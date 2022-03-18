@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open_blog-pre
+  namespace: open_blog
+  labels:
+    app: open_blog-app-pre
+    #可选值,dec/test/pre
+    k8s.eip.work/layer: pre
+spec:
+  replicas: 1
+  strategy:
+    # 滚动发布
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+    # 重新发布
+    #type: Recreate
+  selector:
+    matchLabels:
+      app: open_blog-app-pre
+  template:
+    metadata:
+      annotations:
+        ahasPilotAutoEnable: "off"
+        ahasAppName: "open_blog-app-pre-pre"
+        ahasNamespace: "default"
+      labels:
+        app: open_blog-app-pre
+    spec:
+      containers:
+        - env:
+            - name: ENV_PROFILES_ACTIVE
+              value: pre
+            - name: ENV_MYSQL_DATABASE
+              value: "open_blog"
+            - name: ENV_NACOS_DISCOVERY_SERVER
+              value: "192.168.0.146:27329"
+            - name: ENV_NACOS_DISCOVERY_NAMESPACE
+              value: "pre"
+            - name: ENV_NACOS_CONFIG_SERVER
+              value: "192.168.0.146:27329"
+            - name: ENV_NACOS_CONFIG_NAMESPACE
+              value: "open_blog"
+            - name: ENV_SERVER_PORT
+              value: "8080"
+            - name: ENV_NACOS_ENDPOINT
+              value: ""
+            - name: ENV_NACOS_ACCESSKEY
+              value: ""
+            - name: ENV_NACOS_SECRETKEY
+              value: ""
+            - name: ENV_NACOS_USERNAME
+              value: "nacos"
+            - name: ENV_NACOS_PASSWORD
+              value: "nacos"
+            - name: ENV_LOG_CONFIG
+              value: "classpath:logback-aliyun.xml"
+            - name: ENV_FEATURE_TAG
+              value: "base"
+            - name: ENV_LOG_TOPIC
+              value: open_blog
+          name: open_blog-pre
+          image: xxx
+          livenessProbe:
+            failureThreshold: 20
+            httpGet:
+              path: /api/ok
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 100
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 20
+            httpGet:
+              path: /api/ok
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 100
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          imagePullPolicy: Always
