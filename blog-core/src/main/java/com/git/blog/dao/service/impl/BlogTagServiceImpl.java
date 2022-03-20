@@ -3,6 +3,7 @@ package com.git.blog.dao.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.dao.mapper.BlogArticleTagsMapper;
+import com.git.blog.dto.blog.BlogArticleTagsDTO;
 import com.git.blog.dto.blog.BlogTagDTO;
 import com.git.blog.dto.model.entity.BlogArticleTags;
 import com.git.blog.dto.model.entity.BlogArticleTypes;
@@ -85,6 +86,11 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
         return list;
     }
 
+    @Override
+    public List<BlogArticleTagsDTO> getTagsByArticleIds(List<Long> ids) {
+        if(CollectionUtils.isEmpty(ids))return Collections.emptyList();
+        return blogArticleTagsMapper.getTagsByArticleIds(ids);
+    }
 
     @Override
     public void deleteArticleTag(Long id) {

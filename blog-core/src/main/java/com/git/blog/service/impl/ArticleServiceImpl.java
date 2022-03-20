@@ -9,10 +9,7 @@ import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
-import com.git.blog.dto.blog.BlogArticleDTO;
-import com.git.blog.dto.blog.BlogArticleDetailVO;
-import com.git.blog.dto.blog.BlogArticlePageDTO;
-import com.git.blog.dto.blog.BlogArticleVO;
+import com.git.blog.dto.blog.*;
 import com.git.blog.dto.model.entity.BlogArticle;
 import com.git.blog.dto.model.entity.User;
 import com.git.blog.exception.BizException;
@@ -29,10 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -73,10 +67,26 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         List<Long> uidList = page.getRecords().stream().map(BlogArticle::getUserId).collect(Collectors.toList());
+        List<Long> articleIds = page.getRecords().stream().map(BlogArticle::getId).collect(Collectors.toList());
+
         Map<Long, User> userMapByUid = userService.getUserMapByUid(uidList);
 
+        List<BlogArticleTypesDTO> typesByArticleIds = blogTypeDaoService.getTypesByArticleIds(articleIds);
+        Map<Long, List<BlogArticleTypesDTO>> typeArticleMap = typesByArticleIds.stream().collect(Collectors.groupingBy(BlogArticleTypesDTO::getArticleId));
+
+        List<BlogArticleTagsDTO> blogArticleTypesDTOList = blogTagDaoService.getTagsByArticleIds(articleIds);
+        Map<Long, List<BlogArticleTagsDTO>> tagArticleMap = blogArticleTypesDTOList.stream().collect(Collectors.groupingBy(BlogArticleTagsDTO::getArticleId));
+
+
+
         List collect = page.getRecords().stream().map(i->{
+
+
             BlogArticleVO blogArticleVO = blogMapper.articleToArticleVO(i);
+            blogArticleVO.setTagIds(blogArticleTypesDTOList.stream().map(BlogArticleTagsDTO::getId).distinct().collect(Collectors.toList()));
+            blogArticleVO.setTypeIds(typesByArticleIds.stream().map(BlogArticleTypesDTO::getId).distinct().collect(Collectors.toList()));
+            blogArticleVO.setTags(Optional.ofNullable(tagArticleMap.get(i.getId())).orElse(Collections.emptyList()).stream().map(BlogArticleTagsDTO::getName).filter(StringUtils::isNotEmpty).collect(Collectors.joining(",")));
+            blogArticleVO.setTypes(Optional.ofNullable(typeArticleMap.get(i.getId())).orElse(Collections.emptyList()).stream().map(BlogArticleTypesDTO::getName).filter(StringUtils::isNotEmpty).collect(Collectors.joining(",")));
             blogArticleVO.setAuthor(Optional.ofNullable(userMapByUid.get(i.getUserId())).map(User::getNickname).orElse(StringUtils.EMPTY));
             return blogArticleVO;
         }).collect(Collectors.toList());

@@ -66,7 +66,7 @@ spec:
           livenessProbe:
             failureThreshold: 20
             httpGet:
-              path: /api/ok
+              path: /com.git.blog.api/ok
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 100
@@ -76,7 +76,7 @@ spec:
           readinessProbe:
             failureThreshold: 20
             httpGet:
-              path: /api/ok
+              path: /com.git.blog.api/ok
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 100

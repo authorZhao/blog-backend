@@ -1,5 +1,6 @@
 package com.git.blog.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.git.blog.config.properties.SysProperties;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
@@ -16,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,17 +54,40 @@ public class HexoServiceImpl implements HexoService {
 
     @Override
     public void generateHtml(BlogArticle blogArticle, List<Long> typeIds, List<Long> tagIds, Long uid) {
-        generateMd(blogArticle,typeIds,tagIds,uid);
+        File file = generateMd(blogArticle, typeIds, tagIds, uid);
         exeHexoCleanGenerate();
+        if(file==null)return;
+        String html = null;
+        try {
+            html = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            String articleHtml = parseHtml(html,"article-container");
+            String tocHtml = parseHtml(html,"card-toc");
+            Map<String, String> map = new HashMap<>();
+            map.put("tocHtml",tocHtml);
+            map.put("articleHtml",articleHtml);
+            BlogArticle blogArticle1 = new BlogArticle().setId(blogArticle.getId()).setContent(JSON.toJSONString(map));
+            blogArticleDaoService.updateById(blogArticle1);
+        } catch (IOException e) {
+            log.error("generateHtml update content error",e);
+            e.printStackTrace();
+        }
+    }
+
+    private String parseHtml(String html, String id) {
+        Document parse = Jsoup.parse(html);
+        if(parse==null)return null;
+        Element elementById = parse.getElementById(id);
+        if(elementById==null)return null;
+        return elementById.html();
     }
 
     @Override
-    public void generateMd(BlogArticle blogArticle, List<Long> typeIds, List<Long> tagIds, Long uid) {
-        if(BooleanUtils.isFalse(sysProperties.getHexoUse()))return;
+    public File generateMd(BlogArticle blogArticle, List<Long> typeIds, List<Long> tagIds, Long uid) {
+        if(BooleanUtils.isFalse(sysProperties.getHexoUse()))return null;
 
         //数据准备
         User userById = userService.getUserById(uid);
-        if(userById==null)return;
+        if(userById==null)return null;
         BlogArticle dbArticle = blogArticleDaoService.getById(blogArticle.getId());
         String types = CollectionUtils.isEmpty(typeIds)?"categories: ": "categories: "+blogTypeDaoService.listByIds(typeIds).stream().sorted(Comparator.comparingInt(BlogType::getSort))
                 .map(BlogType::getName)
@@ -77,14 +101,24 @@ public class HexoServiceImpl implements HexoService {
         String updateTime = LocalDateTime.now().format(TimeUtils.DATETIME_FORMATTER);
         String title = blogArticle.getTitle();
         String description = blogArticle.getDescription();
-        String createTime = Optional.ofNullable(dbArticle).map(BlogArticle::getCreateTime).map(i->i.format(TimeUtils.DATETIME_FORMATTER)).orElse(updateTime);
+        LocalDateTime localCreateTime = Optional.ofNullable(dbArticle).map(BlogArticle::getCreateTime).orElse(LocalDateTime.now());
+        String createTime =localCreateTime.format(TimeUtils.DATETIME_FORMATTER);
+
         String frontMatter = String.format(TEMPLATE,title,createTime,updateTime,types,tags,description,cover);
         String content = frontMatter+contentMd;
+        File file = null;
         try {
-            FileUtils.writeStringToFile(new File(sysProperties.getHexoPath()+"/source/_posts/"+ title +".md"), content, StandardCharsets.UTF_8);
+            FileUtils.writeStringToFile(new File(sysProperties.getHexoPath() + "/source/_posts/" + title + "_" + blogArticle.getId() + ".md"), content, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        String year = localCreateTime.getYear()+"";
+        String month = localCreateTime.getMonthValue()<10?"0"+localCreateTime.getMonthValue():localCreateTime.getMonthValue()+"";
+        String day = localCreateTime.getDayOfMonth()<10?"0"+localCreateTime.getDayOfMonth():localCreateTime.getDayOfMonth()+"";
+        String path = sysProperties.getHexoPath() + "/public/" + year + "/" + month + "/"+ day + "/"+ title + "_" + blogArticle.getId()+"/index.html";
+        file = new File(path);
+        if(!file.exists())return null;
+        return file;
     }
 
     @Override

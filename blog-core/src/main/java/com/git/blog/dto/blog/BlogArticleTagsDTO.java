@@ -33,6 +33,9 @@ public class BlogArticleTagsDTO implements Serializable {
     @ApiModelProperty(value = "标签表主键")
     private Long tagId;
 
+    @ApiModelProperty(value = "标签名称")
+    private String name;
+
     /**
     * 文章ID
     */

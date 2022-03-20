@@ -1,0 +1,250 @@
+<!-- 菜单 -->
+
+<!-- 文章标签数量等 -->
+<div class="card-widget card-info" th:fragment="left-card-info">
+    <div class="is-center">
+        <div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"
+                                     onerror="this.onerror=null;this.src='/butterfly/img/friend_404.gif'" alt="avatar" /></div>
+        <div class="author-info__name">平原人</div>
+        <div class="author-info__description">大雪迷人眼</div>
+    </div>
+    <div class="card-info-data is-center">
+        <div class="card-info-data-item"><a href="/archives/">
+            <div class="headline">文章</div>
+            <div class="length-num">8</div>
+        </a></div>
+        <div class="card-info-data-item"><a href="/tags/">
+            <div class="headline">标签</div>
+            <div class="length-num">3</div>
+        </a></div>
+        <div class="card-info-data-item"><a href="/categories/">
+            <div class="headline">分类</div>
+            <div class="length-num">4</div>
+        </a></div>
+    </div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/authorZhao"><i
+        class="fab fa-github"></i><span>Follow Me</span></a>
+    <div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/authorZhao"
+                                                     target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon"
+                                                                                                                        href="/2519946973@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a
+            class="social-icon" href="https://gitee.com/authorZhao" target="_blank" title="Gitee"><i
+            class="fa-brands fa-gitter"></i></a><a class="social-icon" href="https://blog.csdn.net/weixin_43328357"
+                                                   target="_blank" title="CSDN"><i class="fab fa-cuttlefish flat-btn"></i></a></div>
+</div>
+
+<!-- 公告 -->
+<div class="card-widget card-announcement" th:fragment="left-card-announcement">
+    <div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div>
+    <div class="announcement_content"><span
+            style="display:inline-block;text-indent:2em">平原人的，内容均为个人技术总结和思考，如有笔误，欢迎留言指正。</span>
+        <div style="width:100%;margin-top:10px;text-align:center"><img
+                src="https://img-blog.csdnimg.cn/9bdfd92aaa20416dbe88a36056af22c7.png?"
+                data-lazy-src="https://cdn.jsdelivr.net/gh/jitwxs/cdn/blog/configuration/wechat_qrcode.png"
+                style="max-width:200px;margin:0 auto" class="entered loaded" data-ll-status="loaded"></div>
+    </div>
+</div>
+
+<div class="sticky_layout">
+    <!-- 最新文章 -->
+    <div class="card-widget card-recent-post" th:fragment="left-card-recent-post">
+        <div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div>
+        <div class="aside-list">
+            <div class="aside-list-item"><a class="thumbnail" href="/2022/03/16/hello-hexo/" title="hello-hexo"><img
+                    src="http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp"
+                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo" /></a>
+                <div class="content"><a class="title" href="/2022/03/16/hello-hexo/"
+                                        title="hello-hexo">hello-hexo</a><time datetime="2022-03-16T11:54:37.000Z"
+                                                                               title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
+            </div>
+            <div class="aside-list-item"><a class="thumbnail"
+                                            href="/2022/03/16/hello%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4/" title="hello简单命令"><img
+                    src="https://img-blog.csdnimg.cn/0a6d9713a73e4551abfa3fc2d62c12c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bmz5Y6f5Lq6,size_20,color_FFFFFF,t_70,g_se,x_16"
+                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello简单命令" /></a>
+                <div class="content"><a class="title" href="/2022/03/16/hello%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4/"
+                                        title="hello简单命令">hello简单命令</a><time datetime="2022-03-16T11:54:37.000Z"
+                                                                             title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
+            </div>
+            <div class="aside-list-item"><a class="thumbnail" href="/2022/03/16/%E8%AF%97%E8%AF%8D%E6%AC%A3%E8%B5%8F/"
+                                            title="诗词欣赏"><img
+                    src="http://opadmin.pingyuanren.top/file/jpg/2022/aec320bb804d4e7d9c7481a3fffc108b.jpg"
+                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="诗词欣赏" /></a>
+                <div class="content"><a class="title" href="/2022/03/16/%E8%AF%97%E8%AF%8D%E6%AC%A3%E8%B5%8F/"
+                                        title="诗词欣赏">诗词欣赏</a><time datetime="2022-03-16T11:54:37.000Z"
+                                                                   title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
+            </div>
+            <div class="aside-list-item"><a class="thumbnail"
+                                            href="/2022/03/16/es%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="es常用操作"><img
+                    src="https://w.wallhaven.cc/full/72/wallhaven-72ozj3.png"
+                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="es常用操作" /></a>
+                <div class="content"><a class="title" href="/2022/03/16/es%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"
+                                        title="es常用操作">es常用操作</a><time datetime="2022-03-16T11:54:37.000Z"
+                                                                       title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
+            </div>
+            <div class="aside-list-item"><a class="thumbnail"
+                                            href="/2022/03/16/JAVA%E6%BA%90%E7%A0%81%E4%B9%8BReentrantLock%E5%88%86%E5%B8%83%E6%B3%A8%E9%87%8A/"
+                                            title="JAVA源码之ReentrantLock分布注释"><img
+                    src="http://opadmin.pingyuanren.top/file/jpg/2022/d80f2edc778e483eb26edb0c84b39bcb.jpg"
+                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="JAVA源码之ReentrantLock分布注释" /></a>
+                <div class="content"><a class="title"
+                                        href="/2022/03/16/JAVA%E6%BA%90%E7%A0%81%E4%B9%8BReentrantLock%E5%88%86%E5%B8%83%E6%B3%A8%E9%87%8A/"
+                                        title="JAVA源码之ReentrantLock分布注释">JAVA源码之ReentrantLock分布注释</a><time
+                        datetime="2022-03-16T08:58:32.000Z" title="发表于 2022-03-16 16:58:32">2022-03-16</time></div>
+            </div>
+        </div>
+    </div>
+    <!-- 分类 -->
+    <div class="card-widget card-categories" th:fragment="left-card-categories">
+        <div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+
+        </div>
+        <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link"
+                                                    href="/categories/%E5%90%8E%E7%AB%AF/"><span class="card-category-list-name">后端</span><span
+                    class="card-category-list-count">2</span></a></li>
+            <li class="card-category-list-item "><a class="card-category-list-link"
+                                                    href="/categories/%E5%90%8E%E7%AB%AF-JAVA/"><span class="card-category-list-name">后端,JAVA</span><span
+                    class="card-category-list-count">3</span></a></li>
+            <li class="card-category-list-item "><a class="card-category-list-link"
+                                                    href="/categories/%E5%90%8E%E7%AB%AF-%E5%89%8D%E7%AB%AF-JAVA/"><span
+                    class="card-category-list-name">后端,前端,JAVA</span><span class="card-category-list-count">1</span></a>
+            </li>
+            <li class="card-category-list-item "><a class="card-category-list-link"
+                                                    href="/categories/%E5%90%8E%E7%AB%AF-%E7%AE%97%E6%B3%95/"><span
+                    class="card-category-list-name">后端,算法</span><span class="card-category-list-count">1</span></a></li>
+        </ul>
+    </div>
+    <!-- 标签 -->
+    <div class="card-widget card-tags" th:fragment="left-card-tags">
+        <div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div>
+        <div class="card-tag-cloud"><a href="/tags/spring%E5%9C%A8%E5%AD%A6%E4%B9%A0/"
+                                       style="font-size: 1.3em; color: #99a1ac">spring在学习</a> <a
+                href="/tags/spring%E5%9C%A8%E5%AD%A6%E4%B9%A0-mysql/"
+                style="font-size: 1.5em; color: #99a9bf">spring在学习,mysql</a> <a
+                href="/tags/spring%E5%9C%A8%E5%AD%A6%E4%B9%A0-redis-mysql/"
+                style="font-size: 1.1em; color: #999">spring在学习,redis,mysql</a></div>
+    </div>
+    <!-- 归档 -->
+    <div class="card-widget card-archives" th:fragment="left-card-archives">
+        <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
+        <ul class="card-archive-list">
+            <li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/03/"><span
+                    class="card-archive-list-date">三月 2022</span><span class="card-archive-list-count">8</span></a></li>
+        </ul>
+    </div>
+    <!-- 网站资讯 -->
+    <div class="card-widget card-webinfo" th:fragment="left-card-webinfo">
+        <div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div>
+        <div class="webinfo">
+            <div class="webinfo-item">
+                <div class="item-name">文章数目 :</div>
+                <div class="item-count">8</div>
+            </div>
+            <div class="webinfo-item">
+                <div class="item-name">本站访客数 :</div>
+                <div class="item-count" id="busuanzi_value_site_uv"></div>
+            </div>
+            <div class="webinfo-item">
+                <div class="item-name">本站总访问量 :</div>
+                <div class="item-count" id="busuanzi_value_site_pv"></div>
+            </div>
+            <div class="webinfo-item">
+                <div class="item-name">最后更新时间 :</div>
+                <div class="item-count" id="last-push-date" data-lastPushDate="2022-03-16T19:44:06.064Z"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-widget" id="card-toc" th:fragment="left-card-toc">
+    <div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage">2</span></div>
+    <div class="toc-content">
+        <ol class="toc">
+            <li class="toc-item toc-level-1 active"><a class="toc-link"
+                                                       href="#redis%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5clion" data-pjax-state=""><span
+                    class="toc-number">1.</span> <span class="toc-text">redis源码导入clion</span></a>
+                <ol class="toc-child">
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"
+                                                        data-pjax-state=""><span class="toc-number">1.1.</span> <span class="toc-text">背景</span></a>
+                    </li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"
+                                                        data-pjax-state=""><span class="toc-number">1.2.</span> <span class="toc-text">环境</span></a>
+                    </li>
+                    <li class="toc-item toc-level-2 active"><a class="toc-link active" href="#redis3-0"
+                                                               data-pjax-state=""><span class="toc-number">1.3.</span> <span
+                            class="toc-text">redis3.0</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                                                href="#redis-3-0%E6%BA%90%E7%A0%81%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"
+                                                                data-pjax-state=""><span class="toc-number">1.3.1.</span> <span
+                                    class="toc-text">redis-3.0源码目录结构</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                                                href="#CMakeLists-txt%E7%9A%84%E7%BC%96%E5%86%99%EF%BC%8C%E5%9C%A8%E7%9B%B8%E5%BA%94%E7%9B%AE%E5%BD%95%E5%88%9B%E5%BB%BACMakeLists-txt"
+                                                                data-pjax-state=""><span class="toc-number">1.3.2.</span> <span
+                                    class="toc-text">CMakeLists.txt的编写，在相应目录创建CMakeLists.txt</span></a>
+                                <ol class="toc-child">
+                                    <li class="toc-item toc-level-4"><a class="toc-link"
+                                                                        href="#%E6%A0%B9%E7%9B%AE%E5%BD%95" data-pjax-state=""><span
+                                            class="toc-number">1.3.2.1.</span> <span class="toc-text">根目录</span></a>
+                                    </li>
+                                </ol>
+                            </li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#deps" data-pjax-state=""><span
+                                    class="toc-number">1.3.3.</span> <span class="toc-text">deps</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#deps-x2F-hiredis"
+                                                                data-pjax-state=""><span class="toc-number">1.3.4.</span> <span
+                                    class="toc-text">deps/hiredis</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#deps-x2F-jemalloc"
+                                                                data-pjax-state=""><span class="toc-number">1.3.5.</span> <span
+                                    class="toc-text">deps/jemalloc</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#deps-x2F-linenoise"
+                                                                data-pjax-state=""><span class="toc-number">1.3.6.</span> <span
+                                    class="toc-text">deps/linenoise</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#deps-x2F-lua"
+                                                                data-pjax-state=""><span class="toc-number">1.3.7.</span> <span
+                                    class="toc-text">deps/lua</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#reload%E9%A1%B9%E7%9B%AE"
+                                                                data-pjax-state=""><span class="toc-number">1.3.8.</span> <span
+                                    class="toc-text">reload项目</span></a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#redis6-0" data-pjax-state=""><span
+                            class="toc-number">1.4.</span> <span class="toc-text">redis6.0</span></a>
+                        <ol class="toc-child">
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#fork%E6%BA%90%E7%A0%81"
+                                                                data-pjax-state=""><span class="toc-number">1.4.1.</span> <span
+                                    class="toc-text">fork源码</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                                                href="#2-git-clone-%E5%88%87%E6%8D%A2%E5%88%B06-0%E5%88%86%E6%94%AF"
+                                                                data-pjax-state=""><span class="toc-number">1.4.2.</span> <span
+                                    class="toc-text">2.git clone 切换到6.0分支</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                                                href="#3-%E5%AF%BC%E5%85%A5%E5%88%B0clion" data-pjax-state=""><span
+                                    class="toc-number">1.4.3.</span> <span class="toc-text">3. 导入到clion</span></a>
+                            </li>
+                            <li class="toc-item toc-level-3"><a class="toc-link"
+                                                                href="#4-CMakeLists-txt%E7%9A%84%E7%BC%96%E5%86%99" data-pjax-state=""><span
+                                    class="toc-number">1.4.4.</span> <span
+                                    class="toc-text">4.CMakeLists.txt的编写</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95-1"
+                                                                data-pjax-state=""><span class="toc-number">1.4.5.</span> <span
+                                    class="toc-text">根目录</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#deps-x2F-hiredis-1"
+                                                                data-pjax-state=""><span class="toc-number">1.4.6.</span> <span
+                                    class="toc-text">deps/hiredis</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"
+                                                                data-pjax-state=""><span class="toc-number">1.4.7.</span> <span
+                                    class="toc-text">启动</span></a></li>
+                            <li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"
+                                                                data-pjax-state=""><span class="toc-number">1.4.8.</span> <span
+                                    class="toc-text">使用</span></a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"
+                                                        data-pjax-state=""><span class="toc-number">1.5.</span> <span
+                            class="toc-text">注意点</span></a></li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</div>

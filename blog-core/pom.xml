@@ -134,6 +134,12 @@
             <version>0.3.8</version>
         </dependency>
 
+        <!-- jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

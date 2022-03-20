@@ -3,6 +3,7 @@ package com.git.blog.service;
 import com.git.blog.dto.model.entity.BlogArticle;
 import org.springframework.scheduling.annotation.Async;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public interface HexoService {
      * @param tagIds
      * @param uid
      */
-    void generateMd(BlogArticle blogArticle,List<Long> typeIds,List<Long> tagIds,Long uid);
+    File generateMd(BlogArticle blogArticle, List<Long> typeIds, List<Long> tagIds, Long uid);
 
     /**
      * 执行命令

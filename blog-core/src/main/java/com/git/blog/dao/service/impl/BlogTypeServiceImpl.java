@@ -3,7 +3,9 @@ package com.git.blog.dao.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.dao.mapper.BlogArticleTypesMapper;
+import com.git.blog.dto.blog.BlogArticleTypesDTO;
 import com.git.blog.dto.model.entity.BlogArticleTypes;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +72,13 @@ public class BlogTypeServiceImpl extends ServiceImpl<BlogTypeMapper, BlogType> i
         List<Long> typeIds = blogArticleTypes.stream().map(BlogArticleTypes::getTypeId).distinct().collect(Collectors.toList());
         List<BlogType> list = list(new LambdaQueryWrapper<BlogType>().in(BlogType::getId, typeIds).eq(BlogType::getStatus, CommonString.TYPE_NORMAL_STATUS));
         return list;
+    }
+
+    @Override
+    public List<BlogArticleTypesDTO> getTypesByArticleIds(List<Long> ids) {
+        if(CollectionUtils.isEmpty(ids))return Collections.emptyList();
+        List<BlogArticleTypesDTO> blogArticleTypesDTOList = blogArticleTypesMapper.getTypesByArticleIds(ids);
+        return blogArticleTypesDTOList;
     }
 
     @Override

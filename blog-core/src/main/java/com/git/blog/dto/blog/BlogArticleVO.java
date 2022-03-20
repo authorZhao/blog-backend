@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -131,6 +132,18 @@ public class BlogArticleVO implements Serializable {
     */
     @ApiModelProperty(value = "转载或者翻译的原文地址url")
     private String reprintUrl;
+
+    @ApiModelProperty(value = "标签多个,用英文逗号分隔")
+    private String tags;
+
+    @ApiModelProperty(value = "分类多个,用英文逗号分隔")
+    private String types;
+
+    @ApiModelProperty(value = "标签id")
+    private List<Long> tagIds;
+
+    @ApiModelProperty(value = "分了id")
+    private List<Long> typeIds;
 
     /**
     * 添加时间

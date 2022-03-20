@@ -42,7 +42,7 @@ open:
       secretKey: abcdefg
       needLogin: true
       front-url: http://blogs-pre.office.blog.com/#
-      deploy-callback-url: http://apiblogs.office.blog.com/api/deploy/callback
+      deploy-callback-url: http://apiblogs.office.blog.com/com.git.blog.api/deploy/callback
       jen-kins-username: ${JENKINS_USERNAME:authorZhao}
       jen-kins-password: ${JENKINS_PASSWORD:xxxxxx}
     wx:
@@ -83,7 +83,7 @@ open:
       secretKey: abcdefg
       needLogin: true
       front-url: http://blogs-pre.office.blog.com/#
-      deploy-callback-url: http://apiblogs.office.blog.com/api/deploy/callback
+      deploy-callback-url: http://apiblogs.office.blog.com/com.git.blog.api/deploy/callback
       jen-kins-username: ${JENKINS_USERNAME:authorZhao}
       jen-kins-password: ${JENKINS_PASSWORD:xxxxxx}
       imgHost: http://opadmin.pingyuanren.top/

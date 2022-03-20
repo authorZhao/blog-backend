@@ -1,5 +1,6 @@
 package com.git.blog.dao.service;
 
+import com.git.blog.dto.blog.BlogArticleTypesDTO;
 import com.git.blog.dto.model.entity.BlogType;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -35,6 +36,13 @@ public interface BlogTypeDaoService extends IService<BlogType> {
      * @return
      */
     List<BlogType> getTypesByArticleId(Long id);
+
+    /**
+     * 根据文章id查询类型
+     * @param ids
+     * @return
+     */
+    List<BlogArticleTypesDTO> getTypesByArticleIds(List<Long> ids);
 
     /**
      * 根据文章删除类型

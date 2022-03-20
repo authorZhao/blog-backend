@@ -1,5 +1,6 @@
 package com.git.blog.dao.service;
 
+import com.git.blog.dto.blog.BlogArticleTagsDTO;
 import com.git.blog.dto.blog.BlogTagDTO;
 import com.git.blog.dto.model.entity.BlogTag;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -33,6 +34,13 @@ public interface BlogTagDaoService extends IService<BlogTag> {
     List<Long> getTagIdsByArticleId(Long id);
 
     List<BlogTag> getTagsByArticleId(Long id);
+
+    /**
+     *
+     * @param ids
+     * @return
+     */
+    List<BlogArticleTagsDTO> getTagsByArticleIds(List<Long> ids);
 
     /**
      * 根据tagId删除中间表数据
