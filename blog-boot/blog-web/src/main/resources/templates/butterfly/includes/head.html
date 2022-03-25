@@ -1,0 +1,51 @@
+
+<div id="sidebar-menus" th:fragment="head-sidebar-menus">
+    <div class="avatar-img is-center">
+        <img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/butterfly/img/friend_404.gif'" alt="avatar" />
+    </div>
+    <div class="site-data is-center">
+        <div class="data-item"><a href="/archives/">
+            <div class="headline">文章</div>
+            <div class="length-num">8</div>
+        </a></div>
+        <div class="data-item"><a href="/tags/">
+            <div class="headline">标签</div>
+            <div class="length-num">3</div>
+        </a></div>
+        <div class="data-item"><a href="/categories/">
+            <div class="headline">分类</div>
+            <div class="length-num">4</div>
+        </a></div>
+    </div>
+    <hr />
+
+    <!-- 页面顶部菜单 -->
+    <div class="menus_items" th:replace="butterfly/includes/head.html::head-menus_items"></div>
+</div>
+
+
+<!-- 页面顶部菜单 -->
+<div class="menus_items" th:fragment="head-menus_items">
+    <div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a>
+    </div>
+    <div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span>
+              归档</span></a></div>
+    <div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a>
+    </div>
+    <div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span>
+              分类</span></a></div>
+    <div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i
+            class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a>
+        <ul class="menus_item_child">
+            <li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li>
+            <li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li>
+        </ul>
+    </div>
+    <div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a>
+    </div>
+    <div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span>
+              关于</span></a></div>
+</div>
+
+
+

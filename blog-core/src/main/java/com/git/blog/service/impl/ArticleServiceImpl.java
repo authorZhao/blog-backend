@@ -1,5 +1,6 @@
 package com.git.blog.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,10 +14,7 @@ import com.git.blog.dto.blog.*;
 import com.git.blog.dto.model.entity.BlogArticle;
 import com.git.blog.dto.model.entity.User;
 import com.git.blog.exception.BizException;
-import com.git.blog.service.ArticleService;
-import com.git.blog.service.AuthService;
-import com.git.blog.service.HexoService;
-import com.git.blog.service.UserService;
+import com.git.blog.service.*;
 import com.git.blog.service.bean.BlogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -27,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -51,6 +50,9 @@ public class ArticleServiceImpl implements ArticleService {
     private UserService userService;
     @Autowired
     private HexoService hexoService;
+    @Autowired
+    private CacheService cacheService;
+
 
 
     @Override
@@ -78,10 +80,7 @@ public class ArticleServiceImpl implements ArticleService {
         Map<Long, List<BlogArticleTagsDTO>> tagArticleMap = blogArticleTypesDTOList.stream().collect(Collectors.groupingBy(BlogArticleTagsDTO::getArticleId));
 
 
-
         List collect = page.getRecords().stream().map(i->{
-
-
             BlogArticleVO blogArticleVO = blogMapper.articleToArticleVO(i);
             blogArticleVO.setTagIds(blogArticleTypesDTOList.stream().map(BlogArticleTagsDTO::getId).distinct().collect(Collectors.toList()));
             blogArticleVO.setTypeIds(typesByArticleIds.stream().map(BlogArticleTypesDTO::getId).distinct().collect(Collectors.toList()));
@@ -201,5 +200,17 @@ public class ArticleServiceImpl implements ArticleService {
         //3.执行命令
         hexoService.exeHexoCleanGenerate();
         return Boolean.TRUE;
+    }
+
+    @Override
+    public List<BlogArticleDTO> getNewArticles(Integer limit) {
+        String str = cacheService.getStr(CommonString.ARTICLE_NEW+limit);
+        if(StringUtils.isNotEmpty(str)){
+            return JSON.parseArray(str,BlogArticleDTO.class);
+        }
+        List<BlogArticleDTO> collect = blogArticleDaoService.listLimitAndStatus(limit, CommonString.ARTICLE_NORMAL_STATUS)
+                .stream().map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+        cacheService.setStr(CommonString.ARTICLE_NEW+limit,JSON.toJSONString(collect),30L, TimeUnit.MINUTES);
+        return collect;
     }
 }

@@ -4,10 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.git.blog.commmon.CommonString;
 import com.git.blog.dto.blog.BlogArticleDetailVO;
 import com.git.blog.dto.blog.BlogArticlePageDTO;
 import com.git.blog.dto.blog.BlogArticleVO;
+import com.git.blog.dto.blog.TagTypeDetailDTO;
 import com.git.blog.service.ArticleService;
+import com.git.blog.service.CacheService;
+import com.git.blog.service.TagTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +32,26 @@ public class PageController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private CacheService cacheService;
+    @Autowired
+    private TagTypeService tagTypeService;
 
     @RequestMapping("/")
     public ModelAndView goToIndex(){
-        BlogArticlePageDTO blogArticlePageDTO = new BlogArticlePageDTO();
-        blogArticlePageDTO.setPageSize(10);
-        blogArticlePageDTO.setCurrent(1);
-        Page<BlogArticleVO> pages = articleService.pageArticle(blogArticlePageDTO);
+        return goToIndex(1);
+    }
 
+    @RequestMapping("/index/{current}")
+    public ModelAndView goToIndex(@PathVariable("current") Integer current){
+        BlogArticlePageDTO blogArticlePageDTO = new BlogArticlePageDTO();
+        blogArticlePageDTO.setPageSize(2);
+        blogArticlePageDTO.setCurrent(current);
+        Page<BlogArticleVO> pages = articleService.pageArticle(blogArticlePageDTO);
         ModelAndView modelAndView = new ModelAndView("butterfly/index.html");
-        modelAndView.addObject("articleList",pages.getRecords());
+        modelAndView.addObject("pagesArticleList",pages);
+        modelAndView.addObject("pagesArticleListTotalPage",pages.getPages());
+        setTagType(modelAndView);
         return modelAndView;
     }
 
@@ -47,9 +61,28 @@ public class PageController {
         ModelAndView modelAndView = new ModelAndView("butterfly/blog.html");
         String content = blogArticleDetailVO.getContent();
         Map<String,String> parse = JSON.parseObject(content,Map.class);
-
+        setTagType(modelAndView);
         modelAndView.addObject("article",blogArticleDetailVO);
         modelAndView.addObject("articleMap",parse);
+        return modelAndView;
+    }
+
+    @RequestMapping("/tags/{id}")
+    public ModelAndView tagId(@PathVariable("id")Long id){
+        TagTypeDetailDTO tagDetail = tagTypeService.getTagDetail(id);
+        ModelAndView modelAndView = new ModelAndView("butterfly/tag.html");
+        setTagType(modelAndView);
+        modelAndView.addObject("tagDetail",tagDetail);
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/categories/{id}")
+    public ModelAndView categoriesId(@PathVariable("id")Long id){
+        TagTypeDetailDTO typeDetail = tagTypeService.getTypeDetail(id);
+        ModelAndView modelAndView = new ModelAndView("butterfly/categories.html");
+        setTagType(modelAndView);
+        modelAndView.addObject("typeDetail",typeDetail);
         return modelAndView;
     }
 
@@ -74,4 +107,11 @@ public class PageController {
         return "web/file/dir";
     }
 
+
+
+    private void setTagType(ModelAndView modelAndView){
+        modelAndView.addObject("tags",cacheService.getTagType(CommonString.TAG));
+        modelAndView.addObject("types",cacheService.getTagType(CommonString.TYPE));
+        modelAndView.addObject("newArticles",articleService.getNewArticles(5));
+    }
 }

@@ -33,7 +33,7 @@ public class UserCacheImpl implements UserCache {
             // 用来开启Guava Cache的统计功能
             .recordStats()
             // 过期清除
-            .expireAfterWrite(5, TimeUnit.MINUTES)
+            .expireAfterWrite(30, TimeUnit.MINUTES)
             // 每隔十s缓存值则会被刷新。防止缓存穿透
             .refreshAfterWrite(3, TimeUnit.MINUTES)
             .removalListener((RemovalListener<String, Object>) notification -> {

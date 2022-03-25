@@ -5,6 +5,7 @@ import com.git.blog.commmon.CommonString;
 import com.git.blog.dao.mapper.BlogArticleTagsMapper;
 import com.git.blog.dto.blog.BlogArticleTagsDTO;
 import com.git.blog.dto.blog.BlogTagDTO;
+import com.git.blog.dto.blog.TagTypeCountDTO;
 import com.git.blog.dto.model.entity.BlogArticleTags;
 import com.git.blog.dto.model.entity.BlogArticleTypes;
 import com.git.blog.dto.model.entity.BlogType;
@@ -93,11 +94,11 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
     }
 
     @Override
-    public void deleteArticleTag(Long id) {
-        if(id==null)return;
-        BlogArticleTags blogArticleTypes = blogArticleTagsMapper.selectById(id);
+    public void deleteArticleTag(Long tagId) {
+        if(tagId==null)return;
+        BlogArticleTags blogArticleTypes = blogArticleTagsMapper.selectById(tagId);
         if(blogArticleTypes==null) return;
-        blogArticleTagsMapper.deleteById(id);
+        blogArticleTagsMapper.deleteById(blogArticleTypes.getId());
     }
 
     @Override
@@ -113,5 +114,19 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
         tagIds.stream().distinct().forEach(i->{
             blogArticleTagsMapper.insert(new BlogArticleTags().setArticleId(id).setTagId(i));
         });
+    }
+
+    @Override
+    public List<TagTypeCountDTO> getTagsCount() {
+        return blogArticleTagsMapper.getTagsCount();
+    }
+
+    @Override
+    public List<Long> getArticleIds(Long tagId) {
+        if(tagId==null){
+            return Collections.emptyList();
+        }
+        return blogArticleTagsMapper.selectList(new LambdaQueryWrapper<BlogArticleTags>().select(BlogArticleTags::getArticleId)
+                .eq(BlogArticleTags::getTagId,tagId)).stream().map(BlogArticleTags::getArticleId).distinct().collect(Collectors.toList());
     }
 }

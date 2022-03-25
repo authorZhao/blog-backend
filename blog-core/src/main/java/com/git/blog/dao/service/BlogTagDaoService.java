@@ -2,6 +2,7 @@ package com.git.blog.dao.service;
 
 import com.git.blog.dto.blog.BlogArticleTagsDTO;
 import com.git.blog.dto.blog.BlogTagDTO;
+import com.git.blog.dto.blog.TagTypeCountDTO;
 import com.git.blog.dto.model.entity.BlogTag;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,34 +20,34 @@ public interface BlogTagDaoService extends IService<BlogTag> {
 
     /**
      * 根据uid查询所有
-     * @param aLong
+     * @param uid
      * @return
      */
-    List<BlogTag> listByUid(Long aLong);
+    List<BlogTag> listByUid(Long uid);
 
     /**
      * 根据uid查询数量
-     * @param aLong
+     * @param uid
      * @return
      */
-    Integer countByUid(Long aLong);
+    Integer countByUid(Long uid);
 
-    List<Long> getTagIdsByArticleId(Long id);
+    List<Long> getTagIdsByArticleId(Long articleIds);
 
-    List<BlogTag> getTagsByArticleId(Long id);
+    List<BlogTag> getTagsByArticleId(Long articleIds);
 
     /**
      *
-     * @param ids
+     * @param articleIds
      * @return
      */
-    List<BlogArticleTagsDTO> getTagsByArticleIds(List<Long> ids);
+    List<BlogArticleTagsDTO> getTagsByArticleIds(List<Long> articleIds);
 
     /**
      * 根据tagId删除中间表数据
-     * @param id
+     * @param tagId
      */
-    void deleteArticleTag(Long id);
+    void deleteArticleTag(Long tagId);
 
     /**
      * tagId过滤
@@ -61,4 +62,17 @@ public interface BlogTagDaoService extends IService<BlogTag> {
      * @param id 文章id
      */
     void saveByTagIdsAndArticleId(List<Long> tagIds, Long id);
+
+    /**
+     * 获取标签文章数量
+     * @return
+     */
+    List<TagTypeCountDTO> getTagsCount();
+
+    /**
+     * 根据tagId获取文章ids
+     * @param tagId
+     * @return
+     */
+    List<Long> getArticleIds(Long tagId);
 }

@@ -180,51 +180,8 @@
 <body>
 <div id="sidebar">
     <div id="menu-mask"></div>
-
     <!-- 左边标签 -->
-    <div id="sidebar-menus">
-        <div class="avatar-img is-center">
-            <img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar" />
-        </div>
-        <div class="site-data is-center">
-            <div class="data-item"><a href="/archives/">
-                <div class="headline">文章</div>
-                <div class="length-num">8</div>
-            </a></div>
-            <div class="data-item"><a href="/tags/">
-                <div class="headline">标签</div>
-                <div class="length-num">3</div>
-            </a></div>
-            <div class="data-item"><a href="/categories/">
-                <div class="headline">分类</div>
-                <div class="length-num">4</div>
-            </a></div>
-        </div>
-        <hr />
-
-        <!-- 页面顶部菜单 -->
-        <div class="menus_items">
-            <div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a>
-            </div>
-            <div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span>
-              归档</span></a></div>
-            <div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a>
-            </div>
-            <div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span>
-              分类</span></a></div>
-            <div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i
-                    class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a>
-                <ul class="menus_item_child">
-                    <li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li>
-                    <li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li>
-                </ul>
-            </div>
-            <div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a>
-            </div>
-            <div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span>
-              关于</span></a></div>
-        </div>
-    </div>
+    <div id="sidebar-menus" th:replace="butterfly/includes/head.html::head-sidebar-menus"></div>
 </div>
 
 <div class="page" id="body-wrap">
@@ -274,10 +231,10 @@
     </header>
     <main class="layout" id="content-inner">
         <div class="recent-posts" id="recent-posts">
-            <div class="recent-post-item" th:each="article : ${articleList}">
+            <div class="recent-post-item" th:each="article : ${pagesArticleList.records}">
                 <div class=""th:class="${article.id%2 == 0} ? 'post_cover left' : 'post_cover right' ">
                     <a th:href="@{'/article/'+${article.id}}" th:title="${article.title}">
-                        <img class="post_bg" th:src="${article.coverImage}" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hello-hexo"></a>
+                        <img class="post_bg" th:src="${article.coverImage}" onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo"></a>
                 </div>
                 <div class="recent-post-info"><a class="article-title" th:href="@{'/article/'+${article.id}}"
                                                  th:text="${article.title}"></a>
@@ -302,9 +259,12 @@
 
             <nav id="pagination">
                 <div class="pagination">
-                    <span class="page-number current">1</span>
-                    <a class="page-number" href="/page/2/#content-inner" data-pjax-state="">2</a>
-                    <a class="extend next" rel="next" href="/page/2/#content-inner" data-pjax-state=""><i class="fas fa-chevron-right fa-fw"></i></a>
+                    <a class="extend prev" rel="prev" th:href="@{'/index/'+${pagesArticleList.current-2}}" data-pjax-state="" th:if="${pagesArticleList.current>2}"><i class="fas fa-chevron-left fa-fw"></i></a>
+                    <a class="page-number" th:href="@{'/index/'+${pagesArticleList.current-1}}" data-pjax-state="" th:if="${pagesArticleList.current>1}" th:text="${pagesArticleList.current-1}"></a>
+                    <span class="page-number current" th:text="${pagesArticleList.current}"></span>
+                    <a class="page-number" th:href="@{'/index/'+${pagesArticleList.current+1}}" data-pjax-state="" th:if="${pagesArticleList.current+1<=pagesArticleListTotalPage}" th:text="${pagesArticleList.current+1}"></a>
+                    <a class="extend next" rel="next" th:href="@{'/index/'+${pagesArticleList.current+2}}" th:if="${pagesArticleList.current+2<=pagesArticleListTotalPage}" data-pjax-state=""><i class="fas fa-chevron-right fa-fw"></i></a>
+
                 </div>
             </nav>
         </div>
@@ -343,8 +303,8 @@
 
 
 
-
-<div>
+<div th:replace="butterfly/includes/foot.html::foot-under_page"></div>
+<!--<div>
     <script src="/butterfly/js/utils.js"></script>
     <script src="/butterfly/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
@@ -357,7 +317,6 @@
     <script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
     <script>let pjaxSelectors = ["title", "#config-diff", "#body-wrap", "#rightside-config-hide", "#rightside-config-show", ".js-pjax"]
-
     var pjax = new Pjax({
         elements: 'a:not([target="_blank"])',
         selectors: pjaxSelectors,
@@ -365,16 +324,12 @@
         analytics: false,
         scrollRestoration: false
     })
-
     document.addEventListener('pjax:send', function () {
-
         // removeEventListener scroll
         window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
         window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
         typeof preloader === 'object' && preloader.initLoading()
         document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-
         if (window.aplayers) {
             for (let i = 0; i < window.aplayers.length; i++) {
                 if (!window.aplayers[i].options.fixed) {
@@ -382,18 +337,13 @@
                 }
             }
         }
-
         typeof typed === 'object' && typed.destroy()
-
         //reset readmode
         const $bodyClassList = document.body.classList
         $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-
     })
-
     document.addEventListener('pjax:complete', function () {
         window.refreshFn()
-
         document.querySelectorAll('script[data-pjax]').forEach(item => {
             const newScript = document.createElement('script')
             const content = item.text || item.textContent || item.innerHTML || ""
@@ -420,14 +370,13 @@
 
         typeof preloader === 'object' && preloader.endLoading()
     })
-
     document.addEventListener('pjax:error', (e) => {
         if (e.request.status === 404) {
             pjax.loadUrl('/404.html')
         }
     })</script>
     <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-</div>
+</div>-->
 </body>
 
 </html>

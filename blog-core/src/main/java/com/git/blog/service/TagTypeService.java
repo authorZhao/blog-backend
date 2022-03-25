@@ -2,6 +2,7 @@ package com.git.blog.service;
 
 import com.git.blog.dto.blog.BlogTagDTO;
 import com.git.blog.dto.blog.BlogTypeDTO;
+import com.git.blog.dto.blog.TagTypeDetailDTO;
 
 import java.util.List;
 
@@ -89,4 +90,19 @@ public interface TagTypeService {
      * @return
      */
     List<BlogTypeDTO> treeTypes();
+
+    /**
+     * 获取标签详情
+     * @param tagId
+     * @return
+     */
+    TagTypeDetailDTO getTagDetail(Long tagId);
+
+    /**
+     * 获取分类详情
+     * * @param typeId
+     * @return
+     */
+    TagTypeDetailDTO getTypeDetail(Long typeId);
+
 }

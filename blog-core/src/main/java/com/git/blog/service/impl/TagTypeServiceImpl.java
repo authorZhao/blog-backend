@@ -2,10 +2,14 @@ package com.git.blog.service.impl;
 
 import com.git.blog.commmon.CommonString;
 import com.git.blog.commmon.enums.AuthTheadLocal;
+import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
+import com.git.blog.dto.blog.BlogArticleDTO;
 import com.git.blog.dto.blog.BlogTagDTO;
 import com.git.blog.dto.blog.BlogTypeDTO;
+import com.git.blog.dto.blog.TagTypeDetailDTO;
+import com.git.blog.dto.model.entity.BlogArticle;
 import com.git.blog.dto.model.entity.BlogTag;
 import com.git.blog.dto.model.entity.BlogType;
 import com.git.blog.exception.BizException;
@@ -16,11 +20,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -29,16 +41,17 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class TagTypeServiceImpl implements TagTypeService {
+public class TagTypeServiceImpl implements TagTypeService{
     @Autowired
     private BlogTagDaoService blogTagDaoService;
     @Autowired
     private BlogTypeDaoService blogTypeDaoService;
     @Autowired
+    private BlogArticleDaoService blogArticleDaoService;
+    @Autowired
     private BlogMapper blogMapper;
     @Autowired
     private AuthService authService;
-
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -178,6 +191,74 @@ public class TagTypeServiceImpl implements TagTypeService {
         List<BlogTypeDTO> blogTypeDTOS = queryAllTypes();
         List<BlogTypeDTO>  treeList = genTree(blogTypeDTOS);
         return treeList;
+    }
+
+    @Override
+    public TagTypeDetailDTO getTagDetail(Long tagId) {
+        TagTypeDetailDTO tagTypeDetailDTO = new TagTypeDetailDTO();
+        BlogTag tag = blogTagDaoService.getById(tagId);
+        if(tag==null) {
+            return tagTypeDetailDTO;
+        }
+        tagTypeDetailDTO.setId(tag.getId()).setName(tag.getName());
+
+        List<Long> articleIds = blogTagDaoService.getArticleIds(tagId);
+        if(CollectionUtils.isEmpty(articleIds)){
+            return tagTypeDetailDTO;
+        }
+        List<BlogArticle> blogArticles = blogArticleDaoService.listByIdsAndStatus(articleIds,CommonString.ARTICLE_NORMAL_STATUS);
+        if(CollectionUtils.isEmpty(blogArticles)){
+            return tagTypeDetailDTO;
+        }
+        Map<Integer, List<BlogArticle>> map = blogArticles.stream().collect(Collectors.groupingBy(i -> i.getCreateTime().getYear()));
+
+        List<TagTypeDetailDTO.BlogArticleYearDTO> blogArticleYearDTOList = new ArrayList<>();
+        Comparator<BlogArticle> objectComparator = Comparator.comparingLong(i -> i.getCreateTime().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond());
+        map.forEach((k,v)->{
+            TagTypeDetailDTO.BlogArticleYearDTO blogArticleYearDTO = new TagTypeDetailDTO.BlogArticleYearDTO();
+            blogArticleYearDTO.setYear(k);
+            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+            blogArticleYearDTO.setBlogArticleDTOList(collect);
+            blogArticleYearDTOList.add(blogArticleYearDTO);
+        });
+
+        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(TagTypeDetailDTO.BlogArticleYearDTO::getYear)).collect(Collectors.toList());
+        tagTypeDetailDTO.setBlogArticleYearDTOList(blogArticleYearDTOList);
+        return tagTypeDetailDTO;
+    }
+
+    @Override
+    public TagTypeDetailDTO getTypeDetail(Long typeId) {
+        TagTypeDetailDTO tagTypeDetailDTO = new TagTypeDetailDTO();
+        BlogType tag = blogTypeDaoService.getById(typeId);
+        if(tag==null || !CommonString.TYPE_NORMAL_STATUS.equals(tag.getStatus())) {
+            return tagTypeDetailDTO;
+        }
+        tagTypeDetailDTO.setId(tag.getId()).setName(tag.getName());
+
+        List<Long> articleIds = blogTypeDaoService.getArticleIds(typeId);
+        if(CollectionUtils.isEmpty(articleIds)){
+            return tagTypeDetailDTO;
+        }
+        List<BlogArticle> blogArticles = blogArticleDaoService.listByIdsAndStatus(articleIds,CommonString.ARTICLE_NORMAL_STATUS);
+        if(CollectionUtils.isEmpty(blogArticles)){
+            return tagTypeDetailDTO;
+        }
+        Map<Integer, List<BlogArticle>> map = blogArticles.stream().collect(Collectors.groupingBy(i -> i.getCreateTime().getYear()));
+
+        List<TagTypeDetailDTO.BlogArticleYearDTO> blogArticleYearDTOList = new ArrayList<>();
+        Comparator<BlogArticle> objectComparator = Comparator.comparingLong(i -> i.getCreateTime().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond());
+        map.forEach((k,v)->{
+            TagTypeDetailDTO.BlogArticleYearDTO blogArticleYearDTO = new TagTypeDetailDTO.BlogArticleYearDTO();
+            blogArticleYearDTO.setYear(k);
+            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+            blogArticleYearDTO.setBlogArticleDTOList(collect);
+            blogArticleYearDTOList.add(blogArticleYearDTO);
+        });
+
+        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(TagTypeDetailDTO.BlogArticleYearDTO::getYear)).collect(Collectors.toList());
+        tagTypeDetailDTO.setBlogArticleYearDTOList(blogArticleYearDTOList);
+        return tagTypeDetailDTO;
     }
 
     private List<BlogTypeDTO> genTree(List<BlogTypeDTO> blogTypeDTOS) {

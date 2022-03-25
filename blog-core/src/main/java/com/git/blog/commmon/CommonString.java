@@ -9,6 +9,8 @@ public class CommonString {
 
     public static final String LAST_SQL_LIMIT_1 = "Limit 1";
 
+    public static final String LAST_SQL_LIMIT = "Limit %d";
+
     /**
      * dev环境
      */
@@ -68,13 +70,13 @@ public class CommonString {
      */
     public static final String ROLE_DEFAULT_OPERATION  = "operation";
     /**
-     * 测试
+     * TYPE
      */
-    public static final String ROLE_DEFAULT_QA = "qa";
+    public static final String TYPE = "TYPE";
     /**
-     * featureOwner
+     * TAG
      */
-    public static final String ROLE_DEFAULT_FEATURE_OWNER = "featureOwner";
+    public static final String TAG = "TAG";
     /**
      * myself
      */
@@ -97,6 +99,9 @@ public class CommonString {
     public static final String ARTICLE_READ_DELETE = "ARTICLE_READ_DELETE";
     /**删除别人的文章*/
     public static final String ARTICLE_DELETE_OTHER = "ARTICLE_DELETE_OTHER";
+
+    /**最新几篇文章*/
+    public static final String ARTICLE_NEW = "ARTICLE_NEW";
 
     /**文章删除状态*/
     public static final Integer ARTICLE_DELETE_STATUS = 10;

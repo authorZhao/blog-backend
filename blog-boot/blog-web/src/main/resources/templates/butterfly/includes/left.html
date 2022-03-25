@@ -48,46 +48,13 @@
     <div class="card-widget card-recent-post" th:fragment="left-card-recent-post">
         <div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div>
         <div class="aside-list">
-            <div class="aside-list-item"><a class="thumbnail" href="/2022/03/16/hello-hexo/" title="hello-hexo"><img
-                    src="http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp"
-                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo" /></a>
-                <div class="content"><a class="title" href="/2022/03/16/hello-hexo/"
-                                        title="hello-hexo">hello-hexo</a><time datetime="2022-03-16T11:54:37.000Z"
-                                                                               title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
-            </div>
-            <div class="aside-list-item"><a class="thumbnail"
-                                            href="/2022/03/16/hello%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4/" title="hello简单命令"><img
-                    src="https://img-blog.csdnimg.cn/0a6d9713a73e4551abfa3fc2d62c12c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5bmz5Y6f5Lq6,size_20,color_FFFFFF,t_70,g_se,x_16"
-                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello简单命令" /></a>
-                <div class="content"><a class="title" href="/2022/03/16/hello%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4/"
-                                        title="hello简单命令">hello简单命令</a><time datetime="2022-03-16T11:54:37.000Z"
-                                                                             title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
-            </div>
-            <div class="aside-list-item"><a class="thumbnail" href="/2022/03/16/%E8%AF%97%E8%AF%8D%E6%AC%A3%E8%B5%8F/"
-                                            title="诗词欣赏"><img
-                    src="http://opadmin.pingyuanren.top/file/jpg/2022/aec320bb804d4e7d9c7481a3fffc108b.jpg"
-                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="诗词欣赏" /></a>
-                <div class="content"><a class="title" href="/2022/03/16/%E8%AF%97%E8%AF%8D%E6%AC%A3%E8%B5%8F/"
-                                        title="诗词欣赏">诗词欣赏</a><time datetime="2022-03-16T11:54:37.000Z"
-                                                                   title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
-            </div>
-            <div class="aside-list-item"><a class="thumbnail"
-                                            href="/2022/03/16/es%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="es常用操作"><img
-                    src="https://w.wallhaven.cc/full/72/wallhaven-72ozj3.png"
-                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="es常用操作" /></a>
-                <div class="content"><a class="title" href="/2022/03/16/es%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"
-                                        title="es常用操作">es常用操作</a><time datetime="2022-03-16T11:54:37.000Z"
-                                                                       title="发表于 2022-03-16 19:54:37">2022-03-16</time></div>
-            </div>
-            <div class="aside-list-item"><a class="thumbnail"
-                                            href="/2022/03/16/JAVA%E6%BA%90%E7%A0%81%E4%B9%8BReentrantLock%E5%88%86%E5%B8%83%E6%B3%A8%E9%87%8A/"
-                                            title="JAVA源码之ReentrantLock分布注释"><img
-                    src="http://opadmin.pingyuanren.top/file/jpg/2022/d80f2edc778e483eb26edb0c84b39bcb.jpg"
-                    onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="JAVA源码之ReentrantLock分布注释" /></a>
-                <div class="content"><a class="title"
-                                        href="/2022/03/16/JAVA%E6%BA%90%E7%A0%81%E4%B9%8BReentrantLock%E5%88%86%E5%B8%83%E6%B3%A8%E9%87%8A/"
-                                        title="JAVA源码之ReentrantLock分布注释">JAVA源码之ReentrantLock分布注释</a><time
-                        datetime="2022-03-16T08:58:32.000Z" title="发表于 2022-03-16 16:58:32">2022-03-16</time></div>
+            <div class="aside-list-item" th:each="article : ${newArticles}">
+                <a class="thumbnail" th:href="@{'/article/'+${article.id}}" th:title="${article.title}">
+                    <img th:src="${article.coverImage}" onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo" /></a>
+                <div class="content">
+                    <a class="title" th:href="@{'/article/'+${article.id}}" th:text="${article.title}"></a>
+                    <time datetime="2022-03-16T11:54:37.000Z" th:text="${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></time>
+                </div>
             </div>
         </div>
     </div>
@@ -96,34 +63,27 @@
         <div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
-
         </div>
         <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link"
-                                                    href="/categories/%E5%90%8E%E7%AB%AF/"><span class="card-category-list-name">后端</span><span
-                    class="card-category-list-count">2</span></a></li>
-            <li class="card-category-list-item "><a class="card-category-list-link"
-                                                    href="/categories/%E5%90%8E%E7%AB%AF-JAVA/"><span class="card-category-list-name">后端,JAVA</span><span
-                    class="card-category-list-count">3</span></a></li>
-            <li class="card-category-list-item "><a class="card-category-list-link"
-                                                    href="/categories/%E5%90%8E%E7%AB%AF-%E5%89%8D%E7%AB%AF-JAVA/"><span
-                    class="card-category-list-name">后端,前端,JAVA</span><span class="card-category-list-count">1</span></a>
+            <li class="card-category-list-item" th:each="type : ${types}">
+                <a class="card-category-list-link" th:href="@{'/categories/'+${type.id}}">
+                <span class="card-category-list-name" th:text="${type.name}"></span>
+                <span class="card-category-list-count" th:text="${type.count}"></span>
+            </a>
             </li>
-            <li class="card-category-list-item "><a class="card-category-list-link"
-                                                    href="/categories/%E5%90%8E%E7%AB%AF-%E7%AE%97%E6%B3%95/"><span
-                    class="card-category-list-name">后端,算法</span><span class="card-category-list-count">1</span></a></li>
         </ul>
     </div>
     <!-- 标签 -->
     <div class="card-widget card-tags" th:fragment="left-card-tags">
         <div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div>
-        <div class="card-tag-cloud"><a href="/tags/spring%E5%9C%A8%E5%AD%A6%E4%B9%A0/"
-                                       style="font-size: 1.3em; color: #99a1ac">spring在学习</a> <a
-                href="/tags/spring%E5%9C%A8%E5%AD%A6%E4%B9%A0-mysql/"
-                style="font-size: 1.5em; color: #99a9bf">spring在学习,mysql</a> <a
-                href="/tags/spring%E5%9C%A8%E5%AD%A6%E4%B9%A0-redis-mysql/"
-                style="font-size: 1.1em; color: #999">spring在学习,redis,mysql</a></div>
+        <div class="card-tag-cloud">
+            <a th:each="tag : ${tags}" th:if="${tag.id%3==1}"  th:href="@{'/tags/'+${tag.id}}" style="font-size: 1.1em; color: #999" data-pjax-state="" th:text="${tag.name}"></a>
+            <a th:each="tag : ${tags}" th:if="${tag.id%3==2}" th:href="@{'/tags/'+${tag.id}}" style="font-size: 1.5em; color: #99a9bf" data-pjax-state="" th:text="${tag.name}"></a>
+            <a th:each="tag : ${tags}" th:if="${tag.id%3==0}" th:href="@{'/tags/'+${tag.id}}" style="font-size: 1.3em; color: #99a1ac" data-pjax-state="" th:text="${tag.name}"></a>
+
+        </div>
     </div>
+
     <!-- 归档 -->
     <div class="card-widget card-archives" th:fragment="left-card-archives">
         <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
@@ -156,6 +116,7 @@
     </div>
 </div>
 
+<!-- 还未使用 -->
 <div class="card-widget" id="card-toc" th:fragment="left-card-toc">
     <div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage">2</span></div>
     <div class="toc-content">

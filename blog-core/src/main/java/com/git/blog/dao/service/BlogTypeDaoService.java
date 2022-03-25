@@ -1,6 +1,7 @@
 package com.git.blog.dao.service;
 
 import com.git.blog.dto.blog.BlogArticleTypesDTO;
+import com.git.blog.dto.blog.TagTypeCountDTO;
 import com.git.blog.dto.model.entity.BlogType;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -46,9 +47,9 @@ public interface BlogTypeDaoService extends IService<BlogType> {
 
     /**
      * 根据文章删除类型
-     * @param id
+     * @param typeId
      */
-    void deleteArticleType(Long id);
+    void deleteArticleType(Long typeId);
 
     /**
      * 根据类型筛选过滤正确的数据
@@ -63,4 +64,17 @@ public interface BlogTypeDaoService extends IService<BlogType> {
      * @param id 文章id
      */
     void saveByTypeIdsAndArticleId(List<Long> typeIds, Long id);
+
+    /**
+     * 获取分类以及文章数量
+     * @return
+     */
+    List<TagTypeCountDTO> getTypesCount();
+
+    /**
+     * 根据typeId查询articleIds
+     * @param typeId
+     * @return
+     */
+    List<Long> getArticleIds(Long typeId);
 }

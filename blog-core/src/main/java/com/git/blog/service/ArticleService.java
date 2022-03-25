@@ -6,6 +6,8 @@ import com.git.blog.dto.blog.BlogArticleDetailVO;
 import com.git.blog.dto.blog.BlogArticlePageDTO;
 import com.git.blog.dto.blog.BlogArticleVO;
 
+import java.util.List;
+
 /**
  * @author authorZhao
  * @since 2022-03-06
@@ -51,5 +53,12 @@ public interface ArticleService {
      * @return
      */
     Boolean init();
+
+    /**
+     * 查询最新几篇文章
+     * @param limit
+     * @return
+     */
+    List<BlogArticleDTO> getNewArticles(Integer limit);
 
 }

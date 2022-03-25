@@ -20,5 +20,6 @@ public interface BlogMapper {
     BlogArticleVO articleToArticleVO(BlogArticle blogArticle);
     BlogArticleDetailVO articleToArticleDetailVO(BlogArticle blogArticle);
     BlogArticle articleDTOToArticle(BlogArticleDTO blogArticleDTO);
+    BlogArticleDTO articleToArticleDTO(BlogArticle blogArticle);
 
 }

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.dao.mapper.BlogArticleTypesMapper;
 import com.git.blog.dto.blog.BlogArticleTypesDTO;
+import com.git.blog.dto.blog.TagTypeCountDTO;
+import com.git.blog.dto.model.entity.BlogArticleTags;
 import com.git.blog.dto.model.entity.BlogArticleTypes;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.collections4.CollectionUtils;
@@ -82,11 +84,11 @@ public class BlogTypeServiceImpl extends ServiceImpl<BlogTypeMapper, BlogType> i
     }
 
     @Override
-    public void deleteArticleType(Long id) {
-        if(id==null)return;
-        BlogArticleTypes blogArticleTypes = blogArticleTypesMapper.selectById(id);
+    public void deleteArticleType(Long typeId) {
+        if(typeId==null)return;
+        BlogArticleTypes blogArticleTypes = blogArticleTypesMapper.selectById(typeId);
         if(blogArticleTypes==null) return;
-        blogArticleTypesMapper.deleteById(id);
+        blogArticleTypesMapper.deleteById(blogArticleTypes.getTypeId());
     }
 
     @Override
@@ -102,5 +104,19 @@ public class BlogTypeServiceImpl extends ServiceImpl<BlogTypeMapper, BlogType> i
         typeIds.stream().distinct().forEach(i->{
             blogArticleTypesMapper.insert(new BlogArticleTypes().setArticleId(id).setTypeId(i));
         });
+    }
+
+    @Override
+    public List<TagTypeCountDTO> getTypesCount() {
+        return blogArticleTypesMapper.getTypesCount();
+    }
+
+    @Override
+    public List<Long> getArticleIds(Long typeId) {
+        if(typeId==null){
+            return Collections.emptyList();
+        }
+        return blogArticleTypesMapper.selectList(new LambdaQueryWrapper<BlogArticleTypes>().select(BlogArticleTypes::getArticleId)
+                .eq(BlogArticleTypes::getTypeId,typeId)).stream().map(BlogArticleTypes::getArticleId).distinct().collect(Collectors.toList());
     }
 }
