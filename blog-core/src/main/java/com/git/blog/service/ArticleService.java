@@ -1,10 +1,8 @@
 package com.git.blog.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.git.blog.dto.blog.BlogArticleDTO;
-import com.git.blog.dto.blog.BlogArticleDetailVO;
-import com.git.blog.dto.blog.BlogArticlePageDTO;
-import com.git.blog.dto.blog.BlogArticleVO;
+import com.git.blog.commmon.PageParam;
+import com.git.blog.dto.blog.*;
 
 import java.util.List;
 
@@ -19,6 +17,13 @@ public interface ArticleService {
      * @return
      */
     Page<BlogArticleVO> pageArticle(BlogArticlePageDTO blogArticlePageDTO);
+
+    /**
+     * 归档分页
+     * @param param
+     * @return
+     */
+    Page<List<BlogArticleYearDTO>> pageArchives(PageParam param);
 
     /**
      * 新增和修改

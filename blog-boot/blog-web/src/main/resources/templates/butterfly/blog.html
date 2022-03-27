@@ -1,181 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh_CN" data-theme="light">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>hello-hexo | 平原人的博客</title>
-    <meta name="keywords" content="spring在学习,mysql">
-    <meta name="author" content="平原人">
-    <meta name="copyright" content="平原人">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="hexo简单命令">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="hello-hexo">
-    <meta property="og:url" content="http://example.com/2022/03/09/hello-hexo/index.html">
-    <meta property="og:site_name" content="平原人的博客">
-    <meta property="og:description" content="hexo简单命令">
-    <meta property="og:locale" content="zh_CN">
-    <meta property="og:image"
-          content="http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp">
-    <meta property="article:published_time" content="2022-03-09T11:54:37.000Z">
-    <meta property="article:modified_time" content="2022-03-16T19:43:50.000Z">
-    <meta property="article:author" content="平原人">
-    <meta property="article:tag" content="spring在学习,mysql">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image"
-          content="http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp">
-    <link rel="shortcut icon" href="/butterfly/img/favicon.png">
-    <link rel="canonical" href="http://example.com/2022/03/09/hello-hexo/">
-    <link rel="preconnect" href="//cdn.jsdelivr.net" />
-    <link rel="preconnect" href="//busuanzi.ibruce.info" />
-    <link rel="stylesheet" href="/butterfly/css/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css"
-          media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print"
-          onload="this.media='all'">
-    <script>const GLOBAL_CONFIG = {
-        root: '/',
-        algolia: undefined,
-        localSearch: undefined,
-        translate: undefined,
-        noticeOutdate: undefined,
-        highlight: { "plugin": "highlighjs", "highlightCopy": true, "highlightLang": true, "highlightHeightLimit": false },
-        copy: {
-            success: '复制成功',
-            error: '复制错误',
-            noSupport: '浏览器不支持'
-        },
-        relativeDate: {
-            homepage: false,
-            post: false
-        },
-        runtime: '',
-        date_suffix: {
-            just: '刚刚',
-            min: '分钟前',
-            hour: '小时前',
-            day: '天前',
-            month: '个月前'
-        },
-        copyright: undefined,
-        lightbox: 'fancybox',
-        Snackbar: undefined,
-        source: {
-            justifiedGallery: {
-                js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
-                css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
-            }
-        },
-        isPhotoFigcaption: false,
-        islazyload: false,
-        isAnchor: false
-    }</script>
-    <script id="config-diff">var GLOBAL_CONFIG_SITE = {
-        title: 'hello-hexo',
-        isPost: true,
-        isHome: false,
-        isHighlightShrink: false,
-        isToc: true,
-        postUpdate: '2022-03-17 03:43:50'
-    }</script><noscript>
-    <style type="text/css">
-        #nav {
-            opacity: 1
-        }
-
-        .justified-gallery img {
-            opacity: 1
-        }
-
-        #recent-posts time,
-        #post-meta time {
-            display: inline !important
-        }
-    </style>
-</noscript>
-    <script>(win => {
-        win.saveToLocal = {
-            set: function setWithExpiry(key, value, ttl) {
-                if (ttl === 0) return
-                const now = new Date()
-                const expiryDay = ttl * 86400000
-                const item = {
-                    value: value,
-                    expiry: now.getTime() + expiryDay,
-                }
-                localStorage.setItem(key, JSON.stringify(item))
-            },
-
-            get: function getWithExpiry(key) {
-                const itemStr = localStorage.getItem(key)
-
-                if (!itemStr) {
-                    return undefined
-                }
-                const item = JSON.parse(itemStr)
-                const now = new Date()
-
-                if (now.getTime() > item.expiry) {
-                    localStorage.removeItem(key)
-                    return undefined
-                }
-                return item.value
-            }
-        }
-
-        win.getScript = url => new Promise((resolve, reject) => {
-            const script = document.createElement('script')
-            script.src = url
-            script.async = true
-            script.onerror = reject
-            script.onload = script.onreadystatechange = function () {
-                const loadState = this.readyState
-                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-                script.onload = script.onreadystatechange = null
-                resolve()
-            }
-            document.head.appendChild(script)
-        })
-
-        win.activateDarkMode = function () {
-            document.documentElement.setAttribute('data-theme', 'dark')
-            if (document.querySelector('meta[name="theme-color"]') !== null) {
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-            }
-        }
-        win.activateLightMode = function () {
-            document.documentElement.setAttribute('data-theme', 'light')
-            if (document.querySelector('meta[name="theme-color"]') !== null) {
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-            }
-        }
-        const t = saveToLocal.get('theme')
-
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
-
-        const asideStatus = saveToLocal.get('aside-status')
-        if (asideStatus !== undefined) {
-            if (asideStatus === 'hide') {
-                document.documentElement.classList.add('hide-aside')
-            } else {
-                document.documentElement.classList.remove('hide-aside')
-            }
-        }
-
-        const detectApple = () => {
-            if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-                document.documentElement.classList.add('apple')
-            }
-        }
-        detectApple()
-    })(window)</script>
-    <link rel="stylesheet" href="/butterfly/css/my.css">
-    <meta name="generator" content="Hexo 6.1.0">
-</head>
+<head th:replace="butterfly/includes/head.html::head-head"></head>
 <body>
 <div id="sidebar">
     <div id="menu-mask"></div>
@@ -189,44 +15,33 @@
             style="background-image: url('http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp')">
         <nav id="nav"><span id="blog_name"><a id="site-name" href="/">平原人的博客</a></span>
             <div id="menus">
-                <div class="menus_items">
-                    <div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a>
-                    </div>
-                    <div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span>
-                  归档</span></a></div>
-                    <div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span>
-                  标签</span></a></div>
-                    <div class="menus_item"><a class="site-page" href="/categories/"><i
-                            class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div>
-                    <div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i
-                            class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a>
-                        <ul class="menus_item_child">
-                            <li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a>
-                            </li>
-                            <li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span>
-                  链接</span></a></div>
-                    <div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span>
-                  关于</span></a></div>
-                </div>
+                <div class="menus_items" th:replace="butterfly/includes/head.html::head-menus_items"></div>
                 <div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div>
             </div>
         </nav>
+
         <div id="post-info">
-            <h1 class="post-title">hello-hexo</h1>
+            <h1 class="post-title" th:text="${article.title}">hello-hexo</h1>
             <div id="post-meta">
-                <div class="meta-firstline"><span class="post-meta-date"><i
-                        class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time
-                        class="post-meta-date-created" datetime="2022-03-09T11:54:37.000Z"
-                        title="发表于 2022-03-09 19:54:37">2022-03-09</time><span class="post-meta-separator">|</span><i
-                        class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time
-                        class="post-meta-date-updated" datetime="2022-03-16T19:43:50.000Z"
-                        title="更新于 2022-03-17 03:43:50">2022-03-17</time></span><span class="post-meta-categories"><span
-                        class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a
-                        class="post-meta-categories" href="/categories/%E5%90%8E%E7%AB%AF-JAVA/">后端,JAVA</a></span></div>
+                <div class="meta-firstline">
+                    <span class="post-meta-date">
+                        <i class="far fa-calendar-alt fa-fw post-meta-icon"></i>
+                        <span class="post-meta-label">发表于</span><time
+                            class="post-meta-date-created" datetime="2022-03-09T11:54:37.000Z"
+                            title="发表于 2022-03-09 19:54:37" th:text="${#temporals.format(article.createTime,'yyyy-MM-dd')}">2022-03-09</time>
+                    <span class="post-meta-separator">|</span>
+                    <i class="fas fa-history fa-fw post-meta-icon"></i>
+                    <span class="post-meta-label">更新于</span>
+                    <time class="post-meta-date-updated" datetime="2022-03-16T19:43:50.000Z"
+                          title="更新于 2022-03-17 03:43:50" th:text="${#temporals.format(article.updateTime,'yyyy-MM-dd')}">2022-03-17</time>
+                    </span>
+
+                    <span class="post-meta-categories">
+                        <span class="post-meta-separator">|</span>
+                        <i class="fas fa-inbox fa-fw post-meta-icon"></i>
+                    <a class="post-meta-categories" th:each="type : ${article.blogTypeDTOList}" th:href="@{'/categories/'+${type.id}}" th:text="${type.name+'  '}"></a>
+                    </span>
+                </div>
                 <div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id=""
                                                                                              data-flag-title="hello-hexo"><i class="far fa-eye fa-fw post-meta-icon"></i><span
                         class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div>
@@ -270,89 +85,6 @@
 
 <div th:replace="butterfly/includes/foot.html::foot-under_page"></div>
 
-<!--<div>
-    <script src="/butterfly/js/utils.js"></script>
-    <script src="/butterfly/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
-    <div class="js-pjax"></div>
-    <div class="aplayer no-destroy" data-id="7334007765" data-server="netease" data-type="playlist" data-fixed="true"
-         data-autoplay="true" data-volume="0.4"> </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print"
-          onload="this.media='all'">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
-    <script>let pjaxSelectors = ["title", "#config-diff", "#body-wrap", "#rightside-config-hide", "#rightside-config-show", ".js-pjax"]
-    var pjax = new Pjax({
-        elements: 'a:not([target="_blank"])',
-        selectors: pjaxSelectors,
-        cacheBust: false,
-        analytics: false,
-        scrollRestoration: false
-    })
-
-    document.addEventListener('pjax:send', function () {
-
-        // removeEventListener scroll
-        window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-        window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-        typeof preloader === 'object' && preloader.initLoading()
-        document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-
-        if (window.aplayers) {
-            for (let i = 0; i < window.aplayers.length; i++) {
-                if (!window.aplayers[i].options.fixed) {
-                    window.aplayers[i].destroy()
-                }
-            }
-        }
-
-        typeof typed === 'object' && typed.destroy()
-
-        //reset readmode
-        const $bodyClassList = document.body.classList
-        $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-
-    })
-
-    document.addEventListener('pjax:complete', function () {
-        window.refreshFn()
-
-        document.querySelectorAll('script[data-pjax]').forEach(item => {
-            const newScript = document.createElement('script')
-            const content = item.text || item.textContent || item.innerHTML || ""
-            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-            newScript.appendChild(document.createTextNode(content))
-            item.parentNode.replaceChild(newScript, item)
-        })
-
-        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-        typeof chatBtnFn === 'function' && chatBtnFn()
-        typeof panguInit === 'function' && panguInit()
-
-        // google analytics
-        typeof gtag === 'function' && gtag('config', '', { 'page_path': window.location.pathname });
-
-        // baidu analytics
-        typeof _hmt === 'object' && _hmt.push(['_trackPageview', window.location.pathname]);
-
-        typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-        // prismjs
-        typeof Prism === 'object' && Prism.highlightAll()
-
-        typeof preloader === 'object' && preloader.endLoading()
-    })
-
-    document.addEventListener('pjax:error', (e) => {
-        if (e.request.status === 404) {
-            pjax.loadUrl('/404.html')
-        }
-    })</script>
-    <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-</div>-->
 </body>
 
 </html>

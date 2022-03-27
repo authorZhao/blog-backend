@@ -1,6 +1,7 @@
 package com.git.blog.dao.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.dto.model.entity.BlogArticle;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -33,7 +34,6 @@ public interface BlogArticleDaoService extends IService<BlogArticle> {
                 .in(BlogArticle::getId,ids)
                 .eq(status!=null,BlogArticle::getStatus,status));
     }
-
 
     /**
      * 不查询md和content

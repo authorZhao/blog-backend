@@ -49,3 +49,187 @@
 
 
 
+
+<head th:fragment="head-head">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title th:text="${head.title}"></title>
+    <meta name="author" th:attr="content=${head.author}">
+    <meta name="copyright" th:attr="content=${head.copyright}">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" th:attr="content=${head.themeColor}">
+    <meta name="description" th:attr="content=${head.description}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" th:attr="content=${head.ogTitle}">
+    <meta property="og:url" th:attr="content=${head.ogUrl}">
+    <meta property="og:site_name" th:attr="content=${head.ogSiteName}">
+    <meta property="og:description" th:attr="content=${head.ogDescription}">
+    <meta property="og:locale" th:attr="content=${head.ogLocale}">
+    <meta property="og:image" th:attr="content=${head.ogImage}">
+    <meta property="article:author" th:attr="content=${head.articleAuthor}">
+    <meta name="twitter:card" th:attr="content=${head.twitterCard}">
+    <meta name="twitter:image" th:attr="content=${head.twitterImage}">
+    <link rel="shortcut icon" th:href="@{${head.shortcutIcon}}">
+    <link rel="canonical" th:href="@{${head.canonical}}">
+    <link rel="preconnect" th:href="@{${head.preconnect1}}" />
+    <link rel="preconnect" th:href="@{${head.preconnect2}}" />
+    <link rel="stylesheet" th:href="@{${head.stylesheet1}}">
+    <link rel="stylesheet" th:href="@{${head.stylesheet2}}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" th:href="@{${head.stylesheet3}}" media="print" onload="this.media='all'">
+
+    <!-- blog独有 -->
+    <!--<meta name="keywords" content="spring在学习,mysql">
+    <meta property="article:published_time" content="2022-03-09T11:54:37.000Z">
+    <meta property="article:modified_time" content="2022-03-16T19:43:50.000Z">
+    <meta property="article:author" content="平原人">
+    <meta property="article:tag" content="spring在学习,mysql">-->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const GLOBAL_CONFIG = {
+        root: '/',
+        algolia: undefined,
+        localSearch: undefined,
+        translate: undefined,
+        noticeOutdate: undefined,
+        highlight: { "plugin": "highlighjs", "highlightCopy": true, "highlightLang": true, "highlightHeightLimit": false },
+        copy: {
+            success: '复制成功',
+            error: '复制错误',
+            noSupport: '浏览器不支持'
+        },
+        relativeDate: {
+            homepage: false,
+            post: false
+        },
+        runtime: '',
+        date_suffix: {
+            just: '刚刚',
+            min: '分钟前',
+            hour: '小时前',
+            day: '天前',
+            month: '个月前'
+        },
+        copyright: undefined,
+        lightbox: 'fancybox',
+        Snackbar: undefined,
+        source: {
+            justifiedGallery: {
+                    js: /*[(${head.justifiedGallery.js})]*/ 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+                    css: /*[(${head.justifiedGallery.css})]*/ 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+                }
+        },
+        isPhotoFigcaption: false,
+        islazyload: false,
+        isAnchor: false
+            /*]]>*/
+    }</script>
+    <script id="config-diff" th:inline="javascript">
+        /*<![CDATA[*/
+        var GLOBAL_CONFIG_SITE ={
+                title: /*[[${head.configSite.title}]]*/ '平原人的博客',
+                isPost: /*[[${head.configSite.isPost}]]*/ false,
+                isHome: /*[[${head.configSite.isHome}]]*/ true,
+                isHighlightShrink: /*[[${head.configSite.isHighlightShrink}]]*/ false,
+                isToc: /*[[${head.configSite.isToc}]]*/ false,
+                postUpdate: /*[[${head.configSite.postUpdate}]]*/ '2022-03-17 03:44:06'
+            }
+        /*]]>*/
+    </script>
+    <noscript>
+    <style type="text/css">
+        #nav {
+            opacity: 1
+        }
+
+        .justified-gallery img {
+            opacity: 1
+        }
+
+        #recent-posts time,
+        #post-meta time {
+            display: inline !important
+        }
+    </style>
+</noscript>
+    <script>(win => {
+        win.saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0) return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay,
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        }
+
+        win.getScript = url => new Promise((resolve, reject) => {
+            const script = document.createElement('script')
+            script.src = url
+            script.async = true
+            script.onerror = reject
+            script.onload = script.onreadystatechange = function () {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+            }
+            document.head.appendChild(script)
+        })
+
+        win.activateDarkMode = function () {
+            document.documentElement.setAttribute('data-theme', 'dark')
+            if (document.querySelector('meta[name="theme-color"]') !== null) {
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+            }
+        }
+        win.activateLightMode = function () {
+            document.documentElement.setAttribute('data-theme', 'light')
+            if (document.querySelector('meta[name="theme-color"]') !== null) {
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+            }
+        }
+        const t = saveToLocal.get('theme')
+
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+
+        const asideStatus = saveToLocal.get('aside-status')
+        if (asideStatus !== undefined) {
+            if (asideStatus === 'hide') {
+                document.documentElement.classList.add('hide-aside')
+            } else {
+                document.documentElement.classList.remove('hide-aside')
+            }
+        }
+
+        const detectApple = () => {
+            if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+                document.documentElement.classList.add('apple')
+            }
+        }
+        detectApple()
+    })(window)</script>
+    <link rel="stylesheet" th:href="@{${head.stylesheet4}}">
+    <meta name="generator" th:attr="content=${head.generator}">
+</head>
+

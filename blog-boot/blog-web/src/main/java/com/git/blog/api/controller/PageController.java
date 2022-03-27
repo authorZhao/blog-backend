@@ -5,10 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.CommonString;
-import com.git.blog.dto.blog.BlogArticleDetailVO;
-import com.git.blog.dto.blog.BlogArticlePageDTO;
-import com.git.blog.dto.blog.BlogArticleVO;
-import com.git.blog.dto.blog.TagTypeDetailDTO;
+import com.git.blog.commmon.PageParam;
+import com.git.blog.config.properties.BlogProperties;
+import com.git.blog.dto.blog.*;
 import com.git.blog.service.ArticleService;
 import com.git.blog.service.CacheService;
 import com.git.blog.service.TagTypeService;
@@ -31,6 +30,8 @@ import java.util.Map;
 public class PageController {
 
     @Autowired
+    private BlogProperties blogProperties;
+    @Autowired
     private ArticleService articleService;
     @Autowired
     private CacheService cacheService;
@@ -45,13 +46,16 @@ public class PageController {
     @RequestMapping("/index/{current}")
     public ModelAndView goToIndex(@PathVariable("current") Integer current){
         BlogArticlePageDTO blogArticlePageDTO = new BlogArticlePageDTO();
-        blogArticlePageDTO.setPageSize(2);
+        blogArticlePageDTO.setPageSize(10);
         blogArticlePageDTO.setCurrent(current);
         Page<BlogArticleVO> pages = articleService.pageArticle(blogArticlePageDTO);
         ModelAndView modelAndView = new ModelAndView("butterfly/index.html");
-        modelAndView.addObject("pagesArticleList",pages);
-        modelAndView.addObject("pagesArticleListTotalPage",pages.getPages());
-        setTagType(modelAndView);
+        modelAndView.addObject("page",pages);
+        modelAndView.addObject("totalPage",pages.getPages());
+        modelAndView.addObject("hrefPath","/index");
+        BlogProperties clone = blogProperties.clone();
+        clone.getConfigSite().put("isHome",true);
+        setTagType(modelAndView,clone);
         return modelAndView;
     }
 
@@ -61,9 +65,16 @@ public class PageController {
         ModelAndView modelAndView = new ModelAndView("butterfly/blog.html");
         String content = blogArticleDetailVO.getContent();
         Map<String,String> parse = JSON.parseObject(content,Map.class);
-        setTagType(modelAndView);
         modelAndView.addObject("article",blogArticleDetailVO);
         modelAndView.addObject("articleMap",parse);
+
+        BlogProperties clone = blogProperties.clone();
+        clone.getConfigSite().put("isPost",true);
+        clone.getConfigSite().put("isToc",true);
+        clone.getConfigSite().put("title",blogArticleDetailVO.getTitle()+" | "+blogProperties.getTitle());
+        clone.setTitle(blogArticleDetailVO.getTitle());
+        clone.setOgTitle(blogArticleDetailVO.getTitle());
+        setTagType(modelAndView,clone);
         return modelAndView;
     }
 
@@ -71,8 +82,13 @@ public class PageController {
     public ModelAndView tagId(@PathVariable("id")Long id){
         TagTypeDetailDTO tagDetail = tagTypeService.getTagDetail(id);
         ModelAndView modelAndView = new ModelAndView("butterfly/tag.html");
-        setTagType(modelAndView);
         modelAndView.addObject("tagDetail",tagDetail);
+
+        BlogProperties clone = blogProperties.clone();
+        clone.getConfigSite().put("title",tagDetail.getName());
+        clone.setTitle(tagDetail.getName());
+        clone.setOgTitle(tagDetail.getName());
+        setTagType(modelAndView,clone);
         return modelAndView;
     }
 
@@ -81,10 +97,40 @@ public class PageController {
     public ModelAndView categoriesId(@PathVariable("id")Long id){
         TagTypeDetailDTO typeDetail = tagTypeService.getTypeDetail(id);
         ModelAndView modelAndView = new ModelAndView("butterfly/categories.html");
-        setTagType(modelAndView);
         modelAndView.addObject("typeDetail",typeDetail);
+
+        BlogProperties clone = blogProperties.clone();
+        clone.getConfigSite().put("title",typeDetail.getName());
+        clone.setTitle(typeDetail.getName());
+        clone.setOgTitle(typeDetail.getName());
+        setTagType(modelAndView,clone);
         return modelAndView;
     }
+
+    @RequestMapping("/archives")
+    public ModelAndView archives(){
+        return archivesCurrent(1);
+    }
+
+    @RequestMapping("/archives/{current}")
+    public ModelAndView archivesCurrent(@PathVariable("current")Integer current){
+        PageParam pageParam = new PageParam();
+        pageParam.setCurrent(current);
+        pageParam.setPageSize(1);
+        Page<List<BlogArticleYearDTO>> page = articleService.pageArchives(pageParam);
+        ModelAndView modelAndView = new ModelAndView("butterfly/archives.html");
+        modelAndView.addObject("page",page);
+        modelAndView.addObject("totalPage",page.getPages());
+        modelAndView.addObject("hrefPath","/archives");
+
+        BlogProperties clone = blogProperties.clone();
+        clone.setTitle("归档");
+        clone.setOgTitle("归档");
+        clone.getConfigSite().put("title","归档");
+        setTagType(modelAndView);
+        return modelAndView;
+    }
+
 
     @RequestMapping("/menu")
     public String menu(){
@@ -109,7 +155,15 @@ public class PageController {
 
 
 
+    private void setTagType(ModelAndView modelAndView,BlogProperties blogPropertiesParam){
+        modelAndView.addObject("head",blogPropertiesParam);
+        modelAndView.addObject("tags",cacheService.getTagType(CommonString.TAG));
+        modelAndView.addObject("types",cacheService.getTagType(CommonString.TYPE));
+        modelAndView.addObject("newArticles",articleService.getNewArticles(5));
+    }
+
     private void setTagType(ModelAndView modelAndView){
+        modelAndView.addObject("head",blogProperties);
         modelAndView.addObject("tags",cacheService.getTagType(CommonString.TAG));
         modelAndView.addObject("types",cacheService.getTagType(CommonString.TYPE));
         modelAndView.addObject("newArticles",articleService.getNewArticles(5));

@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.CommonString;
+import com.git.blog.commmon.PageParam;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
 import com.git.blog.dto.blog.*;
 import com.git.blog.dto.model.entity.BlogArticle;
+import com.git.blog.dto.model.entity.BlogTag;
+import com.git.blog.dto.model.entity.BlogType;
 import com.git.blog.dto.model.entity.User;
 import com.git.blog.exception.BizException;
 import com.git.blog.service.*;
@@ -23,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -59,6 +64,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Page pageArticle(BlogArticlePageDTO blogArticlePageDTO) {
         Long uid = AuthTheadLocal.get();
         Wrapper<BlogArticle> wrapper = new LambdaQueryWrapper<BlogArticle>()
+                .select(BlogArticle::getId,BlogArticle::getTitle,BlogArticle::getUserId,BlogArticle::getCoverImage,BlogArticle::getEditorType
+                        ,BlogArticle::getQrcodePath,BlogArticle::getTop,BlogArticle::getStatus,BlogArticle::getRecommended
+                        ,BlogArticle::getOriginal,BlogArticle::getDescription,BlogArticle::getKeywords,BlogArticle::getComment
+                        ,BlogArticle::getPassword,BlogArticle::getRequiredAuth,BlogArticle::getReprintUrl,BlogArticle::getCreateTime,BlogArticle::getUpdateTime)
                 .eq(!authService.checkAuth(uid, CommonString.ARTICLE_READ_LIST_OTHER), BlogArticle::getUserId, uid)
                 .eq(!authService.checkAuth(uid, CommonString.ARTICLE_READ_DELETE), BlogArticle::getStatus, CommonString.ARTICLE_NORMAL_STATUS);
         Page<BlogArticle> page = new Page<>(blogArticlePageDTO.getCurrent(), blogArticlePageDTO.getPageSize());
@@ -90,8 +99,40 @@ public class ArticleServiceImpl implements ArticleService {
             return blogArticleVO;
         }).collect(Collectors.toList());
 
-
         page.setRecords(collect);
+        return page;
+    }
+
+    @Override
+    public Page pageArchives(PageParam param) {
+        Wrapper<BlogArticle> wrapper = new LambdaQueryWrapper<BlogArticle>()
+                .select(BlogArticle::getId,BlogArticle::getTitle,BlogArticle::getUserId,BlogArticle::getCoverImage,BlogArticle::getEditorType
+                        ,BlogArticle::getQrcodePath,BlogArticle::getTop,BlogArticle::getStatus,BlogArticle::getRecommended
+                        ,BlogArticle::getOriginal,BlogArticle::getDescription,BlogArticle::getKeywords,BlogArticle::getComment
+                        ,BlogArticle::getPassword,BlogArticle::getRequiredAuth,BlogArticle::getReprintUrl,BlogArticle::getCreateTime,BlogArticle::getUpdateTime)
+                .orderByDesc(BlogArticle::getCreateTime);
+        Page<BlogArticle> page = new Page<>(param.getCurrent(), param.getPageSize());
+        page = blogArticleDaoService.page(page, wrapper);
+
+        if(CollectionUtils.isEmpty(page.getRecords())){
+            return page;
+        }
+        List<BlogArticle> records = page.getRecords();
+
+        Map<Integer, List<BlogArticle>> map = records.stream().collect(Collectors.groupingBy(i -> i.getCreateTime().getYear()));
+
+        List blogArticleYearDTOList = new ArrayList<>();
+        Comparator<BlogArticle> objectComparator = Comparator.comparingLong(i -> i.getCreateTime().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond());
+        map.forEach((k,v)->{
+            BlogArticleYearDTO blogArticleYearDTO = new BlogArticleYearDTO();
+            blogArticleYearDTO.setYear(k);
+            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+            blogArticleYearDTO.setBlogArticleDTOList(collect);
+            blogArticleYearDTOList.add(blogArticleYearDTO);
+        });
+
+        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(BlogArticleYearDTO::getYear)).collect(Collectors.toList());
+        page.setRecords(blogArticleYearDTOList);
         return page;
     }
 
@@ -175,10 +216,12 @@ public class ArticleServiceImpl implements ArticleService {
         if(byId==null) return null;
         BlogArticleDetailVO blogArticleDetailVO = blogMapper.articleToArticleDetailVO(byId);
 
-        List<Long> tagIds = blogTagDaoService.getTagIdsByArticleId(id);
-        List<Long> typeIds = blogTypeDaoService.getTypeIdsByArticleId(id);
-        blogArticleDetailVO.setTagIds(tagIds);
-        blogArticleDetailVO.setTypeIds(typeIds);
+        List<BlogTag> blogTagList = blogTagDaoService.getTagsByArticleId(id);
+        List<BlogType> blogTypeList = blogTypeDaoService.getTypesByArticleId(id);
+        blogArticleDetailVO.setTagIds(blogTagList.stream().map(BlogTag::getId).distinct().collect(Collectors.toList()));
+        blogArticleDetailVO.setTypeIds(blogTypeList.stream().map(BlogType::getId).distinct().collect(Collectors.toList()));
+        blogArticleDetailVO.setBlogTypeDTOList(blogTypeList.stream().map(blogMapper::typeToTypesDTO).collect(Collectors.toList()));
+        blogArticleDetailVO.setBlogTagDTOList(blogTagList.stream().map(blogMapper::tagToTagDTO).collect(Collectors.toList()));
         return blogArticleDetailVO;
     }
 
@@ -190,15 +233,22 @@ public class ArticleServiceImpl implements ArticleService {
         //2.生成md
         List<BlogArticle> list = blogArticleDaoService.list();
         if(CollectionUtils.isEmpty(list))return Boolean.TRUE;
+        Map<BlogArticle,File> map = new HashMap<>();
         list.forEach(i->{
             if(!CommonString.ARTICLE_NORMAL_STATUS.equals(i.getStatus()))return;
             List<Long> tagIds = blogTagDaoService.getTagIdsByArticleId(i.getId());
             List<Long> typeIds = blogTypeDaoService.getTypeIdsByArticleId(i.getId());
-            hexoService.generateMd(i,typeIds,tagIds,AuthTheadLocal.get());
+            File file = hexoService.generateMd(i, typeIds, tagIds, AuthTheadLocal.get());
+            map.put(i,file);
         });
 
         //3.执行命令
         hexoService.exeHexoCleanGenerate();
+
+        //解析html
+        map.forEach((k,v)->{
+            hexoService.parseHtml(k,v);
+        });
         return Boolean.TRUE;
     }
 

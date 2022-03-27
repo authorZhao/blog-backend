@@ -56,7 +56,13 @@ public class HexoServiceImpl implements HexoService {
     public void generateHtml(BlogArticle blogArticle, List<Long> typeIds, List<Long> tagIds, Long uid) {
         File file = generateMd(blogArticle, typeIds, tagIds, uid);
         exeHexoCleanGenerate();
-        if(file==null)return;
+        parseHtml(blogArticle, file);
+    }
+
+
+    @Override
+    public void parseHtml(BlogArticle blogArticle, File file) {
+        if(file ==null) return;
         String html = null;
         try {
             html = FileUtils.readFileToString(file, StandardCharsets.UTF_8);

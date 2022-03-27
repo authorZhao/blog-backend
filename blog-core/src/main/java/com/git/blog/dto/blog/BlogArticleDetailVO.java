@@ -142,6 +142,9 @@ public class BlogArticleDetailVO implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
 
+    private List<BlogTypeDTO> blogTypeDTOList;
+    private List<BlogTagDTO> blogTagDTOList;
+
     private List<Long> typeIds;
 
     private List<Long> tagIds;

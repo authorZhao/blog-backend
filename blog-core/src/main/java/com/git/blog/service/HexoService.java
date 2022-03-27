@@ -24,6 +24,13 @@ public interface HexoService {
     void generateHtml(BlogArticle blogArticle,List<Long> typeIds,List<Long> tagIds,Long uid);
 
     /**
+     * 根据生成的html解析
+     * @param blogArticle 文章
+     * @param file 文章生成的目录
+     */
+    void parseHtml(BlogArticle blogArticle, File file);
+
+    /**
      * 生成md文件
      * @param blogArticle
      * @param typeIds

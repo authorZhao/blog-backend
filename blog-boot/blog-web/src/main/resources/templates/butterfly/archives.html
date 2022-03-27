@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh_CN" data-theme="light">
+
+<head th:replace="butterfly/includes/head.html::head-head"></head>
+
+<body>
+
+<div id="sidebar">
+    <div id="menu-mask"></div>
+    <!-- 左边标签 -->
+    <div id="sidebar-menus" th:replace="butterfly/includes/head.html::head-sidebar-menus"></div>
+</div>
+
+<div class="page" id="body-wrap">
+    <header class="not-home-page" id="page-header"
+            style="background-image: url('http://cn.bing.com/th?id=OHR.LanyonQuoit_ZH-CN6278576563_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp')">
+        <nav id="nav"><span id="blog_name"><a id="site-name" href="/">平原人的博客</a></span>
+
+            <div id="menus">
+                <div id="menus_items" th:replace="butterfly/includes/head.html::head-menus_items"></div>
+                <div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div>
+            </div>
+        </nav>
+        <!--<div id="page-site-info">
+            <h1 id="site-title" th:text="'标签 - '+${tagDetail.name}">spring在学习,mysql</h1>
+        </div>-->
+    </header>
+    <main class="layout" id="content-inner">
+        <div id="archives">
+            <div class="article-sort-title" th:text="'文章总览 - '+${page.total}">标签 - spring在学习,mysql</div>
+            <div class="article-sort" th:each="articles : ${page.records}">
+                <div class="article-sort-item year" th:text="${articles.year}"></div>
+                <div th:each="article : ${articles.blogArticleDTOList}">
+                    <div class="article-sort-item">
+                        <a class="article-sort-item-img"
+                           th:href="@{'/article/'+${article.id}}"
+                           th:title="@{article.title}">
+                            <img th:src="${article.coverImage}" th:attr="src=@{article.title}" onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'"></a>
+                        <div class="article-sort-item-info">
+                            <div class="article-sort-item-time">
+                                <i class="far fa-calendar-alt"></i>
+                                <time datetime="2022-03-16T11:54:37.000Z" class="post-meta-date-created" th:text="'发表于'+ ${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></time>
+                            </div>
+
+                            <a class="article-sort-item-title" th:href="@{'/article/'+${article.id}}" th:text="${article.title}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav id="pagination" th:if="${totalPage==1}">
+                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-1"></div>
+            </nav>
+            <nav id="pagination" th:if="${totalPage==2}">
+                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-2"></div>
+            </nav>
+            <nav id="pagination" th:if="${totalPage==3}">
+                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-3"></div>
+            </nav>
+            <nav id="pagination" th:if="${totalPage>=4}">
+                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-4"></div>
+            </nav>
+
+        </div>
+
+        <div class="aside-content" id="aside-content">
+            <!-- 菜单 -->
+            <div th:replace="butterfly/includes/left.html::left-card-info"></div>
+
+            <!-- 公告 -->
+            <div th:replace="butterfly/includes/left.html::left-card-announcement"></div>
+
+            <div class="sticky_layout">
+
+                <!-- 最新文章 -->
+                <div th:replace="butterfly/includes/left.html::left-card-recent-post"></div>
+                <!-- 分类 -->
+                <div th:replace="butterfly/includes/left.html::left-card-categories"></div>
+                <!-- 标签 -->
+                <div th:replace="butterfly/includes/left.html::left-card-tags"></div>
+                <!-- 归档 -->
+                <div th:replace="butterfly/includes/left.html::left-card-archives"></div>
+                <!-- 网站资讯 -->
+                <div th:replace="butterfly/includes/left.html::left-card-webinfo"></div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- footer -->
+    <div th:replace="butterfly/includes/foot.html::foot-footer"></div>
+</div>
+
+
+<!-- 右边小工具 -->
+<div th:replace="butterfly/includes/right-side.html"></div>
+
+<!-- 底部js -->
+<div th:replace="butterfly/includes/foot.html::foot-under_page"></div>
+</body>
+
+</html>

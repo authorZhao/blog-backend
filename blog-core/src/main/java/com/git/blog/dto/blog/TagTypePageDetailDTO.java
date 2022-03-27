@@ -1,12 +1,11 @@
 package com.git.blog.dto.blog;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.List;
 
 /**
  * <p>
@@ -20,7 +19,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="BlogArticleTags对象", description="文章标签表")
-public class TagTypeDetailDTO {
+public class TagTypePageDetailDTO {
 
     private static final long serialVersionUID=1L;
 
@@ -31,6 +30,7 @@ public class TagTypeDetailDTO {
     private String name;
 
     @ApiModelProperty(value = "博客列表")
-    private List<BlogArticleYearDTO> blogArticleYearDTOList;
+    private Page<BlogArticleYearDTO> blogArticleYearDTOList;
+
 
 }

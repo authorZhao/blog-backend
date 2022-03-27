@@ -1,0 +1,45 @@
+<div class="pagination" th:fragment="page-total-4">
+    <!-- 左箭头 -->
+    <a class="extend prev" rel="prev" th:href="@{${hrefPath}+'/'+${page.current-1}}" data-pjax-state="" th:if="${page.current>=4}"><i class="fas fa-chevron-left fa-fw"></i></a>
+    <!-- 第一页 -->
+    <a class="page-number" th:href="@{${hrefPath}+'/1'}" data-pjax-state="" th:if="${page.current>=2}">1</a>
+
+    <!-- 省略号 -->
+    <span class="space" th:if="${page.current>3 && page.current-2!=1}">...</span>
+
+    <!-- 上一页 -->
+    <a class="page-number" th:href="@{${hrefPath}+'/'+${page.current-1}}" data-pjax-state="" th:if="${page.current-1!=1 && page.current-1>0}" th:text="${page.current-1}"></a>
+    <!-- 当前页 -->
+    <span class="page-number current" th:text="${page.current}"></span>
+    <!-- 下一页 -->
+    <a class="page-number" th:href="@{${hrefPath}+'/'+${page.current+1}}" data-pjax-state="" th:if="${page.current+1<=totalPage}" th:text="${page.current+1}"></a>
+
+    <!-- 省略号 -->
+    <span class="space" th:if="${totalPage>=4 && page.current<totalPage-1 && page.current+2!=totalPage}">...</span>
+
+    <!-- 最后一页 -->
+    <a class="page-number" th:href="@{${hrefPath}+'/'+${totalPage}}" data-pjax-state="" th:if="${page.current!=totalPage && page.current+1!=totalPage &&  totalPage>=4}" th:text="${totalPage}"></a>
+
+    <!-- 右箭头 -->
+    <a class="extend next" rel="next" th:href="@{${hrefPath}+'/'+${page.current+1}}" th:if="${totalPage>=4 &&  page.current<totalPage-2}" data-pjax-state=""><i class="fas fa-chevron-right fa-fw"></i></a>
+
+</div>
+
+<!-- 1页 -->
+<div class="pagination" th:fragment="page-total-1">
+    <span class="page-number current">1</span>
+</div>
+
+
+
+<!-- 2页 -->
+<div class="pagination" th:fragment="page-total-2">
+    <a th:class="${page.current == 1} ? 'page-number current' : 'page-number' " th:href="@{${hrefPath}+'/1'}" data-pjax-state="">1</a>
+    <a th:class="${page.current == 2} ? 'page-number current' : 'page-number' " th:href="@{${hrefPath}+'/2'}" data-pjax-state="">2</a>
+</div>
+<!-- 3页 -->
+<div class="pagination" th:fragment="page-total-3">
+    <a th:class="${page.current == 1} ? 'page-number current' : 'page-number' " th:href="@{${hrefPath}+'/1'}" data-pjax-state="">1</a>
+    <a th:class="${page.current == 2} ? 'page-number current' : 'page-number' " th:href="@{${hrefPath}+'/2'}" data-pjax-state="">2</a>
+    <a th:class="${page.current == 3} ? 'page-number current' : 'page-number' " th:href="@{${hrefPath}+'/3'}" data-pjax-state="">3</a>
+</div>

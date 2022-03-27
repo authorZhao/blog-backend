@@ -5,10 +5,7 @@ import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
-import com.git.blog.dto.blog.BlogArticleDTO;
-import com.git.blog.dto.blog.BlogTagDTO;
-import com.git.blog.dto.blog.BlogTypeDTO;
-import com.git.blog.dto.blog.TagTypeDetailDTO;
+import com.git.blog.dto.blog.*;
 import com.git.blog.dto.model.entity.BlogArticle;
 import com.git.blog.dto.model.entity.BlogTag;
 import com.git.blog.dto.model.entity.BlogType;
@@ -212,17 +209,17 @@ public class TagTypeServiceImpl implements TagTypeService{
         }
         Map<Integer, List<BlogArticle>> map = blogArticles.stream().collect(Collectors.groupingBy(i -> i.getCreateTime().getYear()));
 
-        List<TagTypeDetailDTO.BlogArticleYearDTO> blogArticleYearDTOList = new ArrayList<>();
+        List<BlogArticleYearDTO> blogArticleYearDTOList = new ArrayList<>();
         Comparator<BlogArticle> objectComparator = Comparator.comparingLong(i -> i.getCreateTime().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond());
         map.forEach((k,v)->{
-            TagTypeDetailDTO.BlogArticleYearDTO blogArticleYearDTO = new TagTypeDetailDTO.BlogArticleYearDTO();
+            BlogArticleYearDTO blogArticleYearDTO = new BlogArticleYearDTO();
             blogArticleYearDTO.setYear(k);
             List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
             blogArticleYearDTO.setBlogArticleDTOList(collect);
             blogArticleYearDTOList.add(blogArticleYearDTO);
         });
 
-        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(TagTypeDetailDTO.BlogArticleYearDTO::getYear)).collect(Collectors.toList());
+        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(BlogArticleYearDTO::getYear)).collect(Collectors.toList());
         tagTypeDetailDTO.setBlogArticleYearDTOList(blogArticleYearDTOList);
         return tagTypeDetailDTO;
     }
@@ -246,17 +243,17 @@ public class TagTypeServiceImpl implements TagTypeService{
         }
         Map<Integer, List<BlogArticle>> map = blogArticles.stream().collect(Collectors.groupingBy(i -> i.getCreateTime().getYear()));
 
-        List<TagTypeDetailDTO.BlogArticleYearDTO> blogArticleYearDTOList = new ArrayList<>();
+        List<BlogArticleYearDTO> blogArticleYearDTOList = new ArrayList<>();
         Comparator<BlogArticle> objectComparator = Comparator.comparingLong(i -> i.getCreateTime().atZone(ZoneId.systemDefault()).toInstant().getEpochSecond());
         map.forEach((k,v)->{
-            TagTypeDetailDTO.BlogArticleYearDTO blogArticleYearDTO = new TagTypeDetailDTO.BlogArticleYearDTO();
+            BlogArticleYearDTO blogArticleYearDTO = new BlogArticleYearDTO();
             blogArticleYearDTO.setYear(k);
             List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
             blogArticleYearDTO.setBlogArticleDTOList(collect);
             blogArticleYearDTOList.add(blogArticleYearDTO);
         });
 
-        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(TagTypeDetailDTO.BlogArticleYearDTO::getYear)).collect(Collectors.toList());
+        blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(BlogArticleYearDTO::getYear)).collect(Collectors.toList());
         tagTypeDetailDTO.setBlogArticleYearDTOList(blogArticleYearDTOList);
         return tagTypeDetailDTO;
     }
