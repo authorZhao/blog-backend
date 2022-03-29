@@ -5,6 +5,7 @@ import com.git.blog.config.properties.SysProperties;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
+import com.git.blog.dto.blog.HtmlContent;
 import com.git.blog.dto.model.entity.BlogArticle;
 import com.git.blog.dto.model.entity.BlogTag;
 import com.git.blog.dto.model.entity.BlogType;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -68,10 +70,8 @@ public class HexoServiceImpl implements HexoService {
             html = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             String articleHtml = parseHtml(html,"article-container");
             String tocHtml = parseHtml(html,"card-toc");
-            Map<String, String> map = new HashMap<>();
-            map.put("tocHtml",tocHtml);
-            map.put("articleHtml",articleHtml);
-            BlogArticle blogArticle1 = new BlogArticle().setId(blogArticle.getId()).setContent(JSON.toJSONString(map));
+            HtmlContent htmlContent = new HtmlContent().setTocHtml(tocHtml).setArticleHtml(articleHtml);
+            BlogArticle blogArticle1 = new BlogArticle().setId(blogArticle.getId()).setContent(JSON.toJSONString(htmlContent));
             blogArticleDaoService.updateById(blogArticle1);
         } catch (IOException e) {
             log.error("generateHtml update content error",e);
@@ -81,9 +81,9 @@ public class HexoServiceImpl implements HexoService {
 
     private String parseHtml(String html, String id) {
         Document parse = Jsoup.parse(html);
-        if(parse==null)return null;
+        if(parse==null)return StringUtils.EMPTY;
         Element elementById = parse.getElementById(id);
-        if(elementById==null)return null;
+        if(elementById==null) return StringUtils.EMPTY;
         return elementById.html();
     }
 

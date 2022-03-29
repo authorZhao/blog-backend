@@ -63,21 +63,57 @@ public class BlogProperties implements Cloneable{
     /**作者*/
     private String generator = "hexo";
 
-    private Map<String,Object> justifiedGallery = new HashMap<>();
+    /**markedJs*/
+    private String markedJs = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
+    /**highlightJs*/
+    private String highlightJs = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/highlight.min.js";
 
-    private Map<String,Object> configSite = new HashMap<>();
+    private String highlightLineJs =  "https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/src/highlightjs-line-numbers.min.js";
+
+    private String highlightCss =  "https://cdn.jsdelivr.net/npm/highlight.js@11.5.0/styles/github-dark-dimmed.css";
+
+
+    private Map<String,Object> justifiedGallery;
+
+    private Map<String,Object> configSite;
+
+
+    /**
+     * 左侧栏开关
+     */
+    private Boolean showAsideContent = Boolean.TRUE;
+
+    /**
+     * 左侧栏开关
+     */
+    private Boolean showStickyLayout = Boolean.TRUE;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      *
      */
-
     @PostConstruct
     public void init(){
-        if(justifiedGallery!=null){
+        if(justifiedGallery==null){
+            justifiedGallery = new HashMap<>();
             justifiedGallery.put("js","'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js'");
             justifiedGallery.put("css","'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'");
         }
-        if(configSite!=null){
+        if(configSite==null){
+            configSite = new HashMap<>();
             configSite.put("title","平原人的博客");
             configSite.put("isPost",false);
             configSite.put("isHome",false);

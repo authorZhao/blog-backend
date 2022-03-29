@@ -2,10 +2,27 @@
 <html lang="zh_CN" data-theme="light">
 
 <head th:replace="butterfly/includes/head.html::head-head"></head>
+<head th:if="${articleMap==null}">
+    <!-- blog独有 -->
+    <meta name="keywords" content="spring在学习,mysql">
+    <meta property="article:published_time" content="2022-03-09T11:54:37.000Z">
+    <meta property="article:modified_time" content="2022-03-16T19:43:50.000Z">
+    <meta property="article:author" content="平原人">
+    <meta property="article:tag" content="spring在学习,mysql">
+    <link rel="stylesheet" th:href="@{${head?.highlightCss}}">
+    <script th:src="${head?.highlightJs}"></script>
+    <script th:src="${head?.highlightLineJs}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            hljs.highlightAll();
+            //hljs.initLineNumbersOnLoad();
+        /*]]>*/
+    </script>
+</head>
+
 <body>
 <div id="sidebar">
     <div id="menu-mask"></div>
-
     <!-- 左边标签 -->
     <div id="sidebar-menus" th:replace="butterfly/includes/head.html::head-sidebar-menus"></div>
 </div>
@@ -13,10 +30,17 @@
 <div class="post" id="body-wrap">
     <header class="post-bg" id="page-header"
             style="background-image: url('http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp')">
-        <nav id="nav"><span id="blog_name"><a id="site-name" href="/">平原人的博客</a></span>
+        <nav id="nav">
+            <span id="blog_name">
+                <a id="site-name" href="/">平原人的博客</a>
+            </span>
             <div id="menus">
                 <div class="menus_items" th:replace="butterfly/includes/head.html::head-menus_items"></div>
-                <div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div>
+                <div id="toggle-menu">
+                    <a class="site-page">
+                        <i class="fas fa-bars fa-fw"></i>
+                    </a>
+                </div>
             </div>
         </nav>
 
@@ -42,15 +66,20 @@
                     <a class="post-meta-categories" th:each="type : ${article.blogTypeDTOList}" th:href="@{'/categories/'+${type.id}}" th:text="${type.name+'  '}"></a>
                     </span>
                 </div>
-                <div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id=""
-                                                                                             data-flag-title="hello-hexo"><i class="far fa-eye fa-fw post-meta-icon"></i><span
-                        class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div>
+                <div class="meta-secondline">
+                    <span class="post-meta-separator">|</span>
+                    <span class="post-meta-pv-cv" id="" data-flag-title="hello-hexo">
+                        <i class="far fa-eye fa-fw post-meta-icon"></i>
+                        <span class="post-meta-label">阅读量:</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                </div>
             </div>
         </div>
     </header>
     <main class="layout" id="content-inner">
         <div id="post">
-            <article class="post-content" id="article-container" th:utext="${articleMap.articleHtml}">
+            <article class="post-content" id="article-container" th:utext="${articleMap!=null?articleMap.articleHtml:article.content}">
             </article>
             <div class="post-copyright" th:replace="butterfly/includes/foot.html::foot-post-copyright">
             </div>
@@ -60,15 +89,15 @@
             </nav>
         </div>
         <!-- 左边侧边栏 -->
-        <div class="aside-content" id="aside-content">
+        <div class="aside-content" id="aside-content" th:if="${head.showAsideContent}">
             <!-- 菜单 -->
             <div th:replace="butterfly/includes/left.html::left-card-info"></div>
 
             <!-- 公告 -->
             <div th:replace="butterfly/includes/left.html::left-card-announcement"></div>
 
-            <div class="sticky_layout">
-                <div class="card-widget" id="card-toc" th:utext="${articleMap.tocHtml}"></div>
+            <div class="sticky_layout" th:if="${head.showStickyLayout}">
+                <div class="card-widget" id="card-toc" th:if="${articleMap!=null && #maps.containsKey(articleMap,'tocHtml')}" th:utext="${articleMap.tocHtml}"></div>
                 <!-- 最新文章 -->
                 <div th:replace="butterfly/includes/left.html::left-card-recent-post"></div>
             </div>

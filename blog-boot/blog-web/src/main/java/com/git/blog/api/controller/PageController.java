@@ -11,6 +11,8 @@ import com.git.blog.dto.blog.*;
 import com.git.blog.service.ArticleService;
 import com.git.blog.service.CacheService;
 import com.git.blog.service.TagTypeService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,7 @@ import java.util.Map;
  * 页面跳转的
  */
 @Controller
+@Slf4j
 public class PageController {
 
     @Autowired
@@ -64,13 +67,19 @@ public class PageController {
         BlogArticleDetailVO blogArticleDetailVO = articleService.detailArticle(id);
         ModelAndView modelAndView = new ModelAndView("butterfly/blog.html");
         String content = blogArticleDetailVO.getContent();
-        Map<String,String> parse = JSON.parseObject(content,Map.class);
         modelAndView.addObject("article",blogArticleDetailVO);
-        modelAndView.addObject("articleMap",parse);
-
         BlogProperties clone = blogProperties.clone();
         clone.getConfigSite().put("isPost",true);
-        clone.getConfigSite().put("isToc",true);
+        blogArticleDetailVO.setContentMd("'"+blogArticleDetailVO.getContentMd()+"'");
+        try {
+            HtmlContent parse = JSON.parseObject(content, HtmlContent.class);
+            if(parse!=null && StringUtils.isNotEmpty(parse.getTocHtml())){
+                clone.getConfigSite().put("isToc",true);
+            }
+            modelAndView.addObject("articleMap", parse);
+        }catch (Exception e){
+            clone.getConfigSite().put("isToc",false);
+        }
         clone.getConfigSite().put("title",blogArticleDetailVO.getTitle()+" | "+blogProperties.getTitle());
         clone.setTitle(blogArticleDetailVO.getTitle());
         clone.setOgTitle(blogArticleDetailVO.getTitle());
@@ -129,28 +138,6 @@ public class PageController {
         clone.getConfigSite().put("title","归档");
         setTagType(modelAndView);
         return modelAndView;
-    }
-
-
-    @RequestMapping("/menu")
-    public String menu(){
-        return "web/menu/menu";
-    }
-    @RequestMapping("/role")
-    public String role(){
-        return "web/role/role";
-    }
-    @RequestMapping("/dept")
-    public String dept(){
-        return "web/dept/dept";
-    }
-    @RequestMapping("/article")
-    public String article(){
-        return "article/manage";
-    }
-    @RequestMapping("/dir/dir")
-    public String dir(){
-        return "web/file/dir";
     }
 
 

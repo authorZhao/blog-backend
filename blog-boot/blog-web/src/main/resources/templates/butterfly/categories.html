@@ -27,7 +27,6 @@
     </header>
     <main class="layout" id="content-inner">
         <div id="category">
-            <!--<a th:each="tag : ${tags}" th:if="${tag.id%3==1}"  th:href="@{'/tags/'+${tag.id}}" style="font-size: 1.1em; color: #999" data-pjax-state="" th:text="${tag.name}"></a>-->
             <div class="article-sort-title" th:text="'分类 - '+${typeDetail.name}">标签 - spring在学习,mysql</div>
             <div class="article-sort" th:each="articles : ${typeDetail.blogArticleYearDTOList}">
                 <div class="article-sort-item year" th:text="${articles.year}"></div>
@@ -42,7 +41,6 @@
                                 <i class="far fa-calendar-alt"></i>
                                 <time datetime="2022-03-16T11:54:37.000Z" class="post-meta-date-created" th:text="'发表于'+ ${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></time>
                             </div>
-
                             <a class="article-sort-item-title" th:href="@{'/article/'+${article.id}}" th:text="${article.title}"></a>
                         </div>
                     </div>
