@@ -90,29 +90,4 @@ public class LocalCacheServiceImpl implements CacheService {
         localCache.invalidate(key);
     }
 
-    @Override
-    public List<TagTypeCountDTO> getTagType(String key) {
-        if(StringUtils.isEmpty(key)){
-            return Collections.emptyList();
-        }
-        List<TagTypeCountDTO> tagTypeCountDTOS = Collections.emptyList();
-        String str = getStr(key);
-
-        //走缓存
-        if (StringUtils.isNotEmpty(str)) {
-            return JSON.parseArray(str, TagTypeCountDTO.class);
-        }
-
-        //查数据
-        if (CommonString.TAG.equals(key)) {
-            tagTypeCountDTOS = blogTagDaoService.getTagsCount();
-            setStr(CommonString.TAG, JSON.toJSONString(tagTypeCountDTOS));
-            return tagTypeCountDTOS;
-        }
-
-        tagTypeCountDTOS = blogTypeDaoService.getTypesCount();
-        setStr(CommonString.TYPE, JSON.toJSONString(tagTypeCountDTOS));
-        return tagTypeCountDTOS;
-    }
-
 }

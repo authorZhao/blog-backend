@@ -52,4 +52,12 @@ public interface BlogArticleDaoService extends IService<BlogArticle> {
                 .last(String.format(CommonString.LAST_SQL_LIMIT,limit)));
 
     }
+
+    /**
+     * 获取前一篇和后一篇文章
+     * @param id
+     * @param pre
+     * @return
+     */
+    BlogArticle getPreOrNext(Long id,Boolean pre);
 }

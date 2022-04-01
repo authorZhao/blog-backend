@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${serverPort:8080}
 
 spring:
   application:
@@ -61,6 +61,8 @@ open:
         # 配置地址
     config:
      config-url: http://rc.office.blog.com/spi/rc
+    head:
+      host: http://localhost:8080
 feign:
   httpclient:
     enabled: true
@@ -104,3 +106,6 @@ open:
       # 配置地址
     config:
       config-url: http://rc.office.blog.com/spi/rc
+    head:
+      host: http://opadmin.pingyuanren.top
+

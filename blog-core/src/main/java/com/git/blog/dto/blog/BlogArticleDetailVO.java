@@ -149,5 +149,12 @@ public class BlogArticleDetailVO implements Serializable {
 
     private List<Long> tagIds;
 
+    /**作者*/
+    private String authorName;
+
+    /**上一篇*/
+    private BlogArticleDetailVO pre;
+    /**下一篇*/
+    private BlogArticleDetailVO next;
 
 }

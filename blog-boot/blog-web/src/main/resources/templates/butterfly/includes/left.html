@@ -3,12 +3,11 @@
 <!-- 文章标签数量等 -->
 <div class="card-widget card-info" th:fragment="left-card-info">
     <div class="is-center">
-        <div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"
-                                     onerror="this.onerror=null;this.src='/butterfly/img/friend_404.gif'" alt="avatar" /></div>
+        <div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/butterfly/img/friend_404.gif'" alt="avatar" /></div>
         <div class="author-info__name">平原人</div>
         <div class="author-info__description">大雪迷人眼</div>
     </div>
-    <div class="card-info-data is-center">
+    <div class="card-info-data is-center" th:if="false">
         <div class="card-info-data-item"><a href="/archives/">
             <div class="headline">文章</div>
             <div class="length-num">8</div>
@@ -21,14 +20,24 @@
             <div class="headline">分类</div>
             <div class="length-num">4</div>
         </a></div>
-    </div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/authorZhao"><i
-        class="fab fa-github"></i><span>Follow Me</span></a>
-    <div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/authorZhao"
-                                                     target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon"
-                                                                                                                        href="/2519946973@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a
-            class="social-icon" href="https://gitee.com/authorZhao" target="_blank" title="Gitee"><i
-            class="fa-brands fa-gitter"></i></a><a class="social-icon" href="https://blog.csdn.net/weixin_43328357"
-                                                   target="_blank" title="CSDN"><i class="fab fa-cuttlefish flat-btn"></i></a></div>
+    </div>
+    <a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/authorZhao">
+    <i class="fab fa-github"></i>
+        <span>Follow Me</span></a>
+    <div class="card-info-social-icons is-center">
+        <a class="social-icon" href="https://github.com/authorZhao" target="_blank" title="Github">
+            <i class="fab fa-github"></i>
+        </a>
+        <a class="social-icon" href="/2519946973@qq.com" target="_blank" title="Email">
+            <i class="fas fa-envelope"></i>
+        </a>
+        <a class="social-icon" href="https://gitee.com/authorZhao" target="_blank" title="Gitee">
+            <i class="fa-brands fa-gitter"></i>
+        </a>
+        <a class="social-icon" href="https://blog.csdn.net/weixin_43328357" target="_blank" title="CSDN">
+            <i class="fab fa-cuttlefish flat-btn"></i>
+        </a>
+    </div>
 </div>
 
 <!-- 公告 -->

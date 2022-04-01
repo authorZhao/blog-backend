@@ -2,6 +2,7 @@ package com.git.blog.service;
 
 import com.git.blog.dto.blog.BlogTagDTO;
 import com.git.blog.dto.blog.BlogTypeDTO;
+import com.git.blog.dto.blog.TagTypeCountDTO;
 import com.git.blog.dto.blog.TagTypeDetailDTO;
 
 import java.util.List;
@@ -104,5 +105,12 @@ public interface TagTypeService {
      * @return
      */
     TagTypeDetailDTO getTypeDetail(Long typeId);
+
+    /**
+     * 获取系统的tag和type
+     * @param key
+     * @return
+     */
+    List<TagTypeCountDTO> getTagType(String key);
 
 }

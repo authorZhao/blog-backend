@@ -97,7 +97,7 @@
             <div th:replace="butterfly/includes/left.html::left-card-announcement"></div>
 
             <div class="sticky_layout" th:if="${head.showStickyLayout}">
-                <div class="card-widget" id="card-toc" th:if="${articleMap!=null && #maps.containsKey(articleMap,'tocHtml')}" th:utext="${articleMap.tocHtml}"></div>
+                <div class="card-widget" id="card-toc" th:if="${articleMap!=null && articleMap.tocHtml!=null}" th:utext="${articleMap.tocHtml}"></div>
                 <!-- 最新文章 -->
                 <div th:replace="butterfly/includes/left.html::left-card-recent-post"></div>
             </div>

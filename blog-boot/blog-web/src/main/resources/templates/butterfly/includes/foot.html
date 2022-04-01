@@ -2,59 +2,65 @@
 <!-- footer -->
 <footer id="footer" th:fragment="foot-footer" style="background: linear-gradient( 135deg,">
     <div id="footer-wrap">
-        <div class="copyright">&copy;2020 - 2022 By 平原人</div>
+        <div class="copyright" th:text="${head.copyrightStr}"></div>
         <div class="footer_custom_text">
-            <p><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn"><img class="icp-icon entered loading"
-                                                                                       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAACXBIWXMAAC4jAAAuIwF4pT92AAAH6klEQVR42u2cS4gcVRSG0z1ZSKKoCBMlKGp8LBxUEMQREV8rFV0qCBJFxYUNuhJ8MCMRifgYJlERsxHR6EJEEcSlogsNKKOgQVE3URdBoiBGpx81ntOcv/nnzK3umqrqqupOLX6qp6r63nO++u+jarrulsXFxS210quGUAOsAdYAa4C1JhPgwsKC39dIqGFlTB9ATZISVQBN0VZSk89LokAZMwy3KLBFuGuQ6BAYALtdNCs6R7RLdL5JP58rOlN0yijgBnNwYcYJdFwua4aA2bHZ9198aF60++cPHn9G9LboE9HhPz7d+6vomOi4qCNqm/Tzf6K/RL/LuT+KPhe9K3pOynpAdJ1oZwgsO9TFUj5AB23GA5OkLjZYr4kOGaC1MelvqWNF9LrU+aDo0kBMM+zg0gAyOBfgSRL4jZLE85qMJLUaSLRH7oLDurYfikw92kJd59C27dtQj8TwnegliekWie3kQD+aCWQWeA0ORgK8SgJdEv0SSAQJM5hoZf/uNejwHfObEn+Xy7Q6OqZ1cUhsR0SvSKzXOpCNtBCzOnCbBHOv9kcBh60DJudEDOqrS3bkKgc2BLTnYH4psd8PVxbpwIY57jYJ4gcKKnKBKrAoLbA8QBvQ/sVzFzYikD9JLrfDiUUA7HfKUvEBC+Bfa6IRQ8vqKHWSlJ2rQ50zuxa71nOABpixA2wawCXrpDvWPKM8m6aWpQAVZOhY2nLfu+f6gSs1dsthiQeVohy4z65eRxN6Y9dsLuC0HLgPAkQ9BrBZ67ByOpbDviIduAEggvpobmcuYniQ7mdXZqkPF7tUgNLx5g5Qy9AmFgLIrtT6stbDADWXwgBKRRsAIqg83MfNNCQFnLUufN8D1NxKcWBWgNzv+f4vCbzN1h0HsDAH2j3uWAAmgadbKA3IEEDObeKa8LC+jwcN1GFTkQ3QkzbvUpvwuBwIMIDjAcZBC4GuvAPzBsiJhdwIgKphroUDcSwurqkE6JtnXBNmMUAPb1hzrgxACz4TQA8DbhsGUL9nj7H6Wy4HzXxYPAxQy59YgCFwcU3Yu5PPZ6i4a5lIgEkUch2DGAWQm2fofAY0Ko6JdCA3NW2Cvq+KAxjXB6KcELypcyADCiUdAoh+LjQP5OMheFPnQAo8OHqGBhSewoTmgJ8t35XYeRPtwGF3HAqB+zeV7lMluTdO4riJcOAmAl8nNOekYtel1cQC9H1g0eAqARAPE9IC5BEUDnT/ctxwG6d17DlvNhd4IYClPExggJtNTs9Xcb8nZQ623Afq33nC07Iq14QBJA9xE9etgsyz/BMKIPq+GmANMB7g0zfMTVwT1phPGIAYRGqAtQPHD9ASC9623XzqtukF2MohqRYB5EEEj73yAtiqEkCZ6HYQVB7yk2sozzpQj8Y+dQBV6jSv1rQDHJXkOCAkvRihfVUAuDwKIDsT/WQSZ+i5KA9b7Iu7EHqc6+DvJQC4XCTApgHcz4NIKDELbjAt4QcFer5+5h8U4bj+jcR1i/P0uB+lMbhgP/5G/agroQObRTrwKfupbFuCjzhI/Tzsty4Aq0nz43uGg/kfl4MnM/oZ56IcfizGj8nwPXalAY/w82Qp44UyHHinBdrhq44A2TVe7Ew4kkGwe9mBPM3hc1o2cuOCAD7+VnkHyr7+xVcTSBmPFOnABl7hksrbdgWjUMfNDwP4+Z4miOQAD7ds7DKA8U08BLDl5pF+v49PY5bzulbfTZzbuAFCM5L8t9aMu9yMsUW/5xNkgJooQwFM9F2ADCj4DIBw2Kh/EfD0SD7rWwU9jV10VHI5Le0rX2nfUkIz3oN+kJuxd2BIDBAu9OBDAEMO5O4DDg9dPNc/a/PtyfffhPsKAWjuQzO+SIJY1UC0KeuVdR31uuYEx3AigAIQ7CYPkAcdD5AHEvSb+OwubGTOQ/O9Jm3zzfSyIbnwHfsHeMdARUgI/RqC96Nw6Pd9OMbTFsBo0ZMadjjqUtDcVAMQI+tnOwbvQxgi7XvEWV427K9fYIPJqgSvr071rOlFoduy0IQXf/O8j4+FJsRx+7kefEbZGpNdoJ7Eqv3fcW1BWdyX1YHswsf0ikpg/XkVBpQKCfAijdHcdx/68yxvsefxmn/T/k/8sUFsW/NTiFHF4LUN3ssMr9Q31ml7ugS44iAO+sQypHUHnHeQL3wpb6wHIDZsu0MC/QIQdXS2O4LC3UgDRo+c9xb67jzg5broBEHcrnMrg7hmVz4qyo3muv5UReumXzcs+9f7S110YhhEG1juluB/M4iRTR0iu7+N4h6cpoTWLxPgtC4daa3uY7osAb9tn+c6MrkvtMOjs2zP0kdFksQ/dD/csWbVT1gdkwYmQ7ML1DNwqKdnTfYCP2BUat2YuHWs+MmGJDInelWS+pMShCsHMEc50+Z7w6CpdH53UHR1KJa8VzAa67JPNsPn4M+WxB4VrbikcXfQVTD6pATu5H5N98dA0z7ua9ETUseFPNmnvnli184KgeyvMyPaK/pGoTkgep/atmaI+9Y29WtrBvqQ6EnRFYH6ClmIrNCV2yyxGX9LKAAuEz2s96aiox4m/17QnLYgutyDsR9/NsbR11Vi/UC3KJh26lsD55whcG4V6QpDRwza96JnRVcGoG3l27Gi1xMsffFFhukfqRvMeQ+6bGiVWcEyBmbDmmJloVUO4Kg+0+2rVLyVAzhpqiHUAGuANcAaYK3U+h9BrjcD/ovR1QAAAABJRU5ErkJggg=="
-                                                                                       alt="ICP" data-ll-status="loading">鄂ICP备2022003082号</a></p>
-            <p><a style="margin-inline:5px" target="_blank" href="https://hexo.io/"><img
-                    src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo"
-                    data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" title="博客框架为 Hexo"
-                    alt="HEXO" data-ll-status="loaded" class="entered loaded"></a><a style="margin-inline:5px"
-                                                                                     target="_blank" href="https://github.com/jerryc127/hexo-theme-butterfly"><img
-                    src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender"
-                    data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender"
-                    title="主题采用 Butterfly" alt="Butterfly" data-ll-status="loaded" class="entered loaded"></a><a
-                    style="margin-inline:5px" target="_blank" href="https://www.jsdelivr.com/"><img
-                    src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr"
-                    data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr"
-                    title="本站使用 Jsdelivr 为静态资源提供CDN加速" alt="Jsdelivr" data-ll-status="loaded" class="entered loaded"></a><a
-                    style="margin-inline:5px" target="_blank" href="https://github.com/jitwxs/blog-butterfly"><img
-                    src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub"
-                    data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub"
-                    title="本站项目由 GitHub 托管" alt="GitHub" data-ll-status="loaded" class="entered loaded"></a><a
-                    style="margin-inline:5px" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img
-                    src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris"
-                    data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris"
-                    alt="img" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" data-ll-status="loaded"
-                    class="entered loaded"></a></p>
+            <p th:if="${head!=null && head.icpStr!=null}">
+                <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">
+                    <img class="icp-icon entered loading" src="data:image/png;base64,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" alt="ICP" data-ll-status="loading" th:text="${head.icpStr}"></a>
+            </p>
+            <p th:if="${head!=null && head.copyrightMapList!=null && head.copyrightMapList.size>0}"><a style="margin-inline:5px" target="_blank" th:each="copyrightMap : ${head.copyrightMapList}" th:href="${copyrightMap.href}"><img th:attr="src=${head.host+copyrightMap?.src},data-lazy-src=${head.host+copyrightMap?.dataLazySrc},title=${copyrightMap?.title},alt=${copyrightMap?.alt}"
+                         data-ll-status="loaded" class="entered loaded"></a>
+            </p>
         </div>
     </div>
 </footer>
+<!--<a style="margin-inline:5px" target="_blank" href="https://hexo.io/">
+    <img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo"
+         data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo"></a>
+<a style="margin-inline:5px" target="_blank" href="https://hexo.io/">
+    <img src="/svg/Frame-Hexo-blue.svg?style=flat&amp;logo=hexo"
+         data-lazy-src="http://localhost:8080/svg/Frame-Hexo-blue.svg?style=flat&amp;logo=hexo" >
+</a>-->
+
 
 <div class="post-copyright" th:fragment="foot-post-copyright">
     <div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span
-            class="post-copyright-info"><a href="mailto:undefined">平原人</a></span></div>
+            class="post-copyright-info"><a href="mailto:undefined" th:text="${article?.authorName}"></a></span></div>
     <div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span
-            class="post-copyright-info"><a
-            href="http://example.com/2022/03/10/redis%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5clion/">http://example.com/2022/03/10/redis%E6%BA%90%E7%A0%81%E5%AF%BC%E5%85%A5clion/</a></span>
+            class="post-copyright-info">
+        <a th:if="${article!=null && article.id!=null}" th:href="@{${head.host} +'/'+${article.id}}" th:text="${head.host} +'/'+ ${article.id}">
+            </a></span>
     </div>
-    <div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span
-            class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="http://www.pingyuanren.top" target="_blank">CC
-                BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">平原人的博客</a>！</span></div>
+    <div class="post-copyright__notice">
+        <span class="post-copyright-meta">版权声明: </span>
+        <span class="post-copyright-info">本博客所有文章除特别声明外，均采用
+            <a th:href="${head.host}" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自
+            <a th:href="${head.host}" target="_blank">平原人的博客</a>！
+        </span>
+    </div>
 </div>
 
 
 <nav class="pagination-post" id="pagination" th:fragment="foot-pagination-post">
-    <div class="prev-post pull-full"><a href="/2022/03/16/java%E6%97%A5%E5%BF%97%E5%80%BCJUL/"><img
-            class="prev-cover"
-            src="http://opadmin.pingyuanren.top/file/png/2022/9ff4c554729c4478822a563fc4790c38.png"
-            onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post">
-        <div class="pagination-info">
-            <div class="label">上一篇</div>
-            <div class="prev_info">java日志值JUL</div>
-        </div>
-    </a></div>
+    <div class="prev-post pull-left" th:if="${article!=null && article.pre!=null}">
+        <a th:href="@{'/article/'+${article.pre.id}}" data-pjax-state="">
+            <img class="prev-cover" th:src="${article.pre.coverImage}" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post">
+            <div class="pagination-info">
+                <div class="label">上一篇</div>
+                <div class="prev_info" th:text="${article.pre.title}"></div>
+            </div>
+        </a>
+    </div>
+
+    <div class="next-post pull-right" th:if="${article!=null && article.next!=null}">
+        <a th:href="@{'/article/'+${article.next.id}}" data-pjax-state="">
+            <img class="next-cover" th:src="${article.next.coverImage}" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post">
+            <div class="pagination-info">
+                <div class="label">下一篇</div>
+                <div class="next_info" th:text="${article.next.title}"></div>
+            </div>
+        </a>
+    </div>
 </nav>
 
 <div class="tag_share" th:fragment="foot-tag_share">
@@ -74,10 +80,15 @@
     <script src="/butterfly/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
     <div class="js-pjax"></div>
-    <div class="aplayer no-destroy" data-id="7334007765" data-server="netease" data-type="playlist" data-fixed="true"
-         data-autoplay="true" data-volume="0.4"> </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print"
-          onload="this.media='all'">
+
+    <!--data-id="7334007765" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-volume="0.4"-->
+    <div class="aplayer no-destroy"
+         th:if="${head!=null && head.playerListMap!=null}"
+         th:attr="data-id=${head.playerListMap.dataId?:'7334007765'},data-server=${head.playerListMap.dataServer?:'netease'},
+         data-type=${head.playerListMap.dataType?:'playlist'},data-fixed=${head.playerListMap.dataFixed?:'true'},
+         data-autoplay=${head.playerListMap.dataAutoplay?:'true'},data-volume=${head.playerListMap.dataVolume?:'0.3'}"> </div>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'">
     <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>

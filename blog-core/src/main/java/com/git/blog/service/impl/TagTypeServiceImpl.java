@@ -1,5 +1,6 @@
 package com.git.blog.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.dao.service.BlogArticleDaoService;
@@ -11,6 +12,7 @@ import com.git.blog.dto.model.entity.BlogTag;
 import com.git.blog.dto.model.entity.BlogType;
 import com.git.blog.exception.BizException;
 import com.git.blog.service.AuthService;
+import com.git.blog.service.CacheService;
 import com.git.blog.service.TagTypeService;
 import com.git.blog.service.bean.BlogMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +48,8 @@ public class TagTypeServiceImpl implements TagTypeService{
     private BlogMapper blogMapper;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -256,6 +257,31 @@ public class TagTypeServiceImpl implements TagTypeService{
         blogArticleYearDTOList.stream().sorted(Comparator.comparingInt(BlogArticleYearDTO::getYear)).collect(Collectors.toList());
         tagTypeDetailDTO.setBlogArticleYearDTOList(blogArticleYearDTOList);
         return tagTypeDetailDTO;
+    }
+
+    @Override
+    public List<TagTypeCountDTO> getTagType(String key) {
+        if(StringUtils.isEmpty(key)){
+            return Collections.emptyList();
+        }
+        List<TagTypeCountDTO> tagTypeCountDTOS = Collections.emptyList();
+        String str = cacheService.getStr(key);
+
+        //走缓存
+        if (StringUtils.isNotEmpty(str)) {
+            return JSON.parseArray(str, TagTypeCountDTO.class);
+        }
+
+        //查数据
+        if (CommonString.TAG.equals(key)) {
+            tagTypeCountDTOS = blogTagDaoService.getTagsCount();
+            cacheService.setStr(CommonString.TAG, JSON.toJSONString(tagTypeCountDTOS));
+            return tagTypeCountDTOS;
+        }
+
+        tagTypeCountDTOS = blogTypeDaoService.getTypesCount();
+        cacheService.setStr(CommonString.TYPE, JSON.toJSONString(tagTypeCountDTOS));
+        return tagTypeCountDTOS;
     }
 
     private List<BlogTypeDTO> genTree(List<BlogTypeDTO> blogTypeDTOS) {

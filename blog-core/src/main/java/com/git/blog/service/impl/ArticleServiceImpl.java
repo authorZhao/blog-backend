@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.commmon.PageParam;
 import com.git.blog.commmon.enums.AuthTheadLocal;
+import com.git.blog.config.properties.BlogProperties;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
@@ -57,6 +58,8 @@ public class ArticleServiceImpl implements ArticleService {
     private HexoService hexoService;
     @Autowired
     private CacheService cacheService;
+    @Autowired
+    private BlogProperties blogProperties;
 
 
 
@@ -145,6 +148,10 @@ public class ArticleServiceImpl implements ArticleService {
         List<Long> tagIds = blogArticlePageDTO.getTagIds();
         List<Long> typeIds = blogArticlePageDTO.getTypeIds();
 
+        if(StringUtils.isEmpty(blogArticlePageDTO.getCoverImage())){
+            blogArticlePageDTO.setCoverImage(blogProperties.getArticleCoverImage());
+        }
+
         //2.删除
         if(id!=null){
             //realDeleteArticle(id);
@@ -213,15 +220,31 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public BlogArticleDetailVO detailArticle(Long id) {
         BlogArticle byId = blogArticleDaoService.getById(id);
-        if(byId==null) return null;
+        if(byId==null || !CommonString.ARTICLE_NORMAL_STATUS.equals(byId.getStatus())) return null;
         BlogArticleDetailVO blogArticleDetailVO = blogMapper.articleToArticleDetailVO(byId);
 
+        //标签分类
         List<BlogTag> blogTagList = blogTagDaoService.getTagsByArticleId(id);
         List<BlogType> blogTypeList = blogTypeDaoService.getTypesByArticleId(id);
         blogArticleDetailVO.setTagIds(blogTagList.stream().map(BlogTag::getId).distinct().collect(Collectors.toList()));
         blogArticleDetailVO.setTypeIds(blogTypeList.stream().map(BlogType::getId).distinct().collect(Collectors.toList()));
         blogArticleDetailVO.setBlogTypeDTOList(blogTypeList.stream().map(blogMapper::typeToTypesDTO).collect(Collectors.toList()));
         blogArticleDetailVO.setBlogTagDTOList(blogTagList.stream().map(blogMapper::tagToTagDTO).collect(Collectors.toList()));
+
+        //用户
+        User userById = userService.getUserById(blogArticleDetailVO.getUserId());
+        blogArticleDetailVO.setAuthorName(Optional.ofNullable(userById).map(User::getUsername).orElse(blogProperties.getAuthor()));
+
+        //上下
+        BlogArticle pre = blogArticleDaoService.getPreOrNext(id, true);
+        if(pre!=null){
+            blogArticleDetailVO.setPre(blogMapper.articleToArticleDetailVO(pre));
+        }
+        BlogArticle next = blogArticleDaoService.getPreOrNext(id, false);
+        if(next!=null){
+            blogArticleDetailVO.setNext(blogMapper.articleToArticleDetailVO(next));
+        }
+
         return blogArticleDetailVO;
     }
 

@@ -43,7 +43,15 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/api/user/login",
                         "/api/user/getUrl",
                         "/spi/**",
-                        "/"+blogFileService.getMidPath()+"**"
+                        "/"+blogFileService.getMidPath()+"**",
+                        "/",
+                        "/index/**",
+                        "/article/**",
+                        "*tags/**",
+                        "/categories/**",
+                        "/archives/**",
+                        "/butterfly/**",
+                        "/svg/**"
                 );
         //registry.addInterceptor(new TraceIdInterceptor()).addPathPatterns("/**");
         //super.addInterceptors(registry);

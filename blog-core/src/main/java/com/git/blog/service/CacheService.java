@@ -44,10 +44,4 @@ public interface CacheService {
      */
     void remove(String key);
 
-    /**
-     * 获取系统的tag和type
-     * @param key
-     * @return
-     */
-    List<TagTypeCountDTO> getTagType(String key);
 }

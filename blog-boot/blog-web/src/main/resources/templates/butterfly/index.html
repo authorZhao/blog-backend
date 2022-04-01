@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh_CN" data-theme="light">
+<html lang="zh_CN" data-theme="light" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="butterfly/includes/head.html::head-head"></head>
 <body>
@@ -17,9 +17,11 @@
             <!-- 顶部菜单 -->
             <div id="menus">
                 <div class="menus_items">
-                    <div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a>
+                    <div class="menus_item"><a class="site-page" href="/"><i
+                            class="fa-fw fas fa-home"></i><span> 主页</span></a>
                     </div>
-                    <div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span>
+                    <div class="menus_item"><a class="site-page" href="/archives/"><i
+                            class="fa-fw fas fa-archive"></i><span>
                   归档</span></a></div>
                     <div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span>
                   标签</span></a></div>
@@ -28,9 +30,11 @@
                     <div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i
                             class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a>
                         <ul class="menus_item_child">
-                            <li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a>
+                            <li><a class="site-page child" href="/music/"><i
+                                    class="fa-fw fas fa-music"></i><span> 音乐</span></a>
                             </li>
-                            <li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a>
+                            <li><a class="site-page child" href="/movies/"><i
+                                    class="fa-fw fas fa-video"></i><span> 电影</span></a>
                             </li>
                         </ul>
                     </div>
@@ -46,9 +50,13 @@
         <div id="site-info">
             <h1 id="site-title">平原人的博客</h1>
             <div id="site_social_icons"><a class="social-icon" href="https://github.com/authorZhao" target="_blank"
-                                           title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/2519946973@qq.com"
-                                                                                              target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon"
-                                                                                                                                                                  href="https://gitee.com/authorZhao" target="_blank" title="Gitee"><i class="fa-brands fa-gitter"></i></a><a
+                                           title="Github"><i class="fab fa-github"></i></a><a class="social-icon"
+                                                                                              href="/2519946973@qq.com"
+                                                                                              target="_blank"
+                                                                                              title="Email"><i
+                    class="fas fa-envelope"></i></a><a class="social-icon"
+                                                       href="https://gitee.com/authorZhao" target="_blank"
+                                                       title="Gitee"><i class="fa-brands fa-gitter"></i></a><a
                     class="social-icon" href="https://blog.csdn.net/weixin_43328357" target="_blank" title="CSDN"><i
                     class="fab fa-cuttlefish flat-btn"></i></a></div>
         </div>
@@ -57,9 +65,10 @@
     <main class="layout" id="content-inner">
         <div class="recent-posts" id="recent-posts">
             <div class="recent-post-item" th:each="article : ${page.records}">
-                <div class=""th:class="${article.id%2 == 0} ? 'post_cover left' : 'post_cover right' ">
+                <div class="" th:class="${article.id%2 == 0} ? 'post_cover left' : 'post_cover right' ">
                     <a th:href="@{'/article/'+${article.id}}" th:title="${article.title}">
-                        <img class="post_bg" th:src="${article.coverImage}" onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo"></a>
+                        <img class="post_bg" th:src="${article.coverImage}"
+                             onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo"></a>
                 </div>
                 <div class="recent-post-info"><a class="article-title" th:href="@{'/article/'+${article.id}}"
                                                  th:text="${article.title}"></a>
@@ -67,13 +76,15 @@
                         <span class="post-meta-date">
                             <i class="far fa-calendar-alt"></i>
                             <span class="article-meta-label">发表于</span>
-                        <time datetime="2022-03-16T11:54:37.000Z" th:text="${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></time>
+                        <time datetime="2022-03-16T11:54:37.000Z"
+                              th:text="${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></time>
                         </span>
 
                         <span class="article-meta">
                             <span class="article-meta-separator">|</span>
                             <i class="fas fa-inbox"></i>
-                            <a class="article-meta__categories" th:href="@{/categories/(typeIds=${article.typeIds})}" th:text="${article.types}"></a>
+                            <a class="article-meta__categories" th:href="@{/categories/(typeIds=${article.typeIds})}"
+                               th:text="${article.types}"></a>
                         </span>
 
                     </div>

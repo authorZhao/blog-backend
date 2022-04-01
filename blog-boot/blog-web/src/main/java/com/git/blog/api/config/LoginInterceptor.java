@@ -31,9 +31,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        AuthTheadLocal.set(18L);
-        if(true)return true;
-
         if(BooleanUtils.isFalse(sysProperties.getNeedLogin())){
             return super.preHandle(request,response,handler);
         }
