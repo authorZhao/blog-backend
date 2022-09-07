@@ -51,6 +51,8 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/categories/**",
                         "/archives/**",
                         "/butterfly/**",
+                        "/shici/**",
+                        "/poetry/**",
                         "/svg/**"
                 );
         //registry.addInterceptor(new TraceIdInterceptor()).addPathPatterns("/**");

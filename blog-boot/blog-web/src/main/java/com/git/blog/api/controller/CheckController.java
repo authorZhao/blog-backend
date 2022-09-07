@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,13 @@ public class CheckController {
     @ApiOperation(value = "版本检查")
     @GetMapping("/version")
     public String version(){
-        return "2021-03-03";
+        return "2022-09-27";
+    }
+
+    @ApiOperation(value = "版本检查")
+    @GetMapping("/check/{key}")
+    public String version(@PathVariable("key")String key){
+        return environment.getProperty(key);
     }
 
 }

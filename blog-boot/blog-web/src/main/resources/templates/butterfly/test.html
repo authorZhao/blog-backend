@@ -1,0 +1,569 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Marked in the browser</title>
+</head>
+<body>
+<div id="content"></div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight@0.2.4/lib/vendor/highlight.js/styles/idea.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.5.0/lib/index.min.js"></script>-->
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.5.0/styles/github-dark.css">-->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.5.0/styles/github-dark-dimmed.css">
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/highlight.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/src/highlightjs-line-numbers.min.js"></script>
+<script>
+    var md = '\n' +
+        'springMVC执行过程\n' +
+        '\n' +
+        '![img](https://img-blog.csdnimg.cn/img_convert/e4384fd92cca608ee11c237b92477dc2.png)\n' +
+        '\n' +
+        '```java\n' +
+        'org.apache.catalina.core.StandardWrapperValve#invoke\n' +
+        '\n' +
+        '    \n' +
+        'ApplicationFilterChain filterChain =\n' +
+        '                ApplicationFilterFactory.createFilterChain(request, wrapper, servlet);\n' +
+        '\n' +
+        'filterChain.doFilter\n' +
+        '                            (request.getRequest(), response.getResponse());\n' +
+        '\n' +
+        '\n' +
+        'org.apache.catalina.core.ApplicationFilterChain#internalDoFilter\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```java\n' +
+        '    private void internalDoFilter(ServletRequest request,\n' +
+        '                                  ServletResponse response)\n' +
+        '        throws IOException, ServletException {\n' +
+        '\n' +
+        '        // 这里的FilterChain对象对每个路径单独创建\n' +
+        '        if (pos < n) {\n' +
+        '            //获取当前filter并使下标++\n' +
+        '            ApplicationFilterConfig filterConfig = filters[pos++];\n' +
+        '            try {\n' +
+        '                Filter filter = filterConfig.getFilter();\n' +
+        '\n' +
+        '                if (request.isAsyncSupported() && "false".equalsIgnoreCase(\n' +
+        '                        filterConfig.getFilterDef().getAsyncSupported())) {\n' +
+        '                    request.setAttribute(Globals.ASYNC_SUPPORTED_ATTR, Boolean.FALSE);\n' +
+        '                }\n' +
+        '                if( Globals.IS_SECURITY_ENABLED ) {\n' +
+        '                    final ServletRequest req = request;\n' +
+        '                    final ServletResponse res = response;\n' +
+        '                    Principal principal =\n' +
+        '                        ((HttpServletRequest) req).getUserPrincipal();\n' +
+        '\n' +
+        '                    Object[] args = new Object[]{req, res, this};\n' +
+        '                    SecurityUtil.doAsPrivilege ("doFilter", filter, classType, args, principal);\n' +
+        '                } else {\n' +
+        '                    //执行用户自定义的doFilter\n' +
+        '                    filter.doFilter(request, response, this);\n' +
+        '                }\n' +
+        '            } catch (IOException | ServletException | RuntimeException e) {\n' +
+        '                throw e;\n' +
+        '            } catch (Throwable e) {\n' +
+        '                e = ExceptionUtils.unwrapInvocationTargetException(e);\n' +
+        '                ExceptionUtils.handleThrowable(e);\n' +
+        '                throw new ServletException(sm.getString("filterChain.filter"), e);\n' +
+        '            }\n' +
+        '            return;\n' +
+        '        }\n' +
+        '\n' +
+        '        // We fell off the end of the chain -- call the servlet instance\n' +
+        '        try {\n' +
+        '            if (ApplicationDispatcher.WRAP_SAME_OBJECT) {\n' +
+        '                lastServicedRequest.set(request);\n' +
+        '                lastServicedResponse.set(response);\n' +
+        '            }\n' +
+        '\n' +
+        '            if (request.isAsyncSupported() && !servletSupportsAsync) {\n' +
+        '                request.setAttribute(Globals.ASYNC_SUPPORTED_ATTR,\n' +
+        '                        Boolean.FALSE);\n' +
+        '            }\n' +
+        '            // Use potentially wrapped request from this point\n' +
+        '            if ((request instanceof HttpServletRequest) &&\n' +
+        '                    (response instanceof HttpServletResponse) &&\n' +
+        '                    Globals.IS_SECURITY_ENABLED ) {\n' +
+        '                final ServletRequest req = request;\n' +
+        '                final ServletResponse res = response;\n' +
+        '                Principal principal =\n' +
+        '                    ((HttpServletRequest) req).getUserPrincipal();\n' +
+        '                Object[] args = new Object[]{req, res};\n' +
+        '                SecurityUtil.doAsPrivilege("service",\n' +
+        '                                           servlet,\n' +
+        '                                           classTypeUsedInService,\n' +
+        '                                           args,\n' +
+        '                                           principal);\n' +
+        '            } else {\n' +
+        '                //servlet的service方法\n' +
+        '                servlet.service(request, response);\n' +
+        '            }\n' +
+        '        } catch (IOException | ServletException | RuntimeException e) {\n' +
+        '            throw e;\n' +
+        '        } catch (Throwable e) {\n' +
+        '            e = ExceptionUtils.unwrapInvocationTargetException(e);\n' +
+        '            ExceptionUtils.handleThrowable(e);\n' +
+        '            throw new ServletException(sm.getString("filterChain.servlet"), e);\n' +
+        '        } finally {\n' +
+        '            if (ApplicationDispatcher.WRAP_SAME_OBJECT) {\n' +
+        '                lastServicedRequest.set(null);\n' +
+        '                lastServicedResponse.set(null);\n' +
+        '            }\n' +
+        '        }\n' +
+        '    }\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        'OncePerRequestFilter的doFilter\n' +
+        '\n' +
+        '```java\n' +
+        '\n' +
+        '@Override\n' +
+        '\tpublic final void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)\n' +
+        '\t\t\tthrows ServletException, IOException {\n' +
+        '\n' +
+        '\t\tif (!(request instanceof HttpServletRequest) || !(response instanceof HttpServletResponse)) {\n' +
+        '\t\t\tthrow new ServletException("OncePerRequestFilter just supports HTTP requests");\n' +
+        '\t\t}\n' +
+        '\t\tHttpServletRequest httpRequest = (HttpServletRequest) request;\n' +
+        '\t\tHttpServletResponse httpResponse = (HttpServletResponse) response;\n' +
+        '\n' +
+        '\t\tString alreadyFilteredAttributeName = getAlreadyFilteredAttributeName();\n' +
+        '        //判断是否已经执行过,在request里面设置一个值判断\n' +
+        '\t\tboolean hasAlreadyFilteredAttribute = request.getAttribute(alreadyFilteredAttributeName) != null;\n' +
+        '\t\t//判断\n' +
+        '\t\tif (skipDispatch(httpRequest) || shouldNotFilter(httpRequest)) {\n' +
+        '\n' +
+        '\t\t\t// Proceed without invoking this filter...\n' +
+        '\t\t\tfilterChain.doFilter(request, response);\n' +
+        '\t\t}\n' +
+        '\t\telse if (hasAlreadyFilteredAttribute) {\n' +
+        '\n' +
+        '\t\t\tif (DispatcherType.ERROR.equals(request.getDispatcherType())) {\n' +
+        '\t\t\t\tdoFilterNestedErrorDispatch(httpRequest, httpResponse, filterChain);\n' +
+        '\t\t\t\treturn;\n' +
+        '\t\t\t}\n' +
+        '\n' +
+        '\t\t\t// Proceed without invoking this filter...\n' +
+        '\t\t\tfilterChain.doFilter(request, response);\n' +
+        '\t\t}\n' +
+        '\t\telse {\n' +
+        '\t\t\t// Do invoke this filter...\n' +
+        '\t\t\trequest.setAttribute(alreadyFilteredAttributeName, Boolean.TRUE);\n' +
+        '\t\t\ttry {\n' +
+        '\t\t\t\tdoFilterInternal(httpRequest, httpResponse, filterChain);\n' +
+        '\t\t\t}\n' +
+        '\t\t\tfinally {\n' +
+        '\t\t\t\t// Remove the "already filtered" request attribute for this request.\n' +
+        '\t\t\t\trequest.removeAttribute(alreadyFilteredAttributeName);\n' +
+        '\t\t\t}\n' +
+        '\t\t}\n' +
+        '\t}\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        'servlet的doService方法\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```java\n' +
+        '//org.springframework.web.servlet.FrameworkServlet#processRequest\n' +
+        'protected final void processRequest(HttpServletRequest request, HttpServletResponse response)\n' +
+        '\t\t\tthrows ServletException, IOException {\n' +
+        '\n' +
+        '\t\tlong startTime = System.currentTimeMillis();\n' +
+        '\t\tThrowable failureCause = null;\n' +
+        '\n' +
+        '\t\tLocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();\n' +
+        '\t\tLocaleContext localeContext = buildLocaleContext(request);\n' +
+        '\n' +
+        '\t\tRequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();\n' +
+        '\t\tServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);\n' +
+        '\n' +
+        '\t\tWebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);\n' +
+        '\t\tasyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());\n' +
+        '\n' +
+        '\t\tinitContextHolders(request, localeContext, requestAttributes);\n' +
+        '\n' +
+        '\t\ttry {\n' +
+        '            //最终到了\n' +
+        '            //org.springframework.web.servlet.DispatcherServlet#doService\n' +
+        '            //到了doDispatch\n' +
+        '\t\t\tdoService(request, response);\n' +
+        '\t\t}\n' +
+        '\t\tcatch (ServletException | IOException ex) {\n' +
+        '\t\t\tfailureCause = ex;\n' +
+        '\t\t\tthrow ex;\n' +
+        '\t\t}\n' +
+        '\t\tcatch (Throwable ex) {\n' +
+        '\t\t\tfailureCause = ex;\n' +
+        '\t\t\tthrow new NestedServletException("Request processing failed", ex);\n' +
+        '\t\t}\n' +
+        '\n' +
+        '\t\tfinally {\n' +
+        '\t\t\tresetContextHolders(request, previousLocaleContext, previousAttributes);\n' +
+        '\t\t\tif (requestAttributes != null) {\n' +
+        '\t\t\t\trequestAttributes.requestCompleted();\n' +
+        '\t\t\t}\n' +
+        '\t\t\tlogResult(request, response, failureCause, asyncManager);\n' +
+        '\t\t\tpublishRequestHandledEvent(request, response, startTime, failureCause);\n' +
+        '\t\t}\n' +
+        '\t}\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        'org.springframework.web.servlet.DispatcherServlet#doDispatch\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```java\n' +
+        '\n' +
+        'protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {\n' +
+        '\t\tHttpServletRequest processedRequest = request;\n' +
+        '\t\tHandlerExecutionChain mappedHandler = null;\n' +
+        '\t\tboolean multipartRequestParsed = false;\n' +
+        '\n' +
+        '\t\tWebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);\n' +
+        '\n' +
+        '\t\ttry {\n' +
+        '\t\t\tModelAndView mv = null;\n' +
+        '\t\t\tException dispatchException = null;\n' +
+        '\n' +
+        '\t\t\ttry {\n' +
+        '                //检查是否是Multipart\n' +
+        '\t\t\t\tprocessedRequest = checkMultipart(request);\n' +
+        '\t\t\t\tmultipartRequestParsed = (processedRequest != request);\n' +
+        '\n' +
+        '\t\t\t\t// Determine handler for the current request.\n' +
+        '                //获取handler，根据路径，得到就是controller里面的方法，\n' +
+        '                //HandlerExecutionChain里面有controller的方法，参数类型，返回类型，还有interceptors\n' +
+        '\t\t\t\tmappedHandler = getHandler(processedRequest);\n' +
+        '\t\t\t\tif (mappedHandler == null) {\n' +
+        '\t\t\t\t\tnoHandlerFound(processedRequest, response);\n' +
+        '\t\t\t\t\treturn;\n' +
+        '\t\t\t\t}\n' +
+        '\n' +
+        '\t\t\t\t// Determine handler adapter for the current request.\n' +
+        '                //决定使用哪一种转换器，有几种，本文是RequestMappingHandlerAdapter\n' +
+        '\t\t\t\tHandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());\n' +
+        '\n' +
+        '\t\t\t\t// Process last-modified header, if supported by the handler.\n' +
+        '\t\t\t\tString method = request.getMethod();\n' +
+        '\t\t\t\tboolean isGet = "GET".equals(method);\n' +
+        '\t\t\t\tif (isGet || "HEAD".equals(method)) {\n' +
+        '\t\t\t\t\tlong lastModified = ha.getLastModified(request, mappedHandler.getHandler());\n' +
+        '\t\t\t\t\tif (new ServletWebRequest(request, response).checkNotModified(lastModified) && isGet) {\n' +
+        '\t\t\t\t\t\treturn;\n' +
+        '\t\t\t\t\t}\n' +
+        '\t\t\t\t}\n' +
+        '\t\t\t\t//循环执行拦截器的preHandle返回false直接失败\n' +
+        '\t\t\t\tif (!mappedHandler.applyPreHandle(processedRequest, response)) {\n' +
+        '\t\t\t\t\treturn;\n' +
+        '\t\t\t\t}\n' +
+        '\n' +
+        '\t\t\t\t// Actually invoke the handler.\n' +
+        '                //真正执行controller方法的\n' +
+        '\t\t\t\tmv = ha.handle(processedRequest, response, mappedHandler.getHandler());\n' +
+        '\t\t\t\t\n' +
+        '                //如果开启异步，直接返回(这里return之前会执行finally里面的代码)，比如返回callable，或者其他异步等(异步里面的方法还未执行)\n' +
+        '\t\t\t\tif (asyncManager.isConcurrentHandlingStarted()) {\n' +
+        '\t\t\t\t\treturn;\n' +
+        '\t\t\t\t}\n' +
+        '\n' +
+        '\t\t\t\tapplyDefaultViewName(processedRequest, mv);\n' +
+        '                //执行拦截器的postHandle\n' +
+        '\t\t\t\tmappedHandler.applyPostHandle(processedRequest, response, mv);\n' +
+        '\t\t\t}\n' +
+        '\t\t\tcatch (Exception ex) {\n' +
+        '\t\t\t\tdispatchException = ex;\n' +
+        '\t\t\t}\n' +
+        '\t\t\tcatch (Throwable err) {\n' +
+        '\t\t\t\t// As of 4.3, we\'re processing Errors thrown from handler methods as well,\n' +
+        '\t\t\t\t// making them available for @ExceptionHandler methods and other scenarios.\n' +
+        '\t\t\t\tdispatchException = new NestedServletException("Handler dispatch failed", err);\n' +
+        '\t\t\t}\n' +
+        '            //执行拦截器的afterCompletion\n' +
+        '\t\t\tprocessDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);\n' +
+        '\t\t}\n' +
+        '\t\tcatch (Exception ex) {\n' +
+        '\t\t\ttriggerAfterCompletion(processedRequest, response, mappedHandler, ex);\n' +
+        '\t\t}\n' +
+        '\t\tcatch (Throwable err) {\n' +
+        '\t\t\ttriggerAfterCompletion(processedRequest, response, mappedHandler,\n' +
+        '\t\t\t\t\tnew NestedServletException("Handler processing failed", err));\n' +
+        '\t\t}\n' +
+        '\t\tfinally {\n' +
+        '\t\t\tif (asyncManager.isConcurrentHandlingStarted()) {\n' +
+        '\t\t\t\t// Instead of postHandle and afterCompletion\n' +
+        '\t\t\t\tif (mappedHandler != null) {\n' +
+        '                    //是异步，且有拦截器，执行，此时异步方法一般没有执行完org.springframework.web.servlet.AsyncHandlerInterceptor#afterConcurrentHandlingStarted\n' +
+        '\t\t\t\t\tmappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);\n' +
+        '\t\t\t\t}\n' +
+        '\t\t\t}\n' +
+        '\t\t\telse {\n' +
+        '\t\t\t\t// Clean up any resources used by a multipart request.\n' +
+        '\t\t\t\tif (multipartRequestParsed) {\n' +
+        '\t\t\t\t\tcleanupMultipart(processedRequest);\n' +
+        '\t\t\t\t}\n' +
+        '\t\t\t}\n' +
+        '\t\t}\n' +
+        '\t}\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```\n' +
+        '拦截器执行顺序\n' +
+        '\n' +
+        '正常流程：\n' +
+        'preHandle->controller方法->postHandle->afterCompletion\n' +
+        '\n' +
+        '异步流程\n' +
+        'preHandle->afterConcurrentHandlingStarted->\n' +
+        'controller方法在另一线程\n' +
+        'preHandle->postHandle->afterCompletion\n' +
+        '\n' +
+        '\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '执行controller里面的方法\n' +
+        '\n' +
+        '```\n' +
+        'mv = ha.handle(processedRequest, response, mappedHandler.getHandler());\n' +
+        '\n' +
+        '//Spring默认处理适配器为:RequestMappingHandlerAdapter(注解处理器适配器)\n' +
+        '\n' +
+        'invokeHandlerMethod(request, response, handlerMethod);\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```java\n' +
+        '{\n' +
+        '\n' +
+        '\t\tServletWebRequest webRequest = new ServletWebRequest(request, response);\n' +
+        '\t\ttry {\n' +
+        '\t\t\tWebDataBinderFactory binderFactory = getDataBinderFactory(handlerMethod);\n' +
+        '\t\t\tModelFactory modelFactory = getModelFactory(handlerMethod, binderFactory);\n' +
+        '\t\t\t\n' +
+        '            //找到controller的方法\n' +
+        '\t\t\tServletInvocableHandlerMethod invocableMethod = createInvocableHandlerMethod(handlerMethod);\n' +
+        '\t\t\tif (this.argumentResolvers != null) {\n' +
+        '\t\t\t\tinvocableMethod.setHandlerMethodArgumentResolvers(this.argumentResolvers);\n' +
+        '\t\t\t}\n' +
+        '\t\t\tif (this.returnValueHandlers != null) {\n' +
+        '\t\t\t\tinvocableMethod.setHandlerMethodReturnValueHandlers(this.returnValueHandlers);\n' +
+        '\t\t\t}\n' +
+        '\t\t\tinvocableMethod.setDataBinderFactory(binderFactory);\n' +
+        '\t\t\tinvocableMethod.setParameterNameDiscoverer(this.parameterNameDiscoverer);\n' +
+        '\t\t\t\n' +
+        '            //\n' +
+        '\t\t\tModelAndViewContainer mavContainer = new ModelAndViewContainer();\n' +
+        '\t\t\tmavContainer.addAllAttributes(RequestContextUtils.getInputFlashMap(request));\n' +
+        '\t\t\tmodelFactory.initModel(webRequest, mavContainer, invocableMethod);\n' +
+        '\t\t\tmavContainer.setIgnoreDefaultModelOnRedirect(this.ignoreDefaultModelOnRedirect);\n' +
+        '\t\t\t\n' +
+        '            //异步请求设置，设置超时时间、执行器、注册异步拦截器等\n' +
+        '\t\t\tAsyncWebRequest asyncWebRequest = WebAsyncUtils.createAsyncWebRequest(request, response);\n' +
+        '\t\t\tasyncWebRequest.setTimeout(this.asyncRequestTimeout);\n' +
+        '\n' +
+        '\t\t\tWebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);\n' +
+        '\t\t\tasyncManager.setTaskExecutor(this.taskExecutor);\n' +
+        '\t\t\tasyncManager.setAsyncWebRequest(asyncWebRequest);\n' +
+        '\t\t\tasyncManager.registerCallableInterceptors(this.callableInterceptors);\n' +
+        '\t\t\tasyncManager.registerDeferredResultInterceptors(this.deferredResultInterceptors);\n' +
+        '\t\t\t//判断异步请求是否已经返回结果\n' +
+        '\t\t\tif (asyncManager.hasConcurrentResult()) {\n' +
+        '                //直接拿到异步的结果\n' +
+        '\t\t\t\tObject result = asyncManager.getConcurrentResult();\n' +
+        '\t\t\t\tmavContainer = (ModelAndViewContainer) asyncManager.getConcurrentResultContext()[0];\n' +
+        '\t\t\t\tasyncManager.clearConcurrentResult();\n' +
+        '\t\t\t\tLogFormatUtils.traceDebug(logger, traceOn -> {\n' +
+        '\t\t\t\t\tString formatted = LogFormatUtils.formatValue(result, !traceOn);\n' +
+        '\t\t\t\t\treturn "Resume with async result [" + formatted + "]";\n' +
+        '\t\t\t\t});\n' +
+        '\t\t\t\tinvocableMethod = invocableMethod.wrapConcurrentResult(result);\n' +
+        '\t\t\t}\n' +
+        '\t\t\t\n' +
+        '            //真正执行controller方法\n' +
+        '\t\t\tinvocableMethod.invokeAndHandle(webRequest, mavContainer);\n' +
+        '            //开启异步直接返回\n' +
+        '\t\t\tif (asyncManager.isConcurrentHandlingStarted()) {\n' +
+        '\t\t\t\treturn null;\n' +
+        '\t\t\t}\n' +
+        '\n' +
+        '\t\t\treturn getModelAndView(mavContainer, modelFactory, webRequest);\n' +
+        '\t\t}\n' +
+        '\t\tfinally {\n' +
+        '            //资源清理\n' +
+        '\t\t\twebRequest.requestCompleted();\n' +
+        '\t\t}\n' +
+        '\t}\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```java\n' +
+        'public void invokeAndHandle(ServletWebRequest webRequest, ModelAndViewContainer mavContainer,\n' +
+        '\t\t\tObject... providedArgs) throws Exception {\n' +
+        '\t\t//执行controller的方法\n' +
+        '\t\tObject returnValue = invokeForRequest(webRequest, mavContainer, providedArgs);\n' +
+        '\t\tsetResponseStatus(webRequest);\n' +
+        '\n' +
+        '\t\tif (returnValue == null) {\n' +
+        '\t\t\tif (isRequestNotModified(webRequest) || getResponseStatus() != null || mavContainer.isRequestHandled()) {\n' +
+        '\t\t\t\tdisableContentCachingIfNecessary(webRequest);\n' +
+        '\t\t\t\tmavContainer.setRequestHandled(true);\n' +
+        '\t\t\t\treturn;\n' +
+        '\t\t\t}\n' +
+        '\t\t}\n' +
+        '\t\telse if (StringUtils.hasText(getResponseStatusReason())) {\n' +
+        '\t\t\tmavContainer.setRequestHandled(true);\n' +
+        '\t\t\treturn;\n' +
+        '\t\t}\n' +
+        '\n' +
+        '\t\tmavContainer.setRequestHandled(false);\n' +
+        '\t\tAssert.state(this.returnValueHandlers != null, "No return value handlers");\n' +
+        '\t\ttry {\n' +
+        '            //处理方法的返回结果，普通的直接忽略，看一下异步的\n' +
+        '\t\t\tthis.returnValueHandlers.handleReturnValue(\n' +
+        '\t\t\t\t\treturnValue, getReturnValueType(returnValue), mavContainer, webRequest);\n' +
+        '\t\t}\n' +
+        '\t\tcatch (Exception ex) {\n' +
+        '\t\t\tif (logger.isTraceEnabled()) {\n' +
+        '\t\t\t\tlogger.trace(formatErrorForReturnValue(returnValue), ex);\n' +
+        '\t\t\t}\n' +
+        '\t\t\tthrow ex;\n' +
+        '\t\t}\n' +
+        '\t\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```\n' +
+        'RequestResponseBodyMethodProcessor 普通json的结果处理器\n' +
+        'CallableMethodReturnValueHandler   Callable类型的\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '```java\n' +
+        '\n' +
+        'public void startCallableProcessing(final WebAsyncTask<?> webAsyncTask, Object... processingContext)\n' +
+        '\t\t\tthrows Exception {\n' +
+        '\n' +
+        '\t\tAssert.notNull(webAsyncTask, "WebAsyncTask must not be null");\n' +
+        '\t\tAssert.state(this.asyncWebRequest != null, "AsyncWebRequest must not be null");\n' +
+        '\t\t//超时时间设置\n' +
+        '\t\tLong timeout = webAsyncTask.getTimeout();\n' +
+        '\t\tif (timeout != null) {\n' +
+        '\t\t\tthis.asyncWebRequest.setTimeout(timeout);\n' +
+        '\t\t}\n' +
+        '    \t\n' +
+        '\t\t//执行器设置\n' +
+        '\t\tAsyncTaskExecutor executor = webAsyncTask.getExecutor();\n' +
+        '\t\tif (executor != null) {\n' +
+        '\t\t\tthis.taskExecutor = executor;\n' +
+        '\t\t}\n' +
+        '\t\telse {\n' +
+        '\t\t\tlogExecutorWarning();\n' +
+        '\t\t}\n' +
+        '\t\t\n' +
+        '    \t//添加拦截器，CallableProcessingInterceptor不是一般的拦截器\n' +
+        '\t\tList<CallableProcessingInterceptor> interceptors = new ArrayList<>();\n' +
+        '\t\tinterceptors.add(webAsyncTask.getInterceptor());\n' +
+        '\t\tinterceptors.addAll(this.callableInterceptors.values());\n' +
+        '\t\tinterceptors.add(timeoutCallableInterceptor);\n' +
+        '\t\t\n' +
+        '\t\tfinal Callable<?> callable = webAsyncTask.getCallable();\n' +
+        '\t\tfinal CallableInterceptorChain interceptorChain = new CallableInterceptorChain(interceptors);\n' +
+        '\t\t\n' +
+        '    //超时处理\n' +
+        '\t\tthis.asyncWebRequest.addTimeoutHandler(() -> {\n' +
+        '\t\t\tif (logger.isDebugEnabled()) {\n' +
+        '\t\t\t\tlogger.debug("Async request timeout for " + formatRequestUri());\n' +
+        '\t\t\t}\n' +
+        '\t\t\tObject result = interceptorChain.triggerAfterTimeout(this.asyncWebRequest, callable);\n' +
+        '\t\t\tif (result != CallableProcessingInterceptor.RESULT_NONE) {\n' +
+        '\t\t\t\tsetConcurrentResultAndDispatch(result);\n' +
+        '\t\t\t}\n' +
+        '\t\t});\n' +
+        '\t\t\n' +
+        '    //异常处理\n' +
+        '\t\tthis.asyncWebRequest.addErrorHandler(ex -> {\n' +
+        '\t\t\tif (!this.errorHandlingInProgress) {\n' +
+        '\t\t\t\tif (logger.isDebugEnabled()) {\n' +
+        '\t\t\t\t\tlogger.debug("Async request error for " + formatRequestUri() + ": " + ex);\n' +
+        '\t\t\t\t}\n' +
+        '\t\t\t\tObject result = interceptorChain.triggerAfterError(this.asyncWebRequest, callable, ex);\n' +
+        '\t\t\t\tresult = (result != CallableProcessingInterceptor.RESULT_NONE ? result : ex);\n' +
+        '\t\t\t\tsetConcurrentResultAndDispatch(result);\n' +
+        '\t\t\t}\n' +
+        '\t\t});\n' +
+        '\t\t\n' +
+        '    //执行逻辑\n' +
+        '\t\tthis.asyncWebRequest.addCompletionHandler(() ->\n' +
+        '\t\t\t\tinterceptorChain.triggerAfterCompletion(this.asyncWebRequest, callable));\n' +
+        '\t\t//执行CallableProcessingInterceptor#preProcess\n' +
+        '\t\tinterceptorChain.applyBeforeConcurrentHandling(this.asyncWebRequest, callable);\n' +
+        '    \n' +
+        '    \t//重点，开启异步的请求，需要tomcat支持\n' +
+        '\t\tstartAsyncProcessing(processingContext);\n' +
+        '    //执行逻辑\n' +
+        '\t\ttry {\n' +
+        '\t\t\tFuture<?> future = this.taskExecutor.submit(() -> {\n' +
+        '\t\t\t\tObject result = null;\n' +
+        '\t\t\t\ttry {\n' +
+        '                    //拦截器的方法CallableProcessingInterceptor#preProcess\n' +
+        '\t\t\t\t\tinterceptorChain.applyPreProcess(this.asyncWebRequest, callable);\n' +
+        '                    //执行异步方法\n' +
+        '\t\t\t\t\tresult = callable.call();\n' +
+        '\t\t\t\t}\n' +
+        '\t\t\t\tcatch (Throwable ex) {\n' +
+        '\t\t\t\t\tresult = ex;\n' +
+        '\t\t\t\t}\n' +
+        '\t\t\t\tfinally {\n' +
+        '                    //CallableProcessingInterceptor#postProcess\n' +
+        '\t\t\t\t\tresult = interceptorChain.applyPostProcess(this.asyncWebRequest, callable, result);\n' +
+        '\t\t\t\t}\n' +
+        '                //重点，执行disPatch()方法，后面会在执行一遍DisPatchServlet的doServce方法，所有拦截器会再一次执行，此时异步请求已经有了返回结果，直接返回\n' +
+        '\t\t\t\tsetConcurrentResultAndDispatch(result);\n' +
+        '\t\t\t});\n' +
+        '\t\t\tinterceptorChain.setTaskFuture(future);\n' +
+        '\t\t}\n' +
+        '\t\tcatch (RejectedExecutionException ex) {\n' +
+        '\t\t\tObject result = interceptorChain.applyPostProcess(this.asyncWebRequest, callable, ex);\n' +
+        '\t\t\tsetConcurrentResultAndDispatch(result);\n' +
+        '\t\t\tthrow ex;\n' +
+        '\t\t}\n' +
+        '\t}\n' +
+        '\n' +
+        '```\n' +
+        '\n';
+    document.getElementById('content').innerHTML =
+        marked.parse(md);
+    hljs.highlightAll();
+    hljs.initLineNumbersOnLoad();
+</script>
+</body>
+</html>
