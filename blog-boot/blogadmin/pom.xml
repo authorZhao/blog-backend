@@ -44,17 +44,6 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!-- swagger界面 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -87,12 +76,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.14.0</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.10</version>
+                <configuration>
+                    <!--<mainClass>com.git.nativeweb.NativeWebApplication</mainClass>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
