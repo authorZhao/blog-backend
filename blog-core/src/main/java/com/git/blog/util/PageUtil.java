@@ -55,6 +55,6 @@ public class PageUtil {
         } else {
             url = url.substring(7);
         }
-        return replaceHtmlImageDomain(url, content);
+        return replaceHtmlImageDomain(content, url);
     }
 }
