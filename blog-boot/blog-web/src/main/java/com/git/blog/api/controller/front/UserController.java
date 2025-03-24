@@ -1,8 +1,7 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.front;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.ApiResponse;
-import com.git.blog.commmon.ApiResult;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.config.Permission;
 import com.git.blog.dto.menu.MenuTreeVO;
@@ -10,12 +9,12 @@ import com.git.blog.dto.user.*;
 import com.git.blog.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 

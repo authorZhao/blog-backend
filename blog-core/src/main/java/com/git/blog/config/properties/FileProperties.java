@@ -14,7 +14,7 @@ public class FileProperties {
 	/**
 	 * win上传路径
 	 */
-	private String windowUpLoadPathPrefix = "E:/upLoad/fileDownLoad/";
+	private String windowUpLoadPathPrefix = "E:/upLoad/fileUpLoad/";
 
 	/**
 	 * linux上传路径

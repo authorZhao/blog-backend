@@ -16,7 +16,7 @@ public class WxWorkWebHookResponse implements Serializable {
     private String errmsg;
 
     public boolean isOk() {
-        return new Integer(0).equals(errcode);
+        return errcode != null && errcode == 0;
     }
 
 }

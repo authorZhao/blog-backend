@@ -1,7 +1,9 @@
 package com.git.blog.api.config;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.*;
+
+import jakarta.servlet.*;
+import jakarta.servlet.FilterConfig;
+
 import java.io.IOException;
 
 /**
@@ -17,7 +19,6 @@ public class XssFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.front;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

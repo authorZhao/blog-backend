@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.front;
 
 import com.git.blog.commmon.ApiResponse;
 import com.git.blog.service.BlogFileService;

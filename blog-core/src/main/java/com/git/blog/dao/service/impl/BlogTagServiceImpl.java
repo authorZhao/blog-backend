@@ -59,7 +59,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
     @Override
     public Integer countByUid(Long uid) {
         if(uid==null)return 0;
-        return count(new LambdaQueryWrapper<BlogTag>().eq(BlogTag::getCreateUid,uid));
+        return ((int) count(new LambdaQueryWrapper<BlogTag>().eq(BlogTag::getCreateUid, uid)));
     }
 
 

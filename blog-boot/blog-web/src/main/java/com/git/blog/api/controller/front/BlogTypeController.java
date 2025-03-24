@@ -1,16 +1,13 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.front;
 
 import com.git.blog.commmon.ApiResponse;
-import com.git.blog.dto.blog.BlogTagDTO;
 import com.git.blog.dto.blog.BlogTypeDTO;
-import com.git.blog.service.BlogFileService;
 import com.git.blog.service.TagTypeService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 

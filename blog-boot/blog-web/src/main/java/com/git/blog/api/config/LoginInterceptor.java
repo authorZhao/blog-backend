@@ -1,6 +1,6 @@
 package com.git.blog.api.config;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.git.blog.commmon.ApiResponse;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.config.properties.SysProperties;
@@ -10,10 +10,11 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.HandlerInterceptor;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -23,7 +24,7 @@ import java.io.PrintWriter;
  */
 @Slf4j
 @Configuration
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class LoginInterceptor implements HandlerInterceptor {
 
     private static final String token = "token";
     @Autowired
@@ -32,7 +33,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(BooleanUtils.isFalse(sysProperties.getNeedLogin())){
-            return super.preHandle(request,response,handler);
+            return true;
         }
         String header = request.getHeader(token);
         JwtUtil.TokenEntity tokenEntity = null;
@@ -49,13 +50,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return unauthorizedException(response);
         }
         AuthTheadLocal.set(Long.valueOf(uid));
-        return super.preHandle(request,response,handler);
+        return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         AuthTheadLocal.remove();
-        super.afterCompletion(request,response,handler,ex);
     }
 
 

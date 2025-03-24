@@ -1,6 +1,6 @@
 package com.git.blog.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.git.blog.config.properties.SysProperties;
 import com.git.blog.dao.service.BlogArticleDaoService;
 import com.git.blog.dao.service.BlogTagDaoService;

@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.ApiResponse;
@@ -9,12 +9,12 @@ import com.git.blog.dto.user.*;
 import com.git.blog.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,11 +27,11 @@ import java.util.List;
  * @since 2020-12-24
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/admin/user")
 @Slf4j
 @Api(tags = "[用户UserController]")
 @Permission
-public class UserController {
+public class AdminUserController {
 
     @Autowired
     private UserService userService;

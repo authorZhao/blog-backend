@@ -1,6 +1,6 @@
 package com.git.blog.api.aspect;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.config.Permission;
 import com.git.blog.exception.ApiUnauthorizedException;
@@ -40,7 +40,7 @@ public class AuthOperationLog {
     @Autowired
     private UserService userService;
 
-    @Pointcut("within(com.git.blog.api.controller.UserController || com.git.blog.api.controller.MenuController || com.git.blog.api.controller.RoleController)")
+    @Pointcut("within(com.git.blog.api.controller.admin.UserController || com.git.blog.api.controller.admin.MenuController || com.git.blog.api.controller.admin.RoleController)")
     public void pointCut(){
 
     }

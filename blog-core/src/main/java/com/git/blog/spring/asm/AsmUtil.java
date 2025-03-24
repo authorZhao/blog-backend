@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
  */
 public class AsmUtil {
 
-
+    private static final int JAVA_VERSION = 64;
     /**
      * clazz
      * @param clazz com.qdz.proxy.asm.test1.User
@@ -111,6 +111,14 @@ public class AsmUtil {
             return "D";
         }
         throw new IllegalStateException("Type: " + type.getCanonicalName() + " is not a primitive type");
+    }
+
+    public static int javaVersion(){
+        //Runtime.Version version = Runtime.version();
+        //Integer first = version.version().getFirst();
+        // 17 61
+        //return first - 17 + 61;
+        return JAVA_VERSION;
     }
 }
 

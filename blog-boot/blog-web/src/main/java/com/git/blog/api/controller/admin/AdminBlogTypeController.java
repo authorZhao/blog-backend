@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.admin;
 
 import com.git.blog.commmon.ApiResponse;
 import com.git.blog.dto.blog.BlogTypeDTO;
@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 
@@ -15,8 +15,8 @@ import java.util.List;
  * @author authorZhao
  */
 @RestController
-@RequestMapping("/api/type")
-public class BlogTypeController {
+@RequestMapping("/api/admin/type")
+public class AdminBlogTypeController {
 
     @Autowired
     private TagTypeService tagTypeService;

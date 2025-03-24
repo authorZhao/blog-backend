@@ -1,18 +1,16 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.ApiResponse;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.dto.blog.*;
 import com.git.blog.service.ArticleService;
-import com.git.blog.service.BlogFileService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 
@@ -20,9 +18,9 @@ import java.util.List;
  * @author authorZhao
  */
 @RestController
-@RequestMapping("/api/article")
+@RequestMapping("/api/admin/article")
 @Validated
-public class BlogArticleController {
+public class AdminBlogArticleController {
 
     @Autowired
     private ArticleService articleService;

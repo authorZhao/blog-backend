@@ -1,6 +1,6 @@
 package com.git.blog.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.git.blog.commmon.CommonString;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.dao.service.BlogArticleDaoService;

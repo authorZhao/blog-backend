@@ -1,7 +1,6 @@
 package com.git.blog.dto.notice;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
+import com.alibaba.fastjson2.JSON;
 import com.git.blog.commmon.enums.NoticeTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -121,7 +120,7 @@ public class WxWorkWebHookRequest extends NoticeRequest{
     }
 
     public static WxWorkWebHookRequest news(String title, String description, String url, String picurl) {
-        return news(Lists.newArrayList(new Articles(title, description, url, picurl)));
+        return news(List.of(new Articles(title, description, url, picurl)));
     }
 
 

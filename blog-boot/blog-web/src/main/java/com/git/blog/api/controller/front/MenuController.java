@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.front;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.ApiResponse;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 

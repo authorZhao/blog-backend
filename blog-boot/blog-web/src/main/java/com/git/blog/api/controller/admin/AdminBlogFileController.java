@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.admin;
 
 import com.git.blog.commmon.ApiResponse;
 import com.git.blog.service.BlogFileService;
@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author authorZhao
  */
 @RestController
-@RequestMapping("/api/file")
-public class BlogFileController {
+@RequestMapping("/api/admin/file")
+public class AdminBlogFileController {
 
     @Autowired
     private BlogFileService fileService;

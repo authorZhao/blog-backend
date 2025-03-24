@@ -219,7 +219,7 @@ public class MenuServiceImpl implements MenuService {
         if(byId==null){
             return false;
         }
-        int count = menuDaoService.count(new LambdaQueryWrapper<Menu>().eq(
+        int count = (int) menuDaoService.count(new LambdaQueryWrapper<Menu>().eq(
                 Menu::getMenuParentId, byId.getMenuId()));
         if(count>0){
             throw new BizException("该菜单存在子节点，不能直接删除");

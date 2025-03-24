@@ -1,10 +1,11 @@
 package com.git.blog.spring.asm;
 
 
-import net.bytebuddy.jar.asm.AnnotationVisitor;
-import net.bytebuddy.jar.asm.ClassWriter;
-import net.bytebuddy.jar.asm.MethodVisitor;
-import net.bytebuddy.jar.asm.Opcodes;
+
+import org.springframework.asm.AnnotationVisitor;
+import org.springframework.asm.ClassWriter;
+import org.springframework.asm.MethodVisitor;
+import org.springframework.asm.Opcodes;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static org.springframework.asm.ClassWriter.COMPUTE_MAXS;
 
 /**
  * @author authorZhao
@@ -28,10 +31,10 @@ public class BeanMapperDump implements Opcodes {
         if(!clazz.isInterface()){
             throw new RuntimeException("clazz:"+ name +" is not interface");
         }
-        ClassWriter cw = new ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        ClassWriter cw = new ClassWriter(COMPUTE_MAXS);
         String fileName = name.substring(name.lastIndexOf(".")+1)+"ImplProxy";
         String sourceName = fileName+".java";
-        cw.visit(52, ACC_PUBLIC + ACC_SUPER, AsmUtil.generateorClassName(clazz), null, "java/lang/Object", new String[]{AsmUtil.getClassSlashName(clazz)});
+        cw.visit(AsmUtil.javaVersion(), ACC_PUBLIC + ACC_SUPER, AsmUtil.generateorClassName(clazz), null, "java/lang/Object", new String[]{AsmUtil.getClassSlashName(clazz)});
 
         cw.visitSource(sourceName, null);
         //不关闭继承的方法

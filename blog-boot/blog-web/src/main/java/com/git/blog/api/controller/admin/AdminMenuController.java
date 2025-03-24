@@ -1,4 +1,4 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.git.blog.commmon.ApiResponse;
@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,12 +30,12 @@ import java.util.Objects;
  * @since 2020-12-24
  */
 @RestController
-@RequestMapping("/api/menu")
+@RequestMapping("/api/admin/menu")
 @Slf4j
 @Api(tags = "[菜单MenuController]")
 @Validated
 @Permission(message = "没有菜单相关权限")
-public class MenuController {
+public class AdminMenuController {
 
     @Autowired
     private MenuService menuService;

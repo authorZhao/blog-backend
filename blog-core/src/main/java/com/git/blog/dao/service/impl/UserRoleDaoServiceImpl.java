@@ -30,7 +30,7 @@ public class UserRoleDaoServiceImpl extends ServiceImpl<UserRoleMapper, UserRole
         if(uid==null || roleId==null) {
             return false;
         }
-        int count = count(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUid,uid).eq(UserRole::getRoleId,roleId));
+        int count = (int) count(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUid,uid).eq(UserRole::getRoleId,roleId));
         return count>0;
     }
 }

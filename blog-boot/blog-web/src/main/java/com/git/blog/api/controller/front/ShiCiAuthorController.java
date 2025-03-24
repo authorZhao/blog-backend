@@ -1,6 +1,5 @@
-package com.git.blog.api.controller;
+package com.git.blog.api.controller.front;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-09-05
  */
 @RestController
-@RequestMapping("/shi-ci-song-ci")
-public class ShiCiSongCiController {
+@RequestMapping("/shi-ci-author")
+public class ShiCiAuthorController {
 
 
 

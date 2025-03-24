@@ -1,7 +1,6 @@
 package com.git.blog.dto.notice;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
+import com.alibaba.fastjson2.JSON;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
@@ -124,7 +123,7 @@ public class DingTalkDTO {
     }
 
     public static void main(String[] args) {
-        Map textParam = getTextParam("test,我就是我, @15671689973 是不一样的烟火", Lists.newArrayList("15671689973", "15671689974"), null);
+        Map textParam = getTextParam("test,我就是我, @15671689973 是不一样的烟火", List.of("15671689973", "15671689974"), null);
 
         String s = JSON.toJSONString(textParam);
 

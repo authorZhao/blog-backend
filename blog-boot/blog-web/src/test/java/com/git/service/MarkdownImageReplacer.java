@@ -1,19 +1,8 @@
-package com.git.blog.util;
-
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.git.blog.commmon.PageParam;
+package com.git.service;
 
 import java.util.regex.Pattern;
 
-/**
- * @author authorZhao
- * @since 2020-12-25
- */
-public class PageUtil {
-
-    public static Page convert(PageParam pageParam) {
-        return new Page(pageParam.getCurrent(), pageParam.getPageSize());
-    }
+public class MarkdownImageReplacer {
 
     public static String replaceImageDomain(String markdownContent, String newDomain) {
         // 定义正则表达式（注意 Java 的字符串转义）
@@ -26,6 +15,28 @@ public class PageUtil {
         return Pattern.compile(regex)
                 .matcher(markdownContent)
                 .replaceAll(replacement);
+    }
+
+    public static void main(String[] args) {
+        // 示例用法
+        String originalMarkdown =
+                "![image.png](http://opadmin.pingyuanren.top/file/png/2024/841614b5e3b149a1a8febbc3b8aafb40.png)\n" +
+                        "![logo](https://opadmin.pingyuanren.top/images/logo.png)";
+
+        String newDomain = "new.example.com";
+
+        String updated = replaceImageDomain(originalMarkdown, newDomain);
+        System.out.println(updated);
+
+
+        String originalHtml =
+                "<img src=\"http://opadmin.pingyuanren.top/file/png/1.png\">\n" +
+                        "<img src=\\\"https://opadmin.pingyuanren.top/images/logo.jpg\\\">\n" +
+                        "<IMG SRC='http://opadmin.pingyuanren.top/avatar.png'>";
+
+        String updated2 = replaceHtmlImageDomain(originalHtml, newDomain);
+
+        System.out.println("替换结果：\n" + updated2);
     }
 
 
@@ -44,17 +55,5 @@ public class PageUtil {
         return Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
                 .matcher(htmlContent)
                 .replaceAll(replacement);
-    }
-
-    public static String replaceImg(String url, String content) {
-        if (!url.startsWith("http://localhost:")) {
-            return content;
-        }
-        if (url.endsWith("/")) {
-            url = url.substring(7, url.length() - 1);
-        } else {
-            url = url.substring(7);
-        }
-        return replaceHtmlImageDomain(url, content);
     }
 }

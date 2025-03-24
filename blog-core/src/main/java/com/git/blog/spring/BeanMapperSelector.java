@@ -25,7 +25,7 @@ public class BeanMapperSelector implements ImportBeanDefinitionRegistrar {
     /**
      * 需要扫描的类
      */
-    private Class[] classes;
+    private Class<?>[] classes;
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
@@ -33,7 +33,7 @@ public class BeanMapperSelector implements ImportBeanDefinitionRegistrar {
         Map<String, Object> annotationAttributes = importingClassMetadata.getAnnotationAttributes(BeanMapperScan.class.getName());
         this.basePackage = (String[])annotationAttributes.get("basePackages");
 
-        this.classes = (Class[])annotationAttributes.get("classes");
+        this.classes = (Class<?>[])annotationAttributes.get("classes");
         BeanMapperScanner mapperScanner = new BeanMapperScanner(registry);
         log.info("开始扫描包：{}",basePackage);
         if(basePackage!=null&&basePackage.length>0) {
@@ -45,7 +45,7 @@ public class BeanMapperSelector implements ImportBeanDefinitionRegistrar {
             return;
         }
 
-        for (Class clzz:classes){
+        for (var clzz:classes){
             if(!clzz.isInterface())continue;
             if(!registry.containsBeanDefinition(clzz.getSimpleName())){
                 try {

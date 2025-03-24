@@ -1,5 +1,7 @@
 package com.git.service;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.git.blog.dao.service.BlogTagDaoService;
 import com.git.blog.dao.service.BlogTypeDaoService;
 import com.git.blog.dao.service.ShiCiAuthorService;
@@ -8,7 +10,6 @@ import com.git.blog.dto.blog.BlogArticleTagsDTO;
 import com.git.blog.dto.blog.BlogArticleTypesDTO;
 import com.git.blog.entity.ShiCiAuthor;
 import com.git.blog.entity.ShiCiSongCi;
-import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +45,13 @@ public class SqlTest {
 
     @Test
     public void test1(){
-        List<BlogArticleTypesDTO> typesByArticleIds = blogTypeDaoService.getTypesByArticleIds(Lists.newArrayList(1L, 2L, 3L));
+        List<BlogArticleTypesDTO> typesByArticleIds = blogTypeDaoService.getTypesByArticleIds(List.of(1L, 2L, 3L));
         System.out.println("typesByArticleIds = " + typesByArticleIds);
     }
 
     @Test
     public void test2(){
-        List<BlogArticleTagsDTO> typesByArticleIds = blogTagDaoService.getTagsByArticleIds(Lists.newArrayList(1L, 2L, 3L));
+        List<BlogArticleTagsDTO> typesByArticleIds = blogTagDaoService.getTagsByArticleIds(List.of(1L, 2L, 3L));
         System.out.println("typesByArticleIds = " + typesByArticleIds);
     }
 

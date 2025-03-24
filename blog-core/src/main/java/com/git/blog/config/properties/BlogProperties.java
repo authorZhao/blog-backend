@@ -1,5 +1,6 @@
 package com.git.blog.config.properties;
 
+import com.alibaba.fastjson2.JSON;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
@@ -139,7 +140,6 @@ public class BlogProperties implements Cloneable{
             configSite.put("postUpdate","2022-03-28 03:44:06");
         }
         if(CollectionUtils.isEmpty(copyrightMapList)){
-            JSON.pa
             copyrightMapList = JSON.parseArray(COPYRIGHT_MAP_LIST_STRING,Map.class);
         }
         if(icpStr==null){

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- logback日志级别 TRACE < DEBUG < INFO < WARN < ERROR -->
+<!-- scan：定期扫描配置文件是否变化，变化了自动加载；scanPeriod：扫描间隔时间；debug：为false不输出logback框架本身的日志 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 定义参数常量 -->
+    <!-- 日志级别，小于这个级别的日志不被记录 -->
+    <property name="log.level" value="INFO"/>
+    <!-- 日志文件保留多长时间，单位：天 -->
+    <property name="log.maxHistory" value="30"/>
+    <!-- 日志文件存放的根路径 -->
+    <property name="log.filePath" value="${logback.logs.path:-.}/logs"/>
+    <!-- 日志内容的显示格式 -->
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+
+    <!-- 控制台输出设置 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEBUG -->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${log.filePath}/debug.log</file>
+        <!-- 日志记录按天保存，就是每天都会有一个日志文件保存当天的所有日志 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log.filePath}/debug/debug.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 文件保存多久 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- INFO -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${log.filePath}/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log.filePath}/info/info.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- INFO -->
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${log.filePath}/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log.filePath}/warn/warn.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ERROR -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${log.filePath}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>${log.filePath}/error/error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 创建logger对象
+        name：关注哪个包下的日志信息；level：仅记录哪个级别及以上的日志
+        additivity：为true时会将root里的appender-ref也加入进来，level不基于root -->
+    <!--<logger name="mmo" level="${log.level}" additivity="true">
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+    </logger>-->
+
+    <logger name="com.cube" level="INFO" additivity="true"/>
+    <logger name="com.cube.core.config.InitConfiguration" level="INFO" additivity="true" />
+    <!-- root：所有logger的父类 -->
+    <root level="INFO">
+        <!--<appender-ref ref="DEBUG"/>-->
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+    <!-- 忽略自身 -->
+    <logger name="ch.qos.logback" level="OFF"/>
+    <logger name="org.mongodb" level="OFF"/>
+    <logger name="org.quartz" level="OFF"/>
+</configuration>

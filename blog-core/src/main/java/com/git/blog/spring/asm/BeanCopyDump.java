@@ -2,9 +2,10 @@ package com.git.blog.spring.asm;
 
 
 
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+
+import org.springframework.asm.ClassWriter;
+import org.springframework.asm.MethodVisitor;
+import org.springframework.asm.Opcodes;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -35,8 +36,7 @@ public class BeanCopyDump implements Opcodes {
 
         String key = sourceType.getName()+returnType.getName();
         String str = key.replace(".","");
-
-        cw.visit(55, ACC_PUBLIC + ACC_SUPER, AsmUtil.generateorClassName(clazz,str), null, "java/lang/Object", new String[]{AsmUtil.getClassSlashName(clazz)});
+        cw.visit(AsmUtil.javaVersion(), ACC_PUBLIC + ACC_SUPER, AsmUtil.generateorClassName(clazz,str), null, "java/lang/Object", new String[]{AsmUtil.getClassSlashName(clazz)});
         cw.visitSource(sourceName, null);
 
         Method[] declaredMethods = clazz.getDeclaredMethods();

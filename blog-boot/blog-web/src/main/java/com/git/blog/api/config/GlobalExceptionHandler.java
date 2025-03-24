@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
 /**
@@ -35,26 +35,26 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = BizException.class)
-    public ApiResponse bizExceptionHandler(HttpServletRequest req, BizException e){
+    public ApiResponse<?> bizExceptionHandler(HttpServletRequest req, BizException e){
         log.error("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
         return ApiResponse.error(e.getMessage());
     }
 
     @ExceptionHandler(value = ErrorException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiResponse errorExceptionHandler(HttpServletRequest req, BizException e){
+    public ApiResponse<?> errorExceptionHandler(HttpServletRequest req, BizException e){
         log.error("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
         return ApiResponse.error(e.getMessage());
     }
 
     @ExceptionHandler(value = SqlException.class)
-    public ApiResponse sqlExceptionHandler(HttpServletRequest req, SqlException e){
+    public ApiResponse<?> sqlExceptionHandler(HttpServletRequest req, SqlException e){
         log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
         return ApiResponse.error(e.getMessage());
     }
 
     @ExceptionHandler(value = ApiUnauthorizedException.class)
-    public ApiResponse apiExceptionHandler(HttpServletRequest req, ApiUnauthorizedException e){
+    public ApiResponse<?> apiExceptionHandler(HttpServletRequest req, ApiUnauthorizedException e){
         log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
         return ApiResponse.error(e.getMessage());
     }
@@ -62,14 +62,14 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(value = Exception.class)
-    public ApiResponse exceptionHandler(HttpServletRequest req, Exception e){
+    public ApiResponse<?> exceptionHandler(HttpServletRequest req, Exception e){
         log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURI(),e);
         String errorMsg = "系统异常，请联系管理员或者稍后重试";
-        if(e instanceof BindException){
-            errorMsg = ((BindException) e).getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining());
-        }else if(e instanceof MethodArgumentNotValidException){
+        if(e instanceof MethodArgumentNotValidException){
             errorMsg = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining());
-        }else if(e instanceof DuplicateKeyException){
+        }else if(e instanceof BindException) {
+            errorMsg = ((BindException) e).getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining());
+        } else if(e instanceof DuplicateKeyException){
             errorMsg = "数据重复异常";
         }
 
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = Throwable.class)
-    public ApiResponse throwableHandler(HttpServletRequest req, Throwable e){
+    public ApiResponse<?> throwableHandler(HttpServletRequest req, Throwable e){
         log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURI(),e);
         return ApiResponse.error("系统异常，请联系管理员或者稍后重试");
     }

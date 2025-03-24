@@ -56,7 +56,7 @@ public class UserDaoServiceImpl extends ServiceImpl<UserMapper, User> implements
             return false;
         }
 
-        int count = userRoleDaoService.count(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUid,userId).eq(UserRole::getRoleId,role.getRoleId()));
+        int count = (int) userRoleDaoService.count(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUid,userId).eq(UserRole::getRoleId,role.getRoleId()));
         return count>0;
     }
 
