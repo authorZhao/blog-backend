@@ -2,6 +2,7 @@ package com.git.blog.exception;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * sql异常
  * @author chenjin
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SqlException extends RuntimeException implements Serializable {
 

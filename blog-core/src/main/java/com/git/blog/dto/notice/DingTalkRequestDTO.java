@@ -5,6 +5,7 @@ import com.git.blog.commmon.enums.NoticeTypeEnum;
 import com.git.blog.util.SignUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.*;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @author authorZhao
  * @since 2021-03-11
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 public class DingTalkRequestDTO extends NoticeRequest{

@@ -2,6 +2,7 @@ package com.git.blog.exception;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * 401授权失败业务异常，过期或者没有权限
  * @author chenjin
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ApiUnauthorizedException extends RuntimeException implements Serializable {
 

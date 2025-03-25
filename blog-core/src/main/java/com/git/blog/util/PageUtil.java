@@ -47,9 +47,6 @@ public class PageUtil {
     }
 
     public static String replaceImg(String url, String content) {
-        if (!url.startsWith("http://localhost:")) {
-            return content;
-        }
         if (url.endsWith("/")) {
             url = url.substring(7, url.length() - 1);
         } else {

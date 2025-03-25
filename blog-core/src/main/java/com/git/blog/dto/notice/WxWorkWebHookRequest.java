@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.git.blog.commmon.enums.NoticeTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author 林源
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
 @NoArgsConstructor
