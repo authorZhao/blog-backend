@@ -87,7 +87,7 @@ open:
       jen-kins-username: ${JENKINS_USERNAME:authorZhao}
       jen-kins-password: ${JENKINS_PASSWORD:xxxxxx}
       imgHost: http://opadmin.pingyuanren.top/
-      hexoPath: /usr/local/src/hexo
+      #hexoPath: /usr/local/src/hexo
     wx:
       wx-app-id:
       wx-app-secret:

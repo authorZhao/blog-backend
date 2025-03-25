@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh_CN" data-theme="light">
 
-<head th:replace="butterfly/includes/head.html::head-head"></head>
+<head th:replace="~{butterfly/includes/head.html::head-head}"></head>
 <body>
 
 <div id="sidebar">
     <div id="menu-mask"></div>
     <!-- 左边标签 -->
-    <div id="sidebar-menus" th:replace="butterfly/includes/head.html::head-sidebar-menus"></div>
+    <div id="sidebar-menus" th:replace="~{butterfly/includes/head.html::head-sidebar-menus}"></div>
 </div>
 
 <div class="page" id="body-wrap">
@@ -16,7 +16,7 @@
         <nav id="nav"><span id="blog_name"><a id="site-name" href="/">平原人的博客</a></span>
 
             <div id="menus">
-                <div id="menus_items" th:replace="butterfly/includes/head.html::head-menus_items"></div>
+                <div id="menus_items" th:replace="~{butterfly/includes/head.html::head-menus_items}"></div>
                 <div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div>
             </div>
         </nav>
@@ -53,38 +53,38 @@
 
         <div class="aside-content" id="aside-content">
             <!-- 菜单 -->
-            <div th:replace="butterfly/includes/left.html::left-card-info"></div>
+            <div th:replace="~{butterfly/includes/left.html::left-card-info}"></div>
 
             <!-- 公告 -->
-            <div th:replace="butterfly/includes/left.html::left-card-announcement"></div>
+            <div th:replace="~{butterfly/includes/left.html::left-card-announcement}"></div>
 
             <div class="sticky_layout">
 
                 <!-- 最新文章 -->
-                <div th:replace="butterfly/includes/left.html::left-card-recent-post"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-recent-post}"></div>
                 <!-- 分类 -->
-                <div th:replace="butterfly/includes/left.html::left-card-categories"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-categories}"></div>
                 <!-- 标签 -->
-                <div th:replace="butterfly/includes/left.html::left-card-tags"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-tags}"></div>
                 <!-- 归档 -->
-                <div th:replace="butterfly/includes/left.html::left-card-archives"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-archives}"></div>
                 <!-- 网站资讯 -->
-                <div th:replace="butterfly/includes/left.html::left-card-webinfo"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-webinfo}"></div>
             </div>
         </div>
     </main>
 
 
     <!-- footer -->
-    <div th:replace="butterfly/includes/foot.html::foot-footer"></div>
+    <div th:replace="~{butterfly/includes/foot.html::foot-footer}"></div>
 </div>
 
 
 <!-- 右边小工具 -->
-<div th:replace="butterfly/includes/right-side.html"></div>
+<div th:replace="~{butterfly/includes/right-side.html}"></div>
 
 <!-- 底部js -->
-<div th:replace="butterfly/includes/foot.html::foot-under_page"></div>
+<div th:replace="~{butterfly/includes/foot.html::foot-under_page}"></div>
 </body>
 
 </html>

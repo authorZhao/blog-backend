@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh_CN" data-theme="light" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="butterfly/includes/head.html::head-head"></head>
+<head th:replace="~{butterfly/includes/head.html::head-head}"></head>
 <body>
 <div id="sidebar">
     <div id="menu-mask"></div>
     <!-- 左边标签 -->
-    <div id="sidebar-menus" th:replace="butterfly/includes/head.html::head-sidebar-menus"></div>
+    <div id="sidebar-menus" th:replace="~{butterfly/includes/head.html::head-sidebar-menus}"></div>
 </div>
 
 <div class="page" id="body-wrap">
@@ -94,53 +94,53 @@
             </div>
 
             <nav id="pagination" th:if="${totalPage==1}">
-                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-1"></div>
+                <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-1}"></div>
             </nav>
             <nav id="pagination" th:if="${totalPage==2}">
-                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-2"></div>
+                <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-2}"></div>
             </nav>
             <nav id="pagination" th:if="${totalPage==3}">
-                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-3"></div>
+                <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-3}"></div>
             </nav>
             <nav id="pagination" th:if="${totalPage>=4}">
-                <div class="pagination" th:replace="butterfly/includes/page.html::page-total-4"></div>
+                <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-4}"></div>
             </nav>
         </div>
 
         <!-- 左边侧边栏 -->
         <div class="aside-content" id="aside-content">
             <!-- 菜单 -->
-            <div th:replace="butterfly/includes/left.html::left-card-info"></div>
+            <div th:replace="~{butterfly/includes/left.html::left-card-info}"></div>
 
             <!-- 公告 -->
-            <div th:replace="butterfly/includes/left.html::left-card-announcement"></div>
+            <div th:replace="~{butterfly/includes/left.html::left-card-announcement}"></div>
 
             <div class="sticky_layout">
 
                 <!-- 最新文章 -->
-                <div th:replace="butterfly/includes/left.html::left-card-recent-post"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-recent-post}"></div>
                 <!-- 分类 -->
-                <div th:replace="butterfly/includes/left.html::left-card-categories"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-categories}"></div>
                 <!-- 标签 -->
-                <div th:replace="butterfly/includes/left.html::left-card-tags"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-tags}"></div>
                 <!-- 归档 -->
-                <div th:replace="butterfly/includes/left.html::left-card-archives"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-archives}"></div>
                 <!-- 网站资讯 -->
-                <div th:replace="butterfly/includes/left.html::left-card-webinfo"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-webinfo}"></div>
             </div>
         </div>
     </main>
 
     <!-- footer -->
-    <div th:replace="butterfly/includes/foot.html::foot-footer"></div>
+    <div th:replace="~{butterfly/includes/foot.html::foot-footer}"></div>
 </div>
 
 <!-- 右边小工具 -->
 
-<div th:replace="butterfly/includes/right-side.html"></div>
+<div th:replace="~{butterfly/includes/right-side.html}"></div>
 
 
-<div th:replace="butterfly/includes/foot.html::foot-under_page"></div>
+<div th:replace="~{butterfly/includes/foot.html::foot-under_page}"></div>
 </body>
 
 </html>

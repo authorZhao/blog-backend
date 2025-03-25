@@ -5,13 +5,6 @@ spring:
   application:
     name: blogsadmin
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${env.mysql.username:root}
-    password: ${env.mysql.password:root}
-    url: jdbc:mysql://${env.mysql.host:127.0.0.1}:${env.mysql.port:3306}/${ENV_MYSQL_DATABASE:open_blog}?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
-    hikari:
-      connection-init-sql: SET NAMES utf8mb4;SET time_zone = '+8:00';
   jackson:
     date-format: 'yyyy-MM-dd HH:mm:ss'
     time-zone: GMT+8
@@ -23,7 +16,7 @@ spring:
       max-file-size: 50MB #单个文件大小
       max-request-size: 100MB #总文件大小
   profiles:
-    active: ${ENV_PROFILES_ACTIVE:prod}
+    active: ${ENV_PROFILES_ACTIVE:dev}
   thymeleaf:
     cache: false
     mode: html
@@ -35,8 +28,13 @@ management:
         include: health,info,env
 logging:
     # 指定配置文件，默认classpath:logback-spring.xml输出到控制台
-  config: ${ENV_LOG_CONFIG:classpath:logback-spring.xml}
+  config: ${ENV_LOG_CONFIG:classpath:logback-spring-dev.xml}
 
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
 
 open:
   blog:
@@ -69,8 +67,6 @@ feign:
   okhttp:
     enabled: false
 
-
-
 ---
 #prod环境
 env:
@@ -79,7 +75,9 @@ env:
     password: dev
 
 spring:
-  profiles: prod
+  config:
+    activate:
+      on-profile: prod
 
 open:
   blog:

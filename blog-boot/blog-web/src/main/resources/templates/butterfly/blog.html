@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh_CN" data-theme="light">
 
-<head th:replace="butterfly/includes/head.html::head-head"></head>
+<head th:replace="~{butterfly/includes/head.html::head-head}"></head>
 <head th:if="${articleMap==null}">
     <!-- blog独有 -->
     <meta name="keywords" content="spring在学习,mysql">
@@ -24,7 +24,7 @@
 <div id="sidebar">
     <div id="menu-mask"></div>
     <!-- 左边标签 -->
-    <div id="sidebar-menus" th:replace="butterfly/includes/head.html::head-sidebar-menus"></div>
+    <div id="sidebar-menus" th:replace="~{butterfly/includes/head.html::head-sidebar-menus}"></div>
 </div>
 
 <div class="post" id="body-wrap">
@@ -35,7 +35,7 @@
                 <a id="site-name" href="/">平原人的博客</a>
             </span>
             <div id="menus">
-                <div class="menus_items" th:replace="butterfly/includes/head.html::head-menus_items"></div>
+                <div class="menus_items" th:replace="~{butterfly/includes/head.html::head-menus_items}"></div>
                 <div id="toggle-menu">
                     <a class="site-page">
                         <i class="fas fa-bars fa-fw"></i>
@@ -81,38 +81,38 @@
         <div id="post">
             <article class="post-content" id="article-container" th:utext="${articleMap!=null?articleMap.articleHtml:article.content}">
             </article>
-            <div class="post-copyright" th:replace="butterfly/includes/foot.html::foot-post-copyright">
+            <div class="post-copyright" th:replace="~{butterfly/includes/foot.html::foot-post-copyright}">
             </div>
-            <div class="tag_share" th:replace="butterfly/includes/foot.html::foot-tag_share">
+            <div class="tag_share" th:replace="~{butterfly/includes/foot.html::foot-tag_share}">
             </div>
-            <nav class="pagination-post" id="pagination" th:replace="butterfly/includes/foot.html::foot-pagination-post">
+            <nav class="pagination-post" id="pagination" th:replace="~{butterfly/includes/foot.html::foot-pagination-post}">
             </nav>
         </div>
         <!-- 左边侧边栏 -->
         <div class="aside-content" id="aside-content" th:if="${head.showAsideContent}">
             <!-- 菜单 -->
-            <div th:replace="butterfly/includes/left.html::left-card-info"></div>
+            <div th:replace="~{butterfly/includes/left.html::left-card-info}"></div>
 
             <!-- 公告 -->
-            <div th:replace="butterfly/includes/left.html::left-card-announcement"></div>
+            <div th:replace="~{butterfly/includes/left.html::left-card-announcement}"></div>
 
             <div class="sticky_layout" th:if="${head.showStickyLayout}">
                 <div class="card-widget" id="card-toc" th:if="${articleMap!=null && articleMap.tocHtml!=null}" th:utext="${articleMap.tocHtml}"></div>
                 <!-- 最新文章 -->
-                <div th:replace="butterfly/includes/left.html::left-card-recent-post"></div>
+                <div th:replace="~{butterfly/includes/left.html::left-card-recent-post}"></div>
             </div>
         </div>
     </main>
 
     <!-- footer -->
-    <div th:replace="butterfly/includes/foot.html::foot-footer"></div>
+    <div th:replace="~{butterfly/includes/foot.html::foot-footer}"></div>
 </div>
 
 <!-- 右边小工具 -->
 
-<div th:replace="butterfly/includes/right-side.html"></div>
+<div th:replace="~{butterfly/includes/right-side.html}"></div>
 
-<div th:replace="butterfly/includes/foot.html::foot-under_page"></div>
+<div th:replace="~{butterfly/includes/foot.html::foot-under_page}"></div>
 
 </body>
 

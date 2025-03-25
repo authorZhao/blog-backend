@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<head th:replace="shici/templates/head.html::head-sidebar-menus"></head>
+<head th:replace="~{shici/templates/head.html::head-sidebar-menus}"></head>
 
 <body>
 <div id="main" style="background-image: url('/poetry/assets/images/ying.png'); ">
@@ -37,16 +37,16 @@
                     </div>
 
                     <nav id="pagination" th:if="${totalPage==1}">
-                        <div class="pagination" th:replace="butterfly/includes/page.html::page-total-1"></div>
+                        <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-1}"></div>
                     </nav>
                     <nav id="pagination" th:if="${totalPage==2}">
-                        <div class="pagination" th:replace="butterfly/includes/page.html::page-total-2"></div>
+                        <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-2}"></div>
                     </nav>
                     <nav id="pagination" th:if="${totalPage==3}">
-                        <div class="pagination" th:replace="butterfly/includes/page.html::page-total-3"></div>
+                        <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-3}"></div>
                     </nav>
                     <nav id="pagination" th:if="${totalPage>=4}">
-                        <div class="pagination" th:replace="butterfly/includes/page.html::page-total-4"></div>
+                        <div class="pagination" th:replace="~{butterfly/includes/page.html::page-total-4}"></div>
                     </nav>
                 </div>
             </div>
