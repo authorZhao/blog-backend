@@ -183,18 +183,24 @@ public class HexoServiceImpl implements HexoService {
             }
             e.printStackTrace();
             return null;
+        }finally {
+            if(process!=null) {
+                process.destroy();
+            }
         }
     }
 
 
-    public static String TEMPLATE = "---\n" +
-            "title: %s\n" +
-            "date: %s\n" +
-            "updated: %s\n" +
-            "comments: true\n" +
-            "%s\n" +
-            "%s\n" +
-            "description: %s\n" +
-            "cover: %s\n" +
-            "---\n\n";
+    public static String TEMPLATE = """
+            ---
+            title: %s
+            date: %s
+            updated: %s
+            comments: true
+            %s
+            %s
+            description: %s
+            cover: %s
+            ---
+            """;
 }

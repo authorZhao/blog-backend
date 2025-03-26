@@ -41,12 +41,28 @@
 </div>
 
 <!-- 公告 -->
-<div class="card-widget card-announcement" th:fragment="left-card-announcement">
+<div class="card-widget card-announcement" th:fragment="left-card-announcement-old">
     <div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div>
     <div class="announcement_content"><span
             style="display:inline-block;text-indent:2em">平原人的，内容均为个人技术总结和思考，如有笔误，欢迎留言指正。</span>
         <div style="width:100%;margin-top:10px;text-align:center"><img
                 src="https://img-blog.csdnimg.cn/9bdfd92aaa20416dbe88a36056af22c7.png?"
+                data-lazy-src="https://cdn.jsdelivr.net/gh/jitwxs/cdn/blog/configuration/wechat_qrcode.png"
+                style="max-width:200px;margin:0 auto" class="entered loaded" data-ll-status="loaded"></div>
+    </div>
+</div>
+
+<!--<img th:src="${article.coverImage}" onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo" /></a>-->
+<!-- 公告 -->
+<div class="card-widget card-announcement" th:fragment="left-card-announcement">
+    <div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div>
+    <div class="announcement_content">
+        <!--/*@thymesVar id="head" type="com.git.blog.config.properties.BlogProperties"*/-->
+        <span style="display:inline-block;text-indent:2em" th:text="${head.noticeText}">平原人的，内容均为个人技术总结和思考，如有笔误，欢迎留言指正。</span>
+
+        <div style="width:100%;margin-top:10px;text-align:center">
+
+            <img th:src="${head.noticeImg}"
                 data-lazy-src="https://cdn.jsdelivr.net/gh/jitwxs/cdn/blog/configuration/wechat_qrcode.png"
                 style="max-width:200px;margin:0 auto" class="entered loaded" data-ll-status="loaded"></div>
     </div>

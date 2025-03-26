@@ -36,7 +36,6 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/data-check/**",
                         "/csrf",
                         "/favicon.ico",
-                        "/swagger-ui.html",
                         "/**/",
                         "/api/ok",
                         "/api/check/**",

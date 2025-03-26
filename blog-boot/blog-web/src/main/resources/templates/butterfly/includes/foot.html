@@ -82,6 +82,7 @@
     <div class="js-pjax"></div>
 
     <!--data-id="7334007765" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-volume="0.4"-->
+    <!--/*@thymesVar id="head" type="Map"*/-->
     <div class="aplayer no-destroy"
          th:if="${head!=null && head.playerListMap!=null}"
          th:attr="data-id=${head.playerListMap.dataId?:'7334007765'},data-server=${head.playerListMap.dataServer?:'netease'},
