@@ -1,7 +1,9 @@
-
+<!--/*@thymesVar id="head" type="com.git.blog.config.properties.BlogProperties"*/-->
+<!--/*@thymesVar id="article" type="com.git.blog.dto.blog.BlogArticleDetailVO"*/-->
 <!-- footer -->
 <footer id="footer" th:fragment="foot-footer" style="background: linear-gradient( 135deg,">
     <div id="footer-wrap">
+
         <div class="copyright" th:text="${head.copyrightStr}"></div>
         <div class="footer_custom_text">
             <p th:if="${head!=null && head.icpStr!=null}">
@@ -25,7 +27,8 @@
 
 <div class="post-copyright" th:fragment="foot-post-copyright">
     <div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span
-            class="post-copyright-info"><a href="mailto:undefined" th:text="${article?.authorName}"></a></span></div>
+            class="post-copyright-info">
+            <a href="mailto:undefined" th:text="${article?.authorName}"></a></span></div>
     <div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span
             class="post-copyright-info">
         <a th:if="${article!=null && article.id!=null}" th:href="@{${head.host} +'/'+${article.id}}" th:text="${head.host} +'/'+ ${article.id}">
@@ -35,7 +38,7 @@
         <span class="post-copyright-meta">版权声明: </span>
         <span class="post-copyright-info">本博客所有文章除特别声明外，均采用
             <a th:href="${head.host}" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自
-            <a th:href="${head.host}" target="_blank">平原人的博客</a>！
+            <a th:href="${head.host}" target="_blank" th:text="${head.ogSiteName}"></a>！
         </span>
     </div>
 </div>

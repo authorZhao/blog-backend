@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh_CN" data-theme="light">
+<!--/*@thymesVar id="head" type="com.git.blog.config.properties.BlogProperties"*/-->
+<html lang="zh_CN" th:data-theme="${head?.dataTheme}?:'light'">
 
 <head th:replace="~{butterfly/includes/head.html::head-head}"></head>
 

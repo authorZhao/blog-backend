@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--/*@thymesVar id="head" type="com.git.blog.config.properties.BlogProperties"*/-->
-<html lang="zh_CN" th:data-theme="${head?.dataTheme}" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh_CN" th:data-theme="${head?.dataTheme}?:'light'" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{butterfly/includes/head.html::head-head}"></head>
 <body>

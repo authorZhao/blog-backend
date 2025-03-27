@@ -181,7 +181,7 @@ public class BlogProperties implements Cloneable {
     /**
      * 主题 支持 light和dark
      */
-    private String dataTheme = "light";
+    private String dataTheme = "dark";
 
     /**
      *
