@@ -23,7 +23,7 @@ public class BlogProperties implements Cloneable {
     /**
      * 标题
      */
-    private String title = "平原人的博客";
+    private String title = "平原人的随行笔记";
     /**
      * 作者
      */
@@ -43,7 +43,7 @@ public class BlogProperties implements Cloneable {
     /**
      * 作者
      */
-    private String ogTitle = "平原人的博客";
+    private String ogTitle = "平原人的随行笔记";
     /**
      * 作者
      */
@@ -51,7 +51,7 @@ public class BlogProperties implements Cloneable {
     /**
      * 作者
      */
-    private String ogSiteName = "平原人的博客";
+    private String ogSiteName = "平原人的随行笔记";
     /**
      * 作者
      */
@@ -174,7 +174,7 @@ public class BlogProperties implements Cloneable {
      */
     private Map playerListMap;
 
-    private String noticeText= "平原人的博客，内容均为个人技术总结和思考，如有笔误，欢迎留言指正。";
+    private String noticeText= "平原人的随行笔记，内容均为个人技术总结和思考，如有笔误，欢迎留言指正。";
 
     private String noticeImg = "https://jcdn.ganrobot.com/res/pic/CERTIFY/10019_401678_1677552716106_head.jpg";
 
@@ -195,7 +195,7 @@ public class BlogProperties implements Cloneable {
         }
         if (configSite == null) {
             configSite = new HashMap<>();
-            configSite.put("title", "平原人的博客");
+            configSite.put("title", ogSiteName);
             configSite.put("isPost", false);
             configSite.put("isHome", false);
             configSite.put("isHighlightShrink", false);
@@ -209,7 +209,7 @@ public class BlogProperties implements Cloneable {
             icpStr = "鄂ICP备2022003082号";
         }
         if (copyrightStr == null) {
-            copyrightStr = "©2020 - 2022 By 平原人";
+            copyrightStr = "©2019 - 2025 By 平原人";
         }
         if (playerListMap == null) {
             playerListMap = JSON.parseObject(PLAYER_LIST_MAP_STRING, Map.class);

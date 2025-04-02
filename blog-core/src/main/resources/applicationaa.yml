@@ -25,10 +25,16 @@ spring:
     active: ${ENV_PROFILES_ACTIVE:prod}
 #开发阶段使用
 management:
+  endpoint:
+    shutdown:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include: health,info,env
+        include: deregister,shutdown,info,health,status,beans,configprops,env,metrics,scheduledtasks
+      base-path: /act
+  server:
+    port: 36542
 logging:
   # 指定配置文件，默认classpath:logback-spring.xml输出到控制台
   config: ${ENV_LOG_CONFIG:classpath:logback-spring.xml}

@@ -15,7 +15,7 @@
 <div class="page" id="body-wrap">
     <header class="not-home-page" id="page-header"
             style="background-image: url('http://cn.bing.com/th?id=OHR.LanyonQuoit_ZH-CN6278576563_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp')">
-        <nav id="nav"><span id="blog_name"><a id="site-name" href="/">平原人的博客</a></span>
+        <nav id="nav"><span id="blog_name"><a id="site-name" href="/" th:text="${head.ogSiteName}">平原人的随行笔记</a></span>
 
             <div id="menus">
                 <div id="menus_items" th:replace="~{butterfly/includes/head.html::head-menus_items}"></div>

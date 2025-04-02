@@ -22,6 +22,7 @@ public class WebApplicationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("项目启动完成");
+        //IpUtil.init("city.free.ipdb");
         //初始化sql
         log.info("-------------------------初始化sql------------------------");
         //initSql();

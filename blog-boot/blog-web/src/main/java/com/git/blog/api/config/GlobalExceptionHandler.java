@@ -49,13 +49,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = SqlException.class)
     public ApiResponse<?> sqlExceptionHandler(HttpServletRequest req, SqlException e){
-        log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
+        log.error("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
         return ApiResponse.error(e.getMessage());
     }
 
     @ExceptionHandler(value = ApiUnauthorizedException.class)
     public ApiResponse<?> apiExceptionHandler(HttpServletRequest req, ApiUnauthorizedException e){
-        log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
+        log.error("发生业务异常！,请求url：{}，原因是：",req.getRequestURL(),e);
         return ApiResponse.error(e.getMessage());
     }
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ApiResponse<?> exceptionHandler(HttpServletRequest req, Exception e){
-        log.warn("发生业务异常！,请求url：{}，原因是：",req.getRequestURI(),e);
+        log.error("发生业务异常！,请求url：{}，原因是：",req.getRequestURI(),e);
         String errorMsg = "系统异常，请联系管理员或者稍后重试";
         if(e instanceof MethodArgumentNotValidException){
             errorMsg = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining());

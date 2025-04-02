@@ -201,3 +201,18 @@ CREATE TABLE `user_role`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE IF EXISTS `statistics_data`;
+CREATE TABLE `statistics_data` (
+                                   `id` bigint NOT NULL COMMENT '主键',
+                                   `day_time` int NOT NULL COMMENT '日期数字',
+                                   `total_visits` bigint NOT NULL DEFAULT '0' COMMENT '总访问量',
+                                   `day_visits` bigint NOT NULL DEFAULT '0' COMMENT '日访问量',
+                                   `day_visitors` bigint NOT NULL DEFAULT '0' COMMENT '日访问用户数',
+                                   `total_visitors` bigint NOT NULL DEFAULT '0' COMMENT '总访问用户数',
+                                   `blog_num` bigint NOT NULL DEFAULT '0' COMMENT '文章总数',
+                                   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                   `last_update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
+                                   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='统计表';

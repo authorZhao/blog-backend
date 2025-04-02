@@ -42,6 +42,7 @@
         <caffeine.version>3.2.0</caffeine.version>
         <jsoup>1.19.1</jsoup>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <spring.boot.validation>3.3.3</spring.boot.validation>
     </properties>
 
 
@@ -124,6 +125,12 @@
                 <groupId>jakarta.validation</groupId>
                 <artifactId>jakarta.validation-api</artifactId>
                 <version>${jakarta.validation-api}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>${spring.boot.validation}</version>
             </dependency>
 
             <!-- apache.commons util -->
