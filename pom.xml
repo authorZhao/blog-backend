@@ -148,7 +148,7 @@
 
             <dependency>
                 <groupId>commons-codec</groupId>
-                <artifactId>commons-code</artifactId>
+                <artifactId>commons-codec</artifactId>
                 <version>${commons-code}</version>
             </dependency>
 

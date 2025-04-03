@@ -5,6 +5,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Map;
  */
 @Data
 @Configuration
+@RefreshScope
 @ConfigurationProperties(prefix = "open.blog.head")
 public class BlogProperties implements Cloneable {
     /**
@@ -206,7 +208,7 @@ public class BlogProperties implements Cloneable {
             copyrightMapList = JSON.parseArray(COPYRIGHT_MAP_LIST_STRING, Map.class);
         }
         if (icpStr == null) {
-            icpStr = "鄂ICP备2022003082号";
+            icpStr = "鄂ICP备2025104336号-1";
         }
         if (copyrightStr == null) {
             copyrightStr = "©2019 - 2025 By 平原人";

@@ -1,6 +1,9 @@
 package com.git.blog.api.controller.front;
 
+import com.alibaba.fastjson2.JSON;
+import com.git.blog.config.properties.BlogProperties;
 import io.swagger.annotations.ApiOperation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CheckController {
     @Autowired
     private Environment environment;
+    @Autowired
+    private BlogProperties blogProperties;
 
     @ApiOperation(value = "健康检查")
     @GetMapping("/ok")
@@ -34,9 +39,15 @@ public class CheckController {
     }
 
     @ApiOperation(value = "版本检查")
-    @GetMapping("/check/{key}")
+    @GetMapping("/check/env/{key}")
     public String version(@PathVariable("key")String key){
         return environment.getProperty(key);
+    }
+
+    @ApiOperation(value = "版本检查")
+    @GetMapping("/check/config")
+    public String config(){
+        return JSON.toJSONString(blogProperties);
     }
 
 }

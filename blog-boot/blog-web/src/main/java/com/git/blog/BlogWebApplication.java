@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication(scanBasePackages = {"com.git.blog"} )
 @BeanMapperScan(basePackages = "com.git.blog.service.bean")
-@MapperScan("com.git.blog.dao.mapper")
 @EnableFeignClients(basePackages = "com.git.blog.feign")
 @EnableAsync
 public class BlogWebApplication {
