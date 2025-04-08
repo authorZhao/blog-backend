@@ -1,5 +1,8 @@
 spring:
   cloud:
+    refresh:
+      additional-property-sources-to-retain:
+        - 'applicationConfig: [file:/C:/Users/authorZhao/Desktop/工作文档/worknote/conf/pingyuanren.cn/application.yml] (document #0)'
     config:
       enabled: off
       discovery:

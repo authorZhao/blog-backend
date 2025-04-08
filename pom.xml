@@ -248,15 +248,15 @@
 
     <repositories>
 
-<!--        <repository>-->
-<!--            <id>central</id>-->
-<!--            <url>https://maven.aliyun.com/repository/central/</url>-->
-<!--        </repository>-->
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central/</url>
+        </repository>
 
-<!--        <repository>-->
-<!--            <id>public</id>-->
-<!--            <url>https://maven.aliyun.com/repository/public/</url>-->
-<!--        </repository>-->
+        <repository>
+            <id>public</id>
+            <url>https://maven.aliyun.com/repository/public/</url>
+        </repository>
     </repositories>
 
 </project>
