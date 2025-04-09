@@ -77,22 +77,23 @@ public class WebApplicationRunner implements CommandLineRunner {
 
 
     private void startFileMonitor(String... args) throws Exception {
-
         String s = Arrays.stream(args).filter(i -> i.contains("--spring.config.location=")).findFirst().orElse(null);
+        if(StringUtils.isBlank(s)) {
+            s = env.getProperty("spring.config.location");
+        }
         if(StringUtils.isBlank(s)) {
             return;
         }
         var path = s.split("=")[1];
         List<File> files = new ArrayList<>();
-//        if(path.endsWith("/")){
-//            files.add(new File(URI.create(path + "application.yml").toURL().getFile()));
-//            files.add(new File(URI.create(path + "application-prod.yml").toURL().getFile()));
-//        }else {
-//
-//        }
-
         files.add(new File(URI.create(path).toURL().getFile()));
-        files = files.stream().filter(File::exists).filter(File::isDirectory).toList();
+        files = files.stream().filter(File::exists).map(i->{
+            if(i.isDirectory()) {
+                return i;
+            }else {
+                return i.getParentFile();
+            }
+        }).distinct().toList();
         if(files.isEmpty()) {
             return;
         }
@@ -104,46 +105,7 @@ public class WebApplicationRunner implements CommandLineRunner {
                 if(!file.getName().endsWith(".yml")) {
                     return;
                 }
-
-
-                List<PropertySource<?>> propertySources = null;
-                try {
-                    propertySources = yamlPropertySourceLoader.load(null, new FileSystemResource(file));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                var map = propertySources.stream().collect(Collectors.toMap(PropertySource::getName, Function.identity(),WebApplicationRunner.this::biConsumer));
-
-
-                ConfigurableEnvironment environment = context.getEnvironment();
-                Set<String> activeProfiles = Arrays.stream(environment.getActiveProfiles()).collect(Collectors.toSet());
-
-
-                var envMap = environment.getPropertySources().stream().collect(Collectors.toMap(PropertySource::getName, Function.identity(),WebApplicationRunner.this::biConsumer));
-                Set<String> keys = new HashSet<>();
-                map.values().forEach(i->{
-                    if(!activeProfiles.contains(i.getName())) {
-                        return;
-                    }
-                    PropertySource<?> propertySource = envMap.get(i.getName());
-                    if(propertySource instanceof MapPropertySource oldMap && i instanceof MapPropertySource newMap) {
-                        Map<String, Object> source = oldMap.getSource();
-                        Map<String, Object> source1 = newMap.getSource();
-                        keys.addAll(compareMap(source, source1));
-                    }
-                });
-
-                if(CollectionUtils.isEmpty(keys)) {
-                    return;
-                }
-                // 触发配置刷新
-                //context.getEnvironment().pro
-//                //env.getn
-                context.publishEvent(new EnvironmentChangeEvent(context, keys));
-                RefreshEndpoint refreshEndpoint = context.getBean(RefreshEndpoint.class);
-                refreshEndpoint.refresh();
-                //context.publishEvent(new RefreshEvent(this, null, "Refresh Nacos config"));
-
+                context.publishEvent(new RefreshEvent(this, null, "Refresh Nacos config"));
             }
         };
 
@@ -180,5 +142,33 @@ public class WebApplicationRunner implements CommandLineRunner {
 
         return changedKeys;
     }
+
+
+//    List<PropertySource<?>> propertySources = null;
+//                try {
+//        propertySources = yamlPropertySourceLoader.load(null, new FileSystemResource(file));
+//    } catch (IOException e) {
+//        throw new RuntimeException(e);
+//    }
+//    var map = propertySources.stream().collect(Collectors.toMap(PropertySource::getName, Function.identity(),WebApplicationRunner.this::biConsumer));
+//
+//
+//    ConfigurableEnvironment environment = context.getEnvironment();
+//    Set<String> activeProfiles = Arrays.stream(environment.getActiveProfiles()).collect(Collectors.toSet());
+//
+//
+//    var envMap = environment.getPropertySources().stream().collect(Collectors.toMap(PropertySource::getName, Function.identity(),WebApplicationRunner.this::biConsumer));
+//    Set<String> keys = new HashSet<>();
+//                map.values().forEach(i->{
+//        if(!activeProfiles.contains(i.getName())) {
+//            return;
+//        }
+//        PropertySource<?> propertySource = envMap.get(i.getName());
+//        if(propertySource instanceof MapPropertySource oldMap && i instanceof MapPropertySource newMap) {
+//            Map<String, Object> source = oldMap.getSource();
+//            Map<String, Object> source1 = newMap.getSource();
+//            keys.addAll(compareMap(source, source1));
+//        }
+//    });
 
 }
