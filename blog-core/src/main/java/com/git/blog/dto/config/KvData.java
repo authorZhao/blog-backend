@@ -6,6 +6,6 @@ package com.git.blog.dto.config;
  */
 public record KvData(StrKV oldData,StrKV newData) {
     public static KvData nullUpdate(StrKV strKV) {
-        return new KvData(strKV, null);
+        return new KvData(strKV, strKV);
     }
 }

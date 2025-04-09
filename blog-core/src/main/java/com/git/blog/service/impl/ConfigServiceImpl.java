@@ -36,16 +36,17 @@ public class ConfigServiceImpl implements ConfigService {
         PropertySource<?> refreshConfig = context.getEnvironment().getPropertySources().get("refreshConfig");
         if(refreshConfig == null) {
             Map<String, Object> map = new HashMap<>();
-            map.put(strKV.key(), strKV.value());
             refreshConfig = new MapPropertySource("refreshConfig", map);
-            context.getEnvironment().getPropertySources().addLast(refreshConfig);
         }
         Object property = refreshConfig.getProperty(strKV.key());
         if(Objects.equals(property, strKV.value())) {
             return KvData.nullUpdate(strKV);
         }
-        refreshConfig = new MapPropertySource("refreshConfig", ((Map) refreshConfig.getSource()));
-        context.getEnvironment().getPropertySources().addLast(refreshConfig);
+        Map source = (Map) refreshConfig.getSource();
+        source.put(strKV.key(), strKV.value());
+
+        refreshConfig = new MapPropertySource("refreshConfig", source);
+        context.getEnvironment().getPropertySources().addFirst(refreshConfig);
 
         Thread.ofVirtual().start(()->{
             context.publishEvent(new RefreshEvent(this, null, "Refresh Nacos config"));

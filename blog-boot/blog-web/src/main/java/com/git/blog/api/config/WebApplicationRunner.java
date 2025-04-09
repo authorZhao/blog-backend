@@ -78,13 +78,15 @@ public class WebApplicationRunner implements CommandLineRunner {
 
     private void startFileMonitor(String... args) throws Exception {
         String s = Arrays.stream(args).filter(i -> i.contains("--spring.config.location=")).findFirst().orElse(null);
-        if(StringUtils.isBlank(s)) {
-            s = env.getProperty("spring.config.location");
+        String path = null;
+        if(StringUtils.isNotBlank(s)) {
+            path = s.split("=")[1];
+        }else{
+            path = env.getProperty("spring.config.location");
         }
-        if(StringUtils.isBlank(s)) {
+        if(StringUtils.isBlank(path)) {
             return;
         }
-        var path = s.split("=")[1];
         List<File> files = new ArrayList<>();
         files.add(new File(URI.create(path).toURL().getFile()));
         files = files.stream().filter(File::exists).map(i->{

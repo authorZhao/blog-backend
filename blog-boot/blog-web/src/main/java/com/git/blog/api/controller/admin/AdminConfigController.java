@@ -33,7 +33,6 @@ import java.util.List;
 @RequestMapping("/api/admin/config")
 @Slf4j
 @Api(tags = "[用户UserController]")
-@Permission
 public class AdminConfigController {
 
     @Autowired
