@@ -4,6 +4,8 @@ import com.git.blog.dto.config.KvData;
 import com.git.blog.dto.config.StrKV;
 import jakarta.validation.Valid;
 
+import java.util.Map;
+
 /**
  * @author authorZhao
  * @since 2025-04-09
@@ -15,5 +17,7 @@ public interface ConfigService {
      * @param strKV
      * @return
      */
-    KvData updateKV(@Valid StrKV strKV);
+    KvData updateKV(StrKV strKV);
+
+    Map<String, String> updateMap(Map<String, String> map);
 }

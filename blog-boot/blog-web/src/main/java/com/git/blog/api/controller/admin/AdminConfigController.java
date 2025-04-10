@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,6 +43,12 @@ public class AdminConfigController {
     @PostMapping("/updateKV")
     public ApiResponse<KvData> updateKV(@RequestBody @Valid StrKV strKV){
         return ApiResponse.ok(configService.updateKV(strKV));
+    }
+
+    @ApiOperation(value = "登录")
+    @PostMapping("/updateMap")
+    public ApiResponse<Map<String,String>> updateMap(@RequestBody @Valid Map<String,String> map){
+        return ApiResponse.ok(configService.updateMap(map));
     }
 
 }

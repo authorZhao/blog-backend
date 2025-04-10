@@ -42,7 +42,6 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/api/version",
                         "/api/user/login",
                         "/api/user/getUrl",
-                        "/api/admin/config/updateKV",
                         "/spi/**",
                         "/"+blogFileService.getMidPath()+"**",
                         "/",
