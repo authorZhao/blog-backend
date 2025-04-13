@@ -9,7 +9,9 @@ import com.git.blog.dto.user.*;
 import com.git.blog.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +55,19 @@ public class AdminUserController {
     @ApiOperation(value = "登录")
     @PostMapping("/login")
     public ApiResponse<UserVO> login(@RequestBody @Valid LoginDTO loginDTO){
+        //loginDTO.setSessionId(request.getSession().getId());
         return ApiResponse.ok(userService.login(loginDTO));
+    }
+
+    /**
+     * 获取验证码
+     * @return
+     */
+    @GetMapping("/getVerifyCode")
+    @Permission(open = true)
+    public ApiResponse<VerifyCodeDTO> getVerifyCode(HttpServletResponse response) {
+        var result = userService.getVerifyCode(response);
+        return ApiResponse.ok(result);
     }
 
 

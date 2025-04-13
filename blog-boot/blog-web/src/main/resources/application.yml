@@ -3,8 +3,16 @@ server:
 
 spring:
   application:
-    name: blogsadmin
+    name: blog-web
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${env.mysql.username:root}
+    password: ${env.mysql.password:root}
+    url: jdbc:mysql://${env.mysql.host:127.0.0.1}:${env.mysql.port:3306}/${ENV_MYSQL_DATABASE:open_blog}?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
+    hikari:
+      connection-init-sql: SET NAMES utf8mb4;SET time_zone = '+8:00';
+      connection-timeout: 20000
   jackson:
     date-format: 'yyyy-MM-dd HH:mm:ss'
     time-zone: GMT+8

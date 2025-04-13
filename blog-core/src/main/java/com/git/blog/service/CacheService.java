@@ -20,7 +20,16 @@ public interface CacheService {
      * @param time
      * @param timeUnit
      */
-    void setStr(String key, Object value, Long time, TimeUnit timeUnit);
+    void setObj(String key, Object value, Long time, TimeUnit timeUnit);
+
+
+    default void setStr5Min(String key, String value){
+        setObj(key, value, 5L, TimeUnit.MINUTES);
+    }
+
+    default String getStr5Min(String key){
+        return null;
+    }
 
     /**
      * 存
@@ -28,7 +37,7 @@ public interface CacheService {
      * @param value
      */
     default void setStr(String key, Object value){
-        setStr(key,value,null,null);
+        setObj(key,value,null,null);
     }
 
     /**

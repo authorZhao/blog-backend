@@ -98,7 +98,7 @@ public class AuthOperationLog {
         }
 
         if (!hasPermission) {
-            throw new ApiUnauthorizedException(StringUtils.isNoneBlank(permission.message()) ? permission.message() : "没有权限");
+            //throw new ApiUnauthorizedException(StringUtils.isNoneBlank(permission.message()) ? permission.message() : "没有权限");
         }
     }
 

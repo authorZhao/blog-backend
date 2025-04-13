@@ -6,6 +6,8 @@ import com.git.blog.dto.user.*;
 import com.git.blog.dto.wx.WxAccessTokenRspDTO;
 import com.git.blog.dto.model.entity.Menu;
 import com.git.blog.dto.model.entity.User;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 import java.util.Map;
@@ -150,4 +152,10 @@ public interface UserService {
      * @return
      */
     UserVO login(LoginDTO loginDTO);
+
+    /**
+     * 获取验证码
+     * @param response
+     */
+    VerifyCodeDTO getVerifyCode(HttpServletResponse response);
 }

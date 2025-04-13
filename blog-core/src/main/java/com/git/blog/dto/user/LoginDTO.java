@@ -36,4 +36,11 @@ public class LoginDTO implements Serializable {
     @NotEmpty(message = "密码为空")
     private String password;
 
+    @NotEmpty(message = "验证码为空")
+    private String verifyCode;
+
+    /**
+     * @ignore
+     */
+    private String imgId;
 }

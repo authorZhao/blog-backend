@@ -7,6 +7,8 @@ package com.git.blog.commmon;
  */
 public class CommonString {
 
+    public static final String VERIFY_CODE = "verifyCode";
+
     public static final String LAST_SQL_LIMIT_1 = "Limit 1";
 
     public static final String LAST_SQL_LIMIT = "Limit %d";

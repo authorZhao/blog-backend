@@ -35,22 +35,23 @@ public class RedisCacheServiceImpl implements CacheService {
     private static final Long TIME_OUT = 30L;
 
     @Override
-    public void setStr(String key, Object value, Long time, TimeUnit timeUnit) {
-        if(time==null){
+    public void setObj(String key, Object value, Long time, TimeUnit timeUnit) {
+        if (time == null) {
             time = TIME_OUT;
         }
-        if(timeUnit==null) {
+        if (timeUnit == null) {
             timeUnit = TimeUnit.MINUTES;
         }
-        if(StringUtils.isEmpty(key)){
+        if (StringUtils.isEmpty(key)) {
             return;
         }
-        stringRedisTemplate.opsForValue().set(key, JSON.toJSONString(value),time,timeUnit);
+        String v = value instanceof String ? (String) value : JSON.toJSONString(value);
+        stringRedisTemplate.opsForValue().set(key, v, time, timeUnit);
     }
 
     @Override
     public String getStr(String key) {
-        if(StringUtils.isEmpty(key)){
+        if (StringUtils.isEmpty(key)) {
             return null;
         }
         return stringRedisTemplate.opsForValue().get(key);

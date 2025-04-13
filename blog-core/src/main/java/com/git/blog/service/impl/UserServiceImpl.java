@@ -22,6 +22,9 @@ import com.git.blog.service.*;
 import com.git.blog.service.bean.AuthBeanMapper;
 import com.git.blog.util.JwtUtil;
 import com.git.blog.util.Md5Util;
+import com.git.blog.util.VerificationCode;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -81,6 +85,8 @@ public class UserServiceImpl implements UserService {
     private MenuService menuService;
     @Autowired
     private DingProperties dingProperties;
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     public WxAccessTokenRspDTO getWxToken(String code) {
@@ -252,6 +258,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO login(LoginDTO loginDTO) {
+        var oldCode = JSON.parseObject(cacheService.getStr5Min(loginDTO.getImgId()), SessionCode.class);
+        var code = Optional.ofNullable(oldCode).map(SessionCode::code).map(Object::toString)
+                .map(String::toLowerCase)
+                .orElse(null);
+        if (!Objects.equals(code, loginDTO.getVerifyCode().toLowerCase())) {
+            log.warn("login fail loginDTO={}", loginDTO);
+            throw new BizException("验证码错误");
+        }
 
         //2.登录成功
         User dbUser = userDaoService.getOne(new LambdaQueryWrapper<User>()
@@ -275,6 +289,29 @@ public class UserServiceImpl implements UserService {
         List<RoleVO> roleVOList = roleService.getRoleListByUid(dbUser.getUid());
         userVO.setRoleList(roleVOList);
         return userVO;
+    }
+
+    @Override
+    public VerifyCodeDTO getVerifyCode(HttpServletResponse response) {
+        var id = UUID.randomUUID().toString().replace("-", "");
+        String str = cacheService.getStr5Min(id);
+        var oldSession = JSON.parseObject(str, SessionCode.class);
+        var now = System.currentTimeMillis();
+        if(oldSession!=null && now - oldSession.lastTime() <= 3000L){
+            return null;
+        }
+        var code = VerificationCode.genRandomStr();
+        cacheService.setStr5Min(id, JSON.toJSONString(new SessionCode(id, code, now)));
+        log.info("getVerifyCode id={},code={}", id, code);
+        var bufferedImage = VerificationCode.genCode(code);
+        try {
+            var img = VerificationCode.output(bufferedImage);
+            return new VerifyCodeDTO(id, img);
+        } catch (Exception e) {
+            log.error("getVerifyCode id={},code={}", id, code, e);
+        }
+
+        return null;
     }
 
     @Override

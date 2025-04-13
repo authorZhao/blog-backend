@@ -23,7 +23,6 @@ import java.io.PrintWriter;
  * @since 2020-12-30
  */
 @Slf4j
-@Configuration
 public class LoginInterceptor implements HandlerInterceptor {
 
     private static final String token = "token";
@@ -32,7 +31,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(BooleanUtils.isFalse(sysProperties.getNeedLogin())){
+        if (BooleanUtils.isFalse(sysProperties.getNeedLogin())) {
             return true;
         }
         String header = request.getHeader(token);
@@ -40,13 +39,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isBlank(header)) {
             return unauthorizedException(response);
         }
-        tokenEntity = JwtUtil.verifyToken(header,sysProperties.getSecretKey());
-        if (tokenEntity==null || tokenEntity.isFail()) {
+        tokenEntity = JwtUtil.verifyToken(header, sysProperties.getSecretKey());
+        if (tokenEntity == null || tokenEntity.isFail()) {
             return unauthorizedException(response);
         }
 
         String uid = JwtUtil.getClaim(header);
-        if(StringUtils.isBlank(uid)){
+        if (StringUtils.isBlank(uid)) {
             return unauthorizedException(response);
         }
         AuthTheadLocal.set(Long.valueOf(uid));
@@ -61,19 +60,20 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     /**
      * token验证失败直接返回前端
+     *
      * @param response
      * @return
      */
-    private boolean unauthorizedException(HttpServletResponse response){
+    private boolean unauthorizedException(HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null ;
-        try{
+        PrintWriter out = null;
+        try {
             ApiResponse<Object> apiResponse = ApiResponse.error("登录凭证不合法或已过期")
                     .setCode(401);
             out = response.getWriter();
             out.append(JSON.toJSONString(apiResponse));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return false;

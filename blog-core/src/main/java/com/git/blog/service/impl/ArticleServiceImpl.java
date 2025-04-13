@@ -283,7 +283,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         List<BlogArticleDTO> collect = blogArticleDaoService.listLimitAndStatus(limit, CommonString.ARTICLE_NORMAL_STATUS)
                 .stream().map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
-        cacheService.setStr(CommonString.ARTICLE_NEW+limit,JSON.toJSONString(collect),30L, TimeUnit.MINUTES);
+        cacheService.setObj(CommonString.ARTICLE_NEW+limit,JSON.toJSONString(collect),30L, TimeUnit.MINUTES);
         return collect;
     }
 }

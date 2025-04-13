@@ -11,6 +11,7 @@ public class BizException extends RuntimeException{
      * 通用异常描述与
      */
     public static final BizException COMMON_BIZ_EXCEPTION = new BizException("业务异常");
+    public static final BizException BUSY_OPERATIONS = new BizException("操作繁忙");
 
     public BizException() {
         super();

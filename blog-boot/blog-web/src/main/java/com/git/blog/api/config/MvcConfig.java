@@ -2,6 +2,7 @@ package com.git.blog.api.config;
 
 import com.git.blog.service.BlogFileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,16 +14,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
+//    @Autowired
+//    private LoginInterceptor loginInterceptor;
 
-    @Autowired
-    private LoginInterceptor loginInterceptor;
+    @Bean
+    public LoginInterceptor loginInterceptor(){
+        return new LoginInterceptor();
+
+    }
 
     @Autowired
     private BlogFileService blogFileService;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor)
+        registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/configuration/ui",
                         "/configuration/security",
@@ -36,12 +42,12 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/data-check/**",
                         "/csrf",
                         "/favicon.ico",
-                        "/**/",
                         "/api/ok",
                         "/api/check/**",
                         "/api/version",
-                        "/api/user/login",
-                        "/api/user/getUrl",
+                        "/api/admin/user/login",
+                        "/api/admin/user/getUrl",
+                        "/api/admin/user/getVerifyCode",
                         "/spi/**",
                         "/"+blogFileService.getMidPath()+"**",
                         "/",
