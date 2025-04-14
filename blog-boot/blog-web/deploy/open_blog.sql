@@ -216,3 +216,18 @@ CREATE TABLE `statistics_data` (
                                    `last_update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
                                    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='统计表';
+
+
+DROP TABLE IF EXISTS `config_data`;
+CREATE TABLE `config_data`  (
+                                            `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                            `name` varchar(255) NOT NULL COMMENT '名字',
+                                            `desc` varchar(255) NOT NULL COMMENT '备注',
+                                            `content` text NOT NULL COMMENT '内容',
+                                            `version` int NOT NULL DEFAULT 0 COMMENT '版本',
+                                            `type` int NOT NULL COMMENT ' 1 yml  2 xml',
+                                            `status` tinyint NOT NULL COMMENT '0正常 1 删除',
+                                            `create_time` datetime NOT NULL COMMENT '创建时间',
+                                            `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                            PRIMARY KEY (`id`)
+);
