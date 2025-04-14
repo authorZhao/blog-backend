@@ -33,6 +33,11 @@ public class ConfigEntity {
     private String desc;
 
     /**
+     * 服务名称
+     */
+    private String service;
+
+    /**
      * 内容
      */
     private String content;

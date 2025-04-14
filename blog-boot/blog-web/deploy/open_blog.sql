@@ -231,3 +231,7 @@ CREATE TABLE `config_data`  (
                                             `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
                                             PRIMARY KEY (`id`)
 );
+
+ALTER TABLE `config_data`
+    ADD COLUMN `service` varchar(255) NOT NULL COMMENT '所属服务' AFTER `desc`,
+ADD INDEX `服务`(`service`) COMMENT '服务';
