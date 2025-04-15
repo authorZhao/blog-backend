@@ -235,3 +235,6 @@ CREATE TABLE `config_data`  (
 ALTER TABLE `config_data`
     ADD COLUMN `service` varchar(255) NOT NULL COMMENT '所属服务' AFTER `desc`,
 ADD INDEX `服务`(`service`) COMMENT '服务';
+
+ALTER TABLE `config_data`
+    ADD COLUMN `history` text COMMENT '历史版本' AFTER `status`;

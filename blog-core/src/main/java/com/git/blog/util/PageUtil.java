@@ -1,9 +1,13 @@
 package com.git.blog.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.git.blog.commmon.PageParam;
+import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author authorZhao
@@ -13,6 +17,17 @@ public class PageUtil {
 
     public static Page convert(PageParam pageParam) {
         return new Page(pageParam.getCurrent(), pageParam.getPageSize());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public static <T,R> Page<R> convert(Page<T> page, Function<T,R> function) {
+        if (page == null || CollectionUtils.isEmpty(page.getRecords())) {
+            return (Page<R>) page;
+        }
+        var list = page.getRecords().stream().map(function).collect(Collectors.toList());
+        Page<R> newPage = (Page<R>) page;
+        newPage.setRecords(list);
+        return newPage;
     }
 
     public static String replaceImageDomain(String markdownContent, String newDomain) {

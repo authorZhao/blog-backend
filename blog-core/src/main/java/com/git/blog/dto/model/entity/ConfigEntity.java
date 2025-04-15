@@ -23,7 +23,7 @@ public class ConfigEntity {
     private Integer id;
 
     /***
-     * 名字
+     * 名称
      */
     private String name;
 
@@ -48,6 +48,11 @@ public class ConfigEntity {
     private Integer version;
 
     /**
+     * 历史内容，json数组，每个元素包含版本号和version和修改时间
+     */
+    private String history;
+
+    /**
      * 1 yml  2 xml
      */
     private Integer type;
@@ -58,12 +63,12 @@ public class ConfigEntity {
     private Byte status;
 
     /**
-     *
+     * 创建时间
      */
     private LocalDateTime createTime;
 
     /**
-     *
+     * 修改时间
      */
     private LocalDateTime updateTime;
 }

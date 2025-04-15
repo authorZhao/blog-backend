@@ -12,7 +12,7 @@ public class BizException extends RuntimeException{
      */
     public static final BizException COMMON_BIZ_EXCEPTION = new BizException("业务异常");
     public static final BizException BUSY_OPERATIONS = new BizException("操作繁忙");
-
+    public static final BizException DATA_NOT_EXITS = new BizException("操作不存在之数据");
     public BizException() {
         super();
     }

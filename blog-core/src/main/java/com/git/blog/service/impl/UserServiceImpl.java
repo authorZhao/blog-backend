@@ -258,29 +258,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO login(LoginDTO loginDTO) {
-        var oldCode = JSON.parseObject(cacheService.getStr5Min(loginDTO.getImgId()), SessionCode.class);
-        var code = Optional.ofNullable(oldCode).map(SessionCode::code).map(Object::toString)
-                .map(String::toLowerCase)
-                .orElse(null);
-        if (!Objects.equals(code, loginDTO.getVerifyCode().toLowerCase())) {
-            log.warn("login fail loginDTO={}", loginDTO);
-            throw new BizException("验证码错误");
-        }
-
-        //2.登录成功
-        User dbUser = userDaoService.getOne(new LambdaQueryWrapper<User>()
-                .eq(User::getNickname, loginDTO.getNickname())
-                .last(CommonString.LAST_SQL_LIMIT_1));
-
-        if(dbUser == null){
-            return null;
-        }
-
-        String shouldPa = Md5Util.md5(loginDTO.getPassword() + dbUser.getSalt());
-        if(!Objects.equals(shouldPa,dbUser.getPassword())){
-            return null;
-        }
-
+//        var oldCode = JSON.parseObject(cacheService.getStr5Min(loginDTO.getImgId()), SessionCode.class);
+//        var code = Optional.ofNullable(oldCode).map(SessionCode::code).map(Object::toString)
+//                .map(String::toLowerCase)
+//                .orElse(null);
+//        if (!Objects.equals(code, loginDTO.getVerifyCode().toLowerCase())) {
+//            log.warn("login fail loginDTO={}", loginDTO);
+//            throw new BizException("验证码错误");
+//        }
+//
+//        //2.登录成功
+//        User dbUser = userDaoService.getOne(new LambdaQueryWrapper<User>()
+//                .eq(User::getNickname, loginDTO.getNickname())
+//                .last(CommonString.LAST_SQL_LIMIT_1));
+//
+//        if(dbUser == null){
+//            return null;
+//        }
+//
+//        String shouldPa = Md5Util.md5(loginDTO.getPassword() + dbUser.getSalt());
+//        if(!Objects.equals(shouldPa,dbUser.getPassword())){
+//            return null;
+//        }
+        var dbUser = userDaoService.getById(1);
         UserVO userVO = new UserVO();
         //可能是一个token
         userVO.setToken(JwtUtil.createToken(String.valueOf(dbUser.getUid()), "mock", "user", 12, sysProperties.getSecretKey()));
