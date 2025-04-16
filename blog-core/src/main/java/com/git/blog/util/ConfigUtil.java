@@ -1,10 +1,17 @@
 package com.git.blog.util;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 
+import java.io.File;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -12,7 +19,63 @@ import org.yaml.snakeyaml.Yaml;
  * @author authorZhao
  * @since 2025-04-08
  */
+@Slf4j
 public class ConfigUtil {
+
+    public static List<File> parseArgsFiles(String[] args) {
+        String s = Arrays.stream(args).filter(i -> i.contains("--spring.config.location=")).findFirst().orElse(null);
+        if (StringUtils.isBlank(s)) {
+            return List.of();
+        }
+        var path = s.split("=")[1];
+
+        var paths = List.of(path.split(","));
+        if (CollectionUtils.isEmpty(paths)) {
+            return List.of();
+        }
+        return paths.stream().map(ConfigUtil::pathToFile)
+                .map(ConfigUtil::fileToDir).
+                filter(Objects::nonNull).filter(File::exists).collect(Collectors.toList());
+    }
+
+    public static List<File> parseEnvFiles(String arg) {
+        if (StringUtils.isBlank(arg)) {
+            return List.of();
+        }
+        var paths = List.of(arg.split(","));
+        if (CollectionUtils.isEmpty(paths)) {
+            return List.of();
+        }
+        return paths.stream().map(ConfigUtil::pathToFile)
+                .map(ConfigUtil::fileToDir).
+                filter(Objects::nonNull).filter(File::exists).collect(Collectors.toList());
+    }
+
+    public static File pathToFile(String path) {
+        try {
+            return new File(URI.create(path).toURL().getFile());
+        } catch (MalformedURLException e) {
+            log.info(e.getMessage());
+            return null;
+        }
+
+    }
+
+
+    public  static  <T> T biConsumer(T oldData, T newData) {
+        return newData;
+    }
+
+    public static File fileToDir(File file) {
+        if (file == null) {
+            return null;
+        }
+        if (file.isDirectory()) {
+            return file;
+        } else {
+            return file.getParentFile();
+        }
+    }
 
 
     // 解析 YAML 文件为扁平化的 Key-Value 集合

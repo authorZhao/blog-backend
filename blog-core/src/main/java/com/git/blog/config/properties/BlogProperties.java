@@ -23,31 +23,31 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "open.blog.head")
 public class BlogProperties implements Cloneable {
     /**
-     * 标题
+     * html的title
      */
     private String title = "平原人的随行笔记";
     /**
-     * 作者
+     * html meta元数据的作者
      */
     private String author = "平原人";
     /**
-     * copyright
+     * copyright的人作者
      */
     private String copyright = "平原人";
     /**
-     * 作者
+     * 主题颜色，暂时浪费了
      */
     private String themeColor = "#ffffff";
     /**
-     * 作者
+     * html meta元数据
      */
     private String description = "大雪迷人眼";
     /**
-     * 作者
+     * html meta元数据
      */
     private String ogTitle = "平原人的随行笔记";
     /**
-     * 作者
+     * html meta元数据
      */
     private String ogUrl = "http://www.pingyuanren.com";
     /**
@@ -85,7 +85,7 @@ public class BlogProperties implements Cloneable {
     /**
      * 作者
      */
-    private String canonical = "http://www.pingyuanren.com";
+    private String canonical = "https://www.pingyuanren.cn";
     /**
      * 作者
      */
@@ -135,14 +135,22 @@ public class BlogProperties implements Cloneable {
 
 
     /**
-     * 左侧栏开关
+     * 左侧栏开关 git和公告
      */
     private Boolean showAsideContent = Boolean.TRUE;
 
     /**
-     * 左侧栏开关
+     * 左侧栏开关 最新文章、分类、标签、归档、资讯
      */
     private Boolean showStickyLayout = Boolean.TRUE;
+
+    /// 是否展示最新文章
+    private Boolean showLatestArticles = true;
+
+    /// 特别文章展示
+    private Boolean showSpecialArticles = true;
+
+    private List<Long> specialIds = new ArrayList<>();
 
     /**
      * 首页分页大小

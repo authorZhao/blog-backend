@@ -1,5 +1,6 @@
 package com.git.blog.api.config;
 
+import com.git.blog.util.ConfigUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
@@ -73,33 +74,17 @@ public class WebApplicationRunner implements CommandLineRunner {
     }
 
 
-
-
-
     private void startFileMonitor(String... args) throws Exception {
-        String s = Arrays.stream(args).filter(i -> i.contains("--spring.config.location=")).findFirst().orElse(null);
-        String path = null;
-        if(StringUtils.isNotBlank(s)) {
-            path = s.split("=")[1];
-        }else{
-            path = env.getProperty("spring.config.location");
-        }
-        if(StringUtils.isBlank(path)) {
-            return;
-        }
-        List<File> files = new ArrayList<>();
-        files.add(new File(URI.create(path).toURL().getFile()));
-        files = files.stream().filter(File::exists).map(i->{
-            if(i.isDirectory()) {
-                return i;
-            }else {
-                return i.getParentFile();
-            }
-        }).distinct().toList();
-        if(files.isEmpty()) {
-            return;
-        }
+        List<File> argFiles = ConfigUtil.parseArgsFiles(args);
+        List<File> envFiles = ConfigUtil.parseEnvFiles(env.getProperty("spring.config.location"));
 
+        Set<File> files = new HashSet<>();
+        files.addAll(argFiles);
+        files.addAll(envFiles);
+        if(CollectionUtils.isEmpty(files)) {
+            log.info("无配置监听");
+            return;
+        }
         var listener = new FileAlterationListenerAdaptor() {
             @Override
             public void onFileChange(File file) {
@@ -111,9 +96,7 @@ public class WebApplicationRunner implements CommandLineRunner {
             }
         };
 
-
-
-        log.info("启动configMap文件监听...");
+        log.info("启动configMap文件监听...files={}", files);
         // configMap挂载路径mountPath
         FileAlterationMonitor monitor = new FileAlterationMonitor(1000);
         files.stream().map(FileAlterationObserver::new).peek(i->i.addListener(listener)).forEach(monitor::addObserver);
@@ -121,9 +104,6 @@ public class WebApplicationRunner implements CommandLineRunner {
         log.info("configMap文件监听开始...");
     }
 
-    private <T> T biConsumer(T oldData, T newData) {
-        return newData;
-    }
 
 
     public static Set<String> compareMap(Map<String, Object> oldMap, Map<String, Object> newConfig) {

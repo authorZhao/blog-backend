@@ -53,7 +53,7 @@ public class PageController {
     @RequestMapping("/index/{current}")
     public ModelAndView goToIndex(@PathVariable("current") Integer current) {
         BlogArticlePageDTO blogArticlePageDTO = new BlogArticlePageDTO();
-        blogArticlePageDTO.setPageSize(10);
+        blogArticlePageDTO.setPageSize(blogProperties.getIndexPageSize());
         blogArticlePageDTO.setCurrent(current);
         Page<BlogArticleVO> pages = articleService.pageArticle(blogArticlePageDTO);
         ModelAndView modelAndView = new ModelAndView("butterfly/index.html");
@@ -154,13 +154,23 @@ public class PageController {
         modelAndView.addObject("head", blogPropertiesParam);
         modelAndView.addObject("tags", tagTypeService.getTagType(CommonString.TAG));
         modelAndView.addObject("types", tagTypeService.getTagType(CommonString.TYPE));
-        modelAndView.addObject("newArticles", articleService.getNewArticles(5));
+        if(Boolean.TRUE.equals(blogPropertiesParam.getShowLatestArticles())){
+            modelAndView.addObject("newArticles", articleService.getNewArticles(5));
+        }
+        if(Boolean.TRUE.equals(blogPropertiesParam.getShowSpecialArticles())){
+            modelAndView.addObject("specialArticles", articleService.getSpecialArticles());
+        }
     }
 
     private void setTagType(ModelAndView modelAndView) {
         modelAndView.addObject("head", blogProperties);
         modelAndView.addObject("tags", tagTypeService.getTagType(CommonString.TAG));
         modelAndView.addObject("types", tagTypeService.getTagType(CommonString.TYPE));
-        modelAndView.addObject("newArticles", articleService.getNewArticles(5));
+        if(Boolean.TRUE.equals(blogProperties.getShowLatestArticles())){
+            modelAndView.addObject("newArticles", articleService.getNewArticles(5));
+        }
+        if(Boolean.TRUE.equals(blogProperties.getShowSpecialArticles())){
+            modelAndView.addObject("specialArticles", articleService.getSpecialArticles());
+        }
     }
 }

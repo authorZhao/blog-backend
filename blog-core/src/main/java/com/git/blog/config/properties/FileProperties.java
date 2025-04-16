@@ -36,5 +36,7 @@ public class FileProperties {
 	 */
 	private String sufPath = "file/";
 
+	private String applicationPath = "/";
+
 
 }

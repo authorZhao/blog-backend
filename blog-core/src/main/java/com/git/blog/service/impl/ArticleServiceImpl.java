@@ -286,4 +286,37 @@ public class ArticleServiceImpl implements ArticleService {
         cacheService.setObj(CommonString.ARTICLE_NEW+limit,JSON.toJSONString(collect),30L, TimeUnit.MINUTES);
         return collect;
     }
+
+    @Override
+    public List<BlogArticleDTO> getSpecialArticles() {
+        List<Long> specialIds = blogProperties.getSpecialIds();
+        if (CollectionUtils.isEmpty(specialIds)) return Collections.emptyList();
+
+        String str = cacheService.getStr(CommonString.ARTICLE_SPECIAL);
+        List<BlogArticleDTO> list = JSON.parseArray(str, BlogArticleDTO.class);
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        specialIds = specialIds.stream().distinct().collect(Collectors.toList());
+
+        var oldIds = list.stream().map(BlogArticleDTO::getId).distinct().collect(Collectors.toList());
+        Collections.sort(specialIds);
+        Collections.sort(oldIds);
+
+        if (specialIds.size() == oldIds.size()) {
+            return list;
+        }
+
+        List<BlogArticleDTO> collect = blogArticleDaoService.listByIds(specialIds)
+                .stream().filter(i -> CommonString.ARTICLE_NORMAL_STATUS.equals(i.getStatus()))
+                .map(this::articleDTO).collect(Collectors.toList());
+        cacheService.setObj(CommonString.ARTICLE_SPECIAL, JSON.toJSONString(collect), 240L, TimeUnit.MINUTES);
+        return collect;
+    }
+
+    private BlogArticleDTO articleDTO(BlogArticle article) {
+        var blogArticleDTO = blogMapper.articleToArticleDTO(article);
+        blogArticleDTO.setContent(null).setContentMd(null);
+        return blogArticleDTO;
+    }
 }

@@ -13,7 +13,7 @@
 <div class="page" id="body-wrap">
     <header class="full_page" id="page-header"
             style="background-image: url('http://cn.bing.com/th?id=OHR.LanyonQuoit_ZH-CN6278576563_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp')">
-        <nav id="nav"><span id="blog_name"><a id="site-name" href="/" th:text="${head.ogSiteName}">平原人的随行笔记</a></span>
+        <nav id="nav"><span id="blog_name"><a id="site-name" href="/" th:text="${head.ogTitle}">平原人的随行笔记</a></span>
 
             <!-- 顶部菜单 -->
             <div id="menus">
@@ -117,7 +117,8 @@
             <div th:replace="~{butterfly/includes/left.html::left-card-announcement}"></div>
 
             <div class="sticky_layout">
-
+                <!-- 推荐文章 -->
+                <div th:replace="~{butterfly/includes/left.html::left-card-special-post}"></div>
                 <!-- 最新文章 -->
                 <div th:replace="~{butterfly/includes/left.html::left-card-recent-post}"></div>
                 <!-- 分类 -->

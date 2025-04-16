@@ -69,8 +69,25 @@
 </div>
 
 <div class="sticky_layout">
+
+    <!-- 推荐文章 -->
+    <!--/*@thymesVar id="head" type="com.git.blog.config.properties.BlogProperties"*/-->
+    <div class="card-widget card-recent-post" th:if="${head.showSpecialArticles}" th:fragment="left-card-special-post">
+        <div class="item-headline"><i class="fas fa-history"></i><span>推荐文章</span></div>
+        <div class="aside-list">
+            <div class="aside-list-item" th:each="article : ${specialArticles}">
+                <a class="thumbnail" th:href="@{'/article/'+${article.id}}" th:title="${article.title}">
+                    <img th:src="${article.coverImage}" onerror="this.onerror=null;this.src='/butterfly/img/404.jpg'" alt="hello-hexo" /></a>
+                <div class="content">
+                    <a class="title" th:href="@{'/article/'+${article.id}}" th:text="${article.title}"></a>
+                    <time datetime="2022-03-16T11:54:37.000Z" th:text="${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></time>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 最新文章 -->
-    <div class="card-widget card-recent-post" th:fragment="left-card-recent-post">
+    <div class="card-widget card-recent-post" th:if="${head.showLatestArticles}" th:fragment="left-card-recent-post">
         <div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div>
         <div class="aside-list">
             <div class="aside-list-item" th:each="article : ${newArticles}">
@@ -83,6 +100,9 @@
             </div>
         </div>
     </div>
+
+
+
     <!-- 分类 -->
     <div class="card-widget card-categories" th:fragment="left-card-categories">
         <div class="item-headline">

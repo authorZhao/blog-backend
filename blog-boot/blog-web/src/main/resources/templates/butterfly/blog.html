@@ -33,7 +33,7 @@
             style="background-image: url('http://cn.bing.com/th?id=OHR.SpringForward_ZH-CN6154174266_1920x1080.jpg&amp;amp;rf=LaDigue_1920x1080.jpg&amp;amp;pid=hp')">
         <nav id="nav">
             <span id="blog_name">
-                <a id="site-name" href="/" th:text="${head.ogSiteName}">平原人的随行笔记</a>
+                <a id="site-name" href="/" th:text="${head.ogTitle}">平原人的随行笔记</a>
             </span>
             <div id="menus">
                 <div class="menus_items" th:replace="~{butterfly/includes/head.html::head-menus_items}"></div>
@@ -91,15 +91,20 @@
         </div>
         <!-- 左边侧边栏 -->
         <div class="aside-content" id="aside-content" th:if="${head.showAsideContent}">
-            <!-- 菜单 -->
+            <!-- 菜单，左边 -->
             <div th:replace="~{butterfly/includes/left.html::left-card-info}"></div>
 
-            <!-- 公告 -->
+            <!-- 左边公告 -->
             <div th:replace="~{butterfly/includes/left.html::left-card-announcement}"></div>
 
             <!--/*@thymesVar id="head" type="com.git.blog.config.properties.BlogProperties"*/-->
             <div class="sticky_layout" th:if="${head.showStickyLayout}">
+
+                <!-- 公告，侧边带图片的 -->
                 <div class="card-widget" id="card-toc" th:if="${articleMap!=null && articleMap.tocHtml!=null}" th:utext="${articleMap.tocHtml}"></div>
+                <!-- 推荐文章 -->
+                <div th:replace="~{butterfly/includes/left.html::left-card-special-post}"></div>
+
                 <!-- 最新文章 -->
                 <div th:replace="~{butterfly/includes/left.html::left-card-recent-post}"></div>
             </div>

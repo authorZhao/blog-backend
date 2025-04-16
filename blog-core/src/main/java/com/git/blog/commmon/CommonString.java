@@ -104,7 +104,8 @@ public class CommonString {
 
     /**最新几篇文章*/
     public static final String ARTICLE_NEW = "ARTICLE_NEW";
-
+    /**特别几篇文章*/
+    public static final String ARTICLE_SPECIAL = "ARTICLE_SPECIAL";
     /**文章删除状态*/
     public static final Integer ARTICLE_DELETE_STATUS = 10;
     /**文章正常状态*/

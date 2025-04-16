@@ -66,4 +66,7 @@ public interface ArticleService {
      */
     List<BlogArticleDTO> getNewArticles(Integer limit);
 
+    /// 获取特别推荐文章
+    List<BlogArticleDTO> getSpecialArticles();
+
 }

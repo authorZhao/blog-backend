@@ -53,7 +53,7 @@ public class ShiCiProperties implements Cloneable{
     /**作者*/
     private String shortcutIcon = "/butterfly/img/favicon.png";
     /**作者*/
-    private String canonical = "http://www.pingyuanren.com";
+    private String canonical = "https://www.pingyuanren.cn";
     /**作者*/
     private String preconnect1 = "//cdn.jsdelivr.net";
     /**作者*/
