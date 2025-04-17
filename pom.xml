@@ -26,14 +26,14 @@
         <spring.boot.version>3.3.9</spring.boot.version>
         <spring-cloud.version>2023.0.5</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
-        <lombok.version>1.18.36</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
         <mybatis-plus-version>3.5.10.1</mybatis-plus-version>
         <mysql.connection>8.0.30</mysql.connection>
         <swagger-mode-version>1.5.22</swagger-mode-version>
         <jakarta.validation-api>3.1.1</jakarta.validation-api>
         <commons-collections>4.4</commons-collections>
         <commons-lang3>3.12.0</commons-lang3>
-        <commons-code>1.9</commons-code>
+        <commons-code>1.13</commons-code>
         <fastjson2.version>2.0.56</fastjson2.version>
         <mysqbatis.typehandlers>1.0.2</mysqbatis.typehandlers>
         <jwt.version>4.5.0</jwt.version>
@@ -246,6 +246,12 @@
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>1.19.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.vladsch.flexmark</groupId>
+                <artifactId>flexmark-all</artifactId>
+                <version>0.64.8</version>
             </dependency>
 
         </dependencies>

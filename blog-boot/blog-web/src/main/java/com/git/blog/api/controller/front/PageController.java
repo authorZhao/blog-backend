@@ -10,6 +10,7 @@ import com.git.blog.config.properties.SysProperties;
 import com.git.blog.dto.blog.*;
 import com.git.blog.service.ArticleService;
 import com.git.blog.service.TagTypeService;
+import com.git.blog.util.MarkdownUtil;
 import com.git.blog.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -66,8 +67,8 @@ public class PageController {
         return modelAndView;
     }
 
-    @RequestMapping("/article/{id}")
-    public ModelAndView articleId(@PathVariable("id") Long id) {
+    @RequestMapping("/article_bak/{id}")
+    public ModelAndView articleIdBak(@PathVariable("id") Long id) {
         BlogArticleDetailVO blogArticleDetailVO = articleService.detailArticle(id);
         ModelAndView modelAndView = new ModelAndView("butterfly/blog.html");
         String content = blogArticleDetailVO.getContent();
@@ -85,6 +86,30 @@ public class PageController {
                 parse.setArticleHtml(s);
                 //matcher.articleHtml.replace(pattern, )
             }
+            modelAndView.addObject("articleMap", parse);
+        } catch (Exception e) {
+            clone.getConfigSite().put("isToc", false);
+        }
+        clone.getConfigSite().put("title", blogArticleDetailVO.getTitle() + " | " + blogProperties.getTitle());
+        clone.setTitle(blogArticleDetailVO.getTitle());
+        clone.setOgTitle(blogArticleDetailVO.getTitle());
+        setTagType(modelAndView, clone);
+        return modelAndView;
+    }
+
+    @RequestMapping("/article/{id}")
+    public ModelAndView articleId(@PathVariable("id") Long id) {
+        BlogArticleDetailVO blogArticleDetailVO = articleService.detailArticle(id);
+        ModelAndView modelAndView = new ModelAndView("butterfly/blog.html");
+        String content = blogArticleDetailVO.getContentMd();
+        modelAndView.addObject("article", blogArticleDetailVO);
+        BlogProperties clone = blogProperties.clone();
+        clone.getConfigSite().put("isPost", true);
+        //blogArticleDetailVO.setContentMd("'" + blogArticleDetailVO.getContentMd() + "'");
+        //var path = fileProperties.getSufPath();
+        try {
+            HtmlContent parse = new HtmlContent();
+            parse.setArticleHtml(MarkdownUtil.markdownToHtml(content));
             modelAndView.addObject("articleMap", parse);
         } catch (Exception e) {
             clone.getConfigSite().put("isToc", false);

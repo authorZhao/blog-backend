@@ -28,8 +28,12 @@ public class ConfigUtil {
             return List.of();
         }
         var path = s.split("=")[1];
-
         var paths = List.of(path.split(","));
+        return pathsToFiles(paths);
+
+    }
+
+    private static List<File> pathsToFiles(List<String> paths) {
         if (CollectionUtils.isEmpty(paths)) {
             return List.of();
         }
@@ -43,12 +47,7 @@ public class ConfigUtil {
             return List.of();
         }
         var paths = List.of(arg.split(","));
-        if (CollectionUtils.isEmpty(paths)) {
-            return List.of();
-        }
-        return paths.stream().map(ConfigUtil::pathToFile)
-                .map(ConfigUtil::fileToDir).
-                filter(Objects::nonNull).filter(File::exists).collect(Collectors.toList());
+        return pathsToFiles(paths);
     }
 
     public static File pathToFile(String path) {
@@ -62,7 +61,7 @@ public class ConfigUtil {
     }
 
 
-    public  static  <T> T biConsumer(T oldData, T newData) {
+    public static <T> T biConsumer(T oldData, T newData) {
         return newData;
     }
 
