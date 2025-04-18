@@ -15,6 +15,7 @@ public interface CacheService {
 
     /**
      * 存
+     *
      * @param key
      * @param value
      * @param time
@@ -22,26 +23,19 @@ public interface CacheService {
      */
     void setObj(String key, Object value, Long time, TimeUnit timeUnit);
 
-
-    default void setStr5Min(String key, String value){
-        setObj(key, value, 5L, TimeUnit.MINUTES);
-    }
-
-    default String getStr5Min(String key){
-        return null;
-    }
-
     /**
      * 存
+     *
      * @param key
      * @param value
      */
-    default void setStr(String key, Object value){
-        setObj(key,value,null,null);
+    default void setStr(String key, Object value) {
+        setObj(key, value, null, null);
     }
 
     /**
      * 取
+     *
      * @param key
      * @return
      */
@@ -49,6 +43,7 @@ public interface CacheService {
 
     /**
      * 清除缓存
+     *
      * @param key
      */
     void remove(String key);

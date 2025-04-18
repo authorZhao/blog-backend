@@ -1,7 +1,6 @@
 package com.git.blog.util;
 
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.util.Base64Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

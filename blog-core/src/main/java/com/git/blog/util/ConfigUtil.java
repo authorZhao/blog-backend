@@ -37,8 +37,7 @@ public class ConfigUtil {
         if (CollectionUtils.isEmpty(paths)) {
             return List.of();
         }
-        return paths.stream().map(ConfigUtil::pathToFile)
-                .map(ConfigUtil::fileToDir).
+        return paths.stream().map(ConfigUtil::pathToFile).map(ConfigUtil::fileToDir).
                 filter(Objects::nonNull).filter(File::exists).collect(Collectors.toList());
     }
 

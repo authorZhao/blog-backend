@@ -3,6 +3,7 @@ package com.git.blog.api.config;
 import com.git.blog.service.CacheService;
 import com.git.blog.service.impl.LocalCacheServiceImpl;
 import com.git.blog.service.impl.RedisCacheServiceImpl;
+import com.git.blog.service.schedule.CacheSchedule;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -27,6 +28,10 @@ public class RedisConfig {
         @Bean
         public CacheService cacheService(){
             return new LocalCacheServiceImpl();
+        }
+        @Bean
+        public CacheSchedule cacheSchedule(){
+            return new CacheSchedule();
         }
 
     }

@@ -19,9 +19,9 @@ public class SysProperties {
     private String secretKey;
 
     /**
-     * jwt的过期时间，单位小时
+     * jwt的过期时间，单位秒 默认4小时
      */
-    private Integer expireTime;
+    private Long expireTime = 14400L;
 
     /**
      * 是否需要登录

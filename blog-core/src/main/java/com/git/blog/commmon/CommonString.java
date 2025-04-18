@@ -113,4 +113,6 @@ public class CommonString {
     /**文章草稿状态*/
     public static final Integer ARTICLE_DRAFT_STATUS = 5;
 
+    public static final String UID_TOKEN = "APP:UID:TOKEN:";
+    public static final String IMG_CODE = "APP:IMG_CODE:";
 }

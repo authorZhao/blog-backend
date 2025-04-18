@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.git.blog.commmon.ApiResponse;
 import com.git.blog.commmon.enums.AuthTheadLocal;
 import com.git.blog.config.properties.SysProperties;
+import com.git.blog.service.CacheService;
 import com.git.blog.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static com.git.blog.commmon.CommonString.UID_TOKEN;
+
 /**
  * @author authorZhao
  * @since 2020-12-30
@@ -28,6 +31,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     private static final String token = "token";
     @Autowired
     private SysProperties sysProperties;
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -46,6 +51,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         String uid = JwtUtil.getClaim(header);
         if (StringUtils.isBlank(uid)) {
+            return unauthorizedException(response);
+        }
+
+        String str = cacheService.getStr(UID_TOKEN + uid);
+        if (StringUtils.isBlank(str)) {
             return unauthorizedException(response);
         }
         AuthTheadLocal.set(Long.valueOf(uid));
