@@ -15,7 +15,7 @@ import com.git.blog.dto.model.entity.Menu;
 import com.git.blog.dto.model.entity.RoleMenu;
 import com.git.blog.dto.model.entity.User;
 import com.git.blog.service.MenuService;
-import com.git.blog.service.bean.AuthBeanMapper;
+import com.git.blog.service.map.DataConvert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,8 +43,6 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private MenuDaoService menuDaoService;
-    @Autowired
-    private AuthBeanMapper authBeanMapper;
     @Autowired
     private UserDaoService userDaoService;
     @Autowired
@@ -93,7 +91,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> list = menuDaoService.list(new LambdaQueryWrapper<Menu>()
                 .like(StringUtils.isNotBlank(menuQueryDTO.getMenuName()), Menu::getMenuName, menuQueryDTO.getMenuName()));
         if(CollectionUtils.isNotEmpty(list)){
-            menuVOList = list.stream().map(authBeanMapper::convertMenuToVO).collect(Collectors.toList());
+            menuVOList = list.stream().map(DataConvert.INSTANCE::convertMenuToVO).collect(Collectors.toList());
         }
         return menuVOList;
     }
@@ -128,13 +126,13 @@ public class MenuServiceImpl implements MenuService {
 
 
         List<MenuTreeVO> menuTreeVOList = listAll.stream().map(i->{
-            MenuTreeVO menuTreeVO = authBeanMapper.convertMenuToMenuTreeVO(i);
+            MenuTreeVO menuTreeVO = DataConvert.INSTANCE.convertMenuToMenuTreeVO(i);
             menuTreeVO.setCreateUserName(Optional.ofNullable(userMap.get(i.getCreateUid())).map(User::getUsername).orElse(StringUtils.EMPTY));
             return menuTreeVO;
         }).collect(Collectors.toList());
 
         List<MenuTreeVO> pageList = list.stream().map(i->{
-            MenuTreeVO menuTreeVO = authBeanMapper.convertMenuToMenuTreeVO(i);
+            MenuTreeVO menuTreeVO = DataConvert.INSTANCE.convertMenuToMenuTreeVO(i);
             menuTreeVO.setCreateUserName(Optional.ofNullable(userMap.get(i.getCreateUid())).map(User::getUsername).orElse(StringUtils.EMPTY));
             return menuTreeVO;
         }).collect(Collectors.toList());
@@ -169,11 +167,11 @@ public class MenuServiceImpl implements MenuService {
         final Map<Long, User> userMap = collect;
 
         List<MenuTreeVO> menuTreeVOList = list.stream().map(i->{
-            MenuTreeVO menuTreeVO = authBeanMapper.convertMenuToMenuTreeVO(i);
+            MenuTreeVO menuTreeVO = DataConvert.INSTANCE.convertMenuToMenuTreeVO(i);
             menuTreeVO.setCreateUserName(Optional.ofNullable(userMap.get(i.getCreateUid())).map(User::getUsername).orElse(StringUtils.EMPTY));
             return menuTreeVO;
         }).collect(Collectors.toList());
-        MenuTreeVO menuTreeVO = authBeanMapper.convertMenuToMenuTreeVO(root);
+        MenuTreeVO menuTreeVO = DataConvert.INSTANCE.convertMenuToMenuTreeVO(root);
         //从根节点往下遍历
         genTreeMap(menuTreeVO,menuTreeVOList);
         //userCache.set(MENU_TREE_LIST_ALL,menuTreeVO.getChildren());
@@ -206,7 +204,7 @@ public class MenuServiceImpl implements MenuService {
          page = menuDaoService.page(page, new LambdaQueryWrapper<Menu>()
                 .like(StringUtils.isNotBlank(menuQueryDTO.getMenuName()), Menu::getMenuName, menuQueryDTO.getMenuName()));
          if(CollectionUtils.isNotEmpty(page.getRecords())){
-             List collect = page.getRecords().stream().map(authBeanMapper::convertMenuToVO).collect(Collectors.toList());
+             List collect = page.getRecords().stream().map(DataConvert.INSTANCE::convertMenuToVO).collect(Collectors.toList());
              page.setRecords(collect);
          }
         return page;

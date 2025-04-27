@@ -14,7 +14,7 @@ import com.git.blog.exception.BizException;
 import com.git.blog.service.AuthService;
 import com.git.blog.service.CacheService;
 import com.git.blog.service.TagTypeService;
-import com.git.blog.service.bean.BlogMapper;
+import com.git.blog.service.map.DataConvert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
@@ -45,8 +45,6 @@ public class TagTypeServiceImpl implements TagTypeService{
     @Autowired
     private BlogArticleDaoService blogArticleDaoService;
     @Autowired
-    private BlogMapper blogMapper;
-    @Autowired
     private AuthService authService;
     @Autowired
     private CacheService cacheService;
@@ -61,7 +59,7 @@ public class TagTypeServiceImpl implements TagTypeService{
         if(100<integer) throw new BizException("标签数量上限为100");
 
         blogTagDTO.setId(null);
-        BlogTag blogTag = blogMapper.tagDTOToTag(blogTagDTO);
+        BlogTag blogTag = DataConvert.INSTANCE.tagDTOToTag(blogTagDTO);
         return blogTagDaoService.save(blogTag);
     }
 
@@ -77,7 +75,7 @@ public class TagTypeServiceImpl implements TagTypeService{
         boolean auth = authService.checkAuth(AuthTheadLocal.get(),CommonString.TAG_UPDATE_OTHER);
         if(BooleanUtils.isFalse(auth)) throw new BizException("没有权限修改标签");
 
-        BlogTag blogTag = blogMapper.tagDTOToTag(blogTagDTO);
+        BlogTag blogTag = DataConvert.INSTANCE.tagDTOToTag(blogTagDTO);
         blogTag.setCreateTime(null);
         blogTag.setUpdateTime(null);
         blogTag.setCreateUid(AuthTheadLocal.get());
@@ -113,7 +111,7 @@ public class TagTypeServiceImpl implements TagTypeService{
     @Override
     public List<BlogTagDTO> queryAllTags() {
         List<BlogTag> blogTagDTOList = blogTagDaoService.listByUid(AuthTheadLocal.get());
-        return blogTagDTOList.stream().map(blogMapper::tagToTagDTO).collect(Collectors.toList());
+        return blogTagDTOList.stream().map(DataConvert.INSTANCE::tagToTagDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -125,7 +123,7 @@ public class TagTypeServiceImpl implements TagTypeService{
 
         blogTagDTO.setId(null);
         blogTagDTO.setStatus(CommonString.TYPE_NORMAL_STATUS);
-        BlogType blogTag = blogMapper.typeDTOToType(blogTagDTO);
+        BlogType blogTag = DataConvert.INSTANCE.typeDTOToType(blogTagDTO);
         return blogTypeDaoService.save(blogTag);
     }
 
@@ -175,13 +173,13 @@ public class TagTypeServiceImpl implements TagTypeService{
     @Override
     public List<BlogTypeDTO> queryAllTypes() {
         List<BlogType> blogTagDTOList = blogTypeDaoService.listByStatus(CommonString.TYPE_NORMAL_STATUS);
-        return blogTagDTOList.stream().map(blogMapper::typeToTypesDTO).collect(Collectors.toList());
+        return blogTagDTOList.stream().map(DataConvert.INSTANCE::typeToTypesDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<BlogTypeDTO> listTypes() {
         List<BlogType> blogTagDTOList = blogTypeDaoService.list();
-        return blogTagDTOList.stream().map(blogMapper::typeToTypesDTO).collect(Collectors.toList());
+        return blogTagDTOList.stream().map(DataConvert.INSTANCE::typeToTypesDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -215,7 +213,7 @@ public class TagTypeServiceImpl implements TagTypeService{
         map.forEach((k,v)->{
             BlogArticleYearDTO blogArticleYearDTO = new BlogArticleYearDTO();
             blogArticleYearDTO.setYear(k);
-            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(DataConvert.INSTANCE::articleToArticleDTO).collect(Collectors.toList());
             blogArticleYearDTO.setBlogArticleDTOList(collect);
             blogArticleYearDTOList.add(blogArticleYearDTO);
         });
@@ -249,7 +247,7 @@ public class TagTypeServiceImpl implements TagTypeService{
         map.forEach((k,v)->{
             BlogArticleYearDTO blogArticleYearDTO = new BlogArticleYearDTO();
             blogArticleYearDTO.setYear(k);
-            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(DataConvert.INSTANCE::articleToArticleDTO).collect(Collectors.toList());
             blogArticleYearDTO.setBlogArticleDTOList(collect);
             blogArticleYearDTOList.add(blogArticleYearDTO);
         });

@@ -12,7 +12,7 @@ import com.git.blog.exception.BizException;
 import com.git.blog.dto.model.entity.*;
 import com.git.blog.service.MenuService;
 import com.git.blog.service.RoleService;
-import com.git.blog.service.bean.AuthBeanMapper;
+import com.git.blog.service.map.DataConvert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,8 +43,6 @@ public class RoleServiceImpl implements RoleService {
     private MenuService menuService;
     @Autowired
     private UserRoleDaoService userRoleDaoService;
-    @Autowired
-    private AuthBeanMapper authBeanMapper;
     @Autowired
     private UserDaoService userDaoService;
 
@@ -222,7 +220,7 @@ public class RoleServiceImpl implements RoleService {
             return list;
         }
 
-        list = roleList.stream().map(authBeanMapper::convertRoleToRoleVO).distinct().collect(Collectors.toList());
+        list = roleList.stream().map(DataConvert.INSTANCE::convertRoleToRoleVO).distinct().collect(Collectors.toList());
 
         list.forEach(i->{
             List<RoleMenu> roleMenuList = roleMenuDaoService.list(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, i.getRoleId()));

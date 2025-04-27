@@ -19,7 +19,7 @@ import com.git.blog.dto.wx.WxUserInfo;
 import com.git.blog.exception.BizException;
 import com.git.blog.dto.model.entity.*;
 import com.git.blog.service.*;
-import com.git.blog.service.bean.AuthBeanMapper;
+import com.git.blog.service.map.DataConvert;
 import com.git.blog.util.JwtUtil;
 import com.git.blog.util.Md5Util;
 import com.git.blog.util.VerificationCode;
@@ -74,8 +74,6 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
     @Autowired
     private RoleDaoService roleDaoService;
-    @Autowired
-    private AuthBeanMapper authBeanMapper;
     @Autowired
     private SysProperties sysProperties;
     @Autowired
@@ -204,7 +202,7 @@ public class UserServiceImpl implements UserService {
         }
 
         //3.修改用户
-        User user = authBeanMapper.convertUserDTOToUser(userDTO);
+        User user = DataConvert.INSTANCE.convertUserDTOToUser(userDTO);
         user.setUpdateTime(new Date());
         userDaoService.updateById(user);
 
@@ -461,8 +459,8 @@ public class UserServiceImpl implements UserService {
         }
 
         //转化为树
-        menuVOList = menus.stream().distinct().map(authBeanMapper::convertMenuToMenuTreeVO).sorted(Comparator.comparingLong(MenuTreeVO::getMenuSort)).collect(Collectors.toList());
-        MenuTreeVO menuTreeVO = Optional.of(root).map(authBeanMapper::convertMenuToMenuTreeVO).get();
+        menuVOList = menus.stream().distinct().map(DataConvert.INSTANCE::convertMenuToMenuTreeVO).sorted(Comparator.comparingLong(MenuTreeVO::getMenuSort)).collect(Collectors.toList());
+        MenuTreeVO menuTreeVO = Optional.of(root).map(DataConvert.INSTANCE::convertMenuToMenuTreeVO).get();
         //没有一级菜单就没有
         menuService.genTreeMap(menuTreeVO, menuVOList);
         return menuTreeVO.getChildren();

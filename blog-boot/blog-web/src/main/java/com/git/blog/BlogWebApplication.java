@@ -1,6 +1,5 @@
 package com.git.blog;
 
-import com.git.blog.spring.anno.BeanMapperScan;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 
 @SpringBootApplication(scanBasePackages = {"com.git.blog"} )
-@BeanMapperScan(basePackages = "com.git.blog.service.bean")
+//@BeanMapperScan(basePackages = "com.git.blog.service.bean")
 @EnableFeignClients(basePackages = "com.git.blog.feign")
 @EnableAsync
 public class BlogWebApplication {

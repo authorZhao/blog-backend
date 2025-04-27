@@ -19,7 +19,7 @@ import com.git.blog.dto.model.entity.BlogType;
 import com.git.blog.dto.model.entity.User;
 import com.git.blog.exception.BizException;
 import com.git.blog.service.*;
-import com.git.blog.service.bean.BlogMapper;
+import com.git.blog.service.map.DataConvert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,8 +46,6 @@ public class ArticleServiceImpl implements ArticleService {
     private BlogArticleDaoService blogArticleDaoService;
     @Autowired
     private AuthService authService;
-    @Autowired
-    private BlogMapper blogMapper;
     @Autowired
     private BlogTagDaoService blogTagDaoService;
     @Autowired
@@ -93,7 +91,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         List collect = page.getRecords().stream().map(i->{
-            BlogArticleVO blogArticleVO = blogMapper.articleToArticleVO(i);
+            BlogArticleVO blogArticleVO = DataConvert.INSTANCE.articleToArticleVO(i);
             blogArticleVO.setTagIds(blogArticleTypesDTOList.stream().map(BlogArticleTagsDTO::getId).distinct().collect(Collectors.toList()));
             blogArticleVO.setTypeIds(typesByArticleIds.stream().map(BlogArticleTypesDTO::getId).distinct().collect(Collectors.toList()));
             blogArticleVO.setTags(Optional.ofNullable(tagArticleMap.get(i.getId())).orElse(Collections.emptyList()).stream().map(BlogArticleTagsDTO::getName).filter(StringUtils::isNotEmpty).collect(Collectors.joining(",")));
@@ -129,7 +127,7 @@ public class ArticleServiceImpl implements ArticleService {
         map.forEach((k,v)->{
             BlogArticleYearDTO blogArticleYearDTO = new BlogArticleYearDTO();
             blogArticleYearDTO.setYear(k);
-            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+            List<BlogArticleDTO> collect = v.stream().sorted(objectComparator.reversed()).map(DataConvert.INSTANCE::articleToArticleDTO).collect(Collectors.toList());
             blogArticleYearDTO.setBlogArticleDTOList(collect);
             blogArticleYearDTOList.add(blogArticleYearDTO);
         });
@@ -163,7 +161,7 @@ public class ArticleServiceImpl implements ArticleService {
         typeIds = blogTypeDaoService.filterTypeIds(typeIds);
 
         //3.新增
-        BlogArticle blogArticle = blogMapper.articleDTOToArticle(blogArticlePageDTO);
+        BlogArticle blogArticle = DataConvert.INSTANCE.articleDTOToArticle(blogArticlePageDTO);
 
         if(id!=null){
             //realDeleteArticle(id);
@@ -221,15 +219,15 @@ public class ArticleServiceImpl implements ArticleService {
     public BlogArticleDetailVO detailArticle(Long id) {
         BlogArticle byId = blogArticleDaoService.getById(id);
         if(byId==null || !CommonString.ARTICLE_NORMAL_STATUS.equals(byId.getStatus())) return null;
-        BlogArticleDetailVO blogArticleDetailVO = blogMapper.articleToArticleDetailVO(byId);
+        BlogArticleDetailVO blogArticleDetailVO = DataConvert.INSTANCE.articleToArticleDetailVO(byId);
 
         //标签分类
         List<BlogTag> blogTagList = blogTagDaoService.getTagsByArticleId(id);
         List<BlogType> blogTypeList = blogTypeDaoService.getTypesByArticleId(id);
         blogArticleDetailVO.setTagIds(blogTagList.stream().map(BlogTag::getId).distinct().collect(Collectors.toList()));
         blogArticleDetailVO.setTypeIds(blogTypeList.stream().map(BlogType::getId).distinct().collect(Collectors.toList()));
-        blogArticleDetailVO.setBlogTypeDTOList(blogTypeList.stream().map(blogMapper::typeToTypesDTO).collect(Collectors.toList()));
-        blogArticleDetailVO.setBlogTagDTOList(blogTagList.stream().map(blogMapper::tagToTagDTO).collect(Collectors.toList()));
+        blogArticleDetailVO.setBlogTypeDTOList(blogTypeList.stream().map(DataConvert.INSTANCE::typeToTypesDTO).collect(Collectors.toList()));
+        blogArticleDetailVO.setBlogTagDTOList(blogTagList.stream().map(DataConvert.INSTANCE::tagToTagDTO).collect(Collectors.toList()));
 
         //用户
         User userById = userService.getUserById(blogArticleDetailVO.getUserId());
@@ -238,11 +236,11 @@ public class ArticleServiceImpl implements ArticleService {
         //上下
         BlogArticle pre = blogArticleDaoService.getPreOrNext(id, true);
         if(pre!=null){
-            blogArticleDetailVO.setPre(blogMapper.articleToArticleDetailVO(pre));
+            blogArticleDetailVO.setPre(DataConvert.INSTANCE.articleToArticleDetailVO(pre));
         }
         BlogArticle next = blogArticleDaoService.getPreOrNext(id, false);
         if(next!=null){
-            blogArticleDetailVO.setNext(blogMapper.articleToArticleDetailVO(next));
+            blogArticleDetailVO.setNext(DataConvert.INSTANCE.articleToArticleDetailVO(next));
         }
 
         return blogArticleDetailVO;
@@ -282,7 +280,7 @@ public class ArticleServiceImpl implements ArticleService {
             return JSON.parseArray(str,BlogArticleDTO.class);
         }
         List<BlogArticleDTO> collect = blogArticleDaoService.listLimitAndStatus(limit, CommonString.ARTICLE_NORMAL_STATUS)
-                .stream().map(blogMapper::articleToArticleDTO).collect(Collectors.toList());
+                .stream().map(DataConvert.INSTANCE::articleToArticleDTO).collect(Collectors.toList());
         cacheService.setObj(CommonString.ARTICLE_NEW+limit,JSON.toJSONString(collect),30L, TimeUnit.MINUTES);
         return collect;
     }
@@ -315,7 +313,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     private BlogArticleDTO articleDTO(BlogArticle article) {
-        var blogArticleDTO = blogMapper.articleToArticleDTO(article);
+        var blogArticleDTO = DataConvert.INSTANCE.articleToArticleDTO(article);
         blogArticleDTO.setContent(null).setContentMd(null);
         return blogArticleDTO;
     }
