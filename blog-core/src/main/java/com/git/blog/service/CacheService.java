@@ -30,7 +30,17 @@ public interface CacheService {
      * @param value
      */
     default void setStr(String key, Object value) {
-        setObj(key, value, null, null);
+        setObj(key, value, 1L, TimeUnit.DAYS);
+    }
+
+    /**
+     * 存
+     *
+     * @param key
+     * @param value
+     */
+    default void setStr(String key, Object value, Long time, TimeUnit timeUnit) {
+        setObj(key, value, time, timeUnit);
     }
 
     /**

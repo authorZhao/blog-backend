@@ -28,7 +28,7 @@
         <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
         <lombok.version>1.18.38</lombok.version>
         <mybatis-plus-version>3.5.10.1</mybatis-plus-version>
-        <mysql.connection>8.0.30</mysql.connection>
+        <mysql.connection>8.0.33</mysql.connection>
         <swagger-mode-version>1.5.22</swagger-mode-version>
         <jakarta.validation-api>3.1.1</jakarta.validation-api>
         <commons-collections>4.4</commons-collections>
@@ -43,6 +43,7 @@
         <jsoup>1.19.1</jsoup>
         <mapstruct.version>1.6.3</mapstruct.version>
         <spring.boot.validation>3.3.3</spring.boot.validation>
+        <commons-io>2.16.1</commons-io>
     </properties>
 
 
@@ -252,6 +253,18 @@
                 <groupId>com.vladsch.flexmark</groupId>
                 <artifactId>flexmark-all</artifactId>
                 <version>0.64.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-crypto</artifactId>
+                <version>6.4.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io}</version>
             </dependency>
 
         </dependencies>
